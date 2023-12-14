@@ -215,7 +215,7 @@
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div
               class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-1 d-flex justify-content-between align-items-center">
-              <h6 class="text-white text-capitalize ps-3">Danh sách điểm đặt bẳng quảng cáo</h6>
+              <h6 class="text-white text-capitalize ps-3">Danh sách điểm đặt bảng quảng cáo</h6>
               <div class="row">
                 <div class="col-6">
                   <button class="btn toast-btn btn-outline-white" type="button" data-target="infoToast"
@@ -232,29 +232,29 @@
                     <ul class="dropdown-menu  dropdown-menu-end px-1 py-1" aria-labelledby="dropdownMenuButton">
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast" data-sort="diaChi"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Địa chỉ
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="diaChi"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Địa chỉ
                           </button>
                         </a>
                       </li>
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast" data-sort="khuVuc"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Khu vực
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="khuVuc"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Khu vực
                           </button>
                         </a>
                       </li>
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast" data-sort="loaiVT"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Loại Vị Trí
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="loaiVT"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Loại Vị Trí
                           </button>
                         </a>
                       </li>
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"data-sort="hinhThuc"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Hình thức 
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="hinhThuc"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Hình thức
                           </button>
                         </a>
                       </li>
@@ -299,7 +299,7 @@
                     <td data-sort="khuVuc" style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
                       <span class="text-xs text-secondary mb-0">{{khuVuc}}</span>
                     </td>
-                    <td data-sort="loaiVT"  style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
+                    <td data-sort="loaiVT" style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
                       <span class="text-xs text-secondary">{{loaiVT}}</span>
                     </td>
                     <td data-sort="hinhThuc" class="align-middle text-center">
@@ -308,7 +308,7 @@
                       </div>
                     </td>
                     <td class="align-middle text-center">
-                      <i class="fa {{#if_eq quyHoach "ĐÃ QUY HOẠCH"}}fa-check-circle text-success {{else}}
+                      <i class="fa {{#if_eq quyHoach " ĐÃ QUY HOẠCH"}}fa-check-circle text-success {{else}}
                         fa-times-circle text-danger {{/if_eq}}" aria-hidden="true"></i>
                     </td>
                     <td class="align-middle text-center">
@@ -755,6 +755,189 @@
             </div>
           </div>
 
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card my-4">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div
+              class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-1 d-flex justify-content-between align-items-center">
+              <h6 class="text-white text-capitalize ps-3">Danh sách bảng quảng cáo</h6>
+              <div class="row">
+                <div class="col-6">
+                  <button class="btn toast-btn btn-outline-white" type="button" data-target="infoToast"
+                    style="background-color: transparent; color:transparent; border:none ; outline: none; box-shadow: none;"
+                    disabled><i class="fa-solid fa-plus pe-1"></i>Add</button>
+                </div>
+                <div class="col-6">
+                  <li class="nav-item dropdown pe-3 d-flex align-items-center">
+                    <a href="javascript:;" class="nav-link text-body p-0 text-center" id="dropdownMenuButton"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      <button class="btn bg-gradient-success mb-0 me-4 toast-btn" type="button"
+                        data-target="infoToast"><i class="fa-solid fa-sort"></i></button>
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end px-1 py-1" aria-labelledby="dropdownMenuButton">
+                      <li>
+                        <a class="dropdown-item text-center" href="javascript:;">
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="diaChi"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Địa chỉ
+                          </button>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item text-center" href="javascript:;">
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="khuVuc"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Khu vực
+                          </button>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item text-center" href="javascript:;">
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="loaiVT"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Loại Vị Trí
+                          </button>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item text-center" href="javascript:;">
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="hinhThuc"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Hình thức
+                          </button>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body px-0 pb-2">
+            <div class="table-responsive p-0">
+              <!-- Detail Ads Modal -->
+              <div class="modal detail-ads fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div>
+                        <h5 class="modal-title" id="staticBackdropLabel">Xem chi tiết</h5>
+                      </div>
+                      <button class="btn-close toast-btn" type="button" onclick="closeViewPlaceDetail(this)"
+                        data-bs-dismiss="modal" aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
+                        <i class="fa fa-times text-dark  fs-4" aria-hidden="true"></i>
+                      </button>
+
+                    </div>
+                    <div class="modal-body">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-12">
+                            <h6>Thông Tin Chung</h6>
+                            <div class="card">
+                              <div class="card-body">
+                                <div class="d-flex flex-column justify-content-center detail-card">
+                                  <h6 class="text-sm font-weight-normal mb-1">
+                                    <span class="font-weight-bold"></span>
+                                  </h6>
+                                  <h6 class="text-sm font-weight-normal mb-1">
+                                    <span class="font-weight-bold">Khu vực: </span> TP Hồ Chí Minh, Việt Nam
+                                  </h6>
+                                  <h6 class="text-sm font-weight-normal mb-1">
+                                    <span class="font-weight-bold">Loại vị trí: </span>
+                                    <span class="span-content"></span>
+                                  </h6>
+                                  <h6 class="text-sm font-weight-normal mb-1">
+                                    <span class="font-weight-bold">Hình thức: </span>
+                                    <span class="span-content"></span>
+                                  </h6>
+                                  <h6 class="text-sm font-weight-normal mb-1">
+                                    <span class="font-weight-bold"></span>
+                                  </h6>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="row mt-3">
+                          <div class="col-12">
+                            <div class="card text-white">
+                              <img src="{{#if hinhAnh}}{{hinhAnh}}{{else}}/assets/img/places/place.png{{/if}}"
+                                class="card-img" alt="..."
+                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
+                              {{!-- <div class="card-img-overlay">
+                                <h5 class="card-title text-white">
+                                  Phường 4, Quận 5
+                                </h5>
+                              </div> --}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <table class="table align-items-center justify-content-center mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên bảng</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Địa chỉ</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
+                      Kích thước</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Số
+                      lượng</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">Ngày hết
+                      hạn</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">Tuỳ chọn
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each placedetails}}
+                  <tr>
+                    <td style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;"
+                      onclick="openViewPlaceDetail(this, '{{adName}}', '{{adSize}}', '{{adQuantity}}', '{{expireDay}}')">
+                      <div class="d-flex px-2">
+                        <div>
+                          <img src="{{#if imagePath}}{{imagePath}}{{else}}/assets/img/ads/ads.jpeg{{/if}}"
+                            class="avatar avatar-sm me-3 border-radius-lg" alt="spotify">
+                        </div>
+                        <div class="my-auto">
+                          <h6 class="mb-0 text-sm">{{adName}}</h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
+                      <span class="text-xs text-secondary mb-0">{{Place.diaChi}}, {{Place.khuVuc}}</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-xs text-secondary">{{adSize}}</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <div class="d-flex align-items-center">
+                        <span class="me-2 text-xs text-secondary">{{adQuantity}}</span>
+                      </div>
+                    </td>
+                    <td class="align-middle text-center">
+                      <span class="text-xs text-secondary">{{expireDay}}</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
+                        data-bs-target="#editPlaceModal" onclick="showEditPlaceModal(this)" data-id="{{id}}"
+                        data-ad-name="{{adName}}" data-ad-size="{{adSize}}" data-ad-quantity="{{adQuantity}}"
+                        data-expire-day="{{expireDay}}"></i>
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

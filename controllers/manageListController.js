@@ -36,6 +36,31 @@ controller.show = async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
 
+  res.locals.placedetails = await models.Placedetail.findAll({
+    include: [{
+      model: models.Place,
+      attributes: [
+        "diaChi",
+        "khuVuc",
+      ],
+    }],
+    attributes: [
+      "id",
+      "adName",
+      "adSize",
+      "adQuantity",
+      "expireDay",
+      "imagePath",
+    ],
+    where: {
+      '$Place.khuVuc$': {
+        [Op.like]: '%Quận 1%', // Use the like operator to check for 'Quận 5' in khuVuc
+      },
+    },
+    order: [["createdAt", "DESC"]],
+    // limit: 10,
+  });
+
   res.render("manage-list");
 };
 

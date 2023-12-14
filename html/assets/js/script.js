@@ -366,6 +366,8 @@ function closeViewDetailPlace(elm) {
   elm.closest('.modal.detail-place').style.display = "none";
   document.querySelector('.modal-backdrop.fade.show').remove();
 }
+
+
 // searching
 document.getElementById('phuongDropdown').addEventListener('change', function () {
   var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);

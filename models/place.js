@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
     class Place extends Model {
         static associate(models) {
         // define association here
+        Place.hasMany(models.Placedetail, {
+            foreignKey: 'placeId'
+        });
         // Tag.belongsToMany(models.Blog, {
         //   through: "BlogTag",
         //   foreignKey: "tagId",
