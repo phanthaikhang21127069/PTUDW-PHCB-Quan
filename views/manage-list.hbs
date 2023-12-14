@@ -232,23 +232,29 @@
                     <ul class="dropdown-menu  dropdown-menu-end px-1 py-1" aria-labelledby="dropdownMenuButton">
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"><i
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast" data-sort="diaChi"><i
                               class="fa-solid fa-arrow-up-a-z pe-1"></i>Địa chỉ
                           </button>
                         </a>
                       </li>
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Hình thức báo
-                            cáo
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast" data-sort="khuVuc"><i
+                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Khu vực
                           </button>
                         </a>
                       </li>
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Tình trạng
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast" data-sort="loaiVT"><i
+                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Loại Vị Trí
+                          </button>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item text-center" href="javascript:;">
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"data-sort="hinhThuc"><i
+                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Hình thức 
                           </button>
                         </a>
                       </li>
@@ -277,7 +283,7 @@
                 <tbody>
                   {{#each places}}
                   <tr>
-                    <td
+                    <td data-sort="diaChi"
                       onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}')"
                       style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">
                       <div class="d-flex px-2">
@@ -290,13 +296,13 @@
                         </div>
                       </div>
                     </td>
-                    <td style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
+                    <td data-sort="khuVuc" style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
                       <span class="text-xs text-secondary mb-0">{{khuVuc}}</span>
                     </td>
-                    <td style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
+                    <td data-sort="loaiVT"  style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
                       <span class="text-xs text-secondary">{{loaiVT}}</span>
                     </td>
-                    <td class="align-middle text-center">
+                    <td data-sort="hinhThuc" class="align-middle text-center">
                       <div class="d-flex align-items-center">
                         <span class="me-2 text-xs text-secondary">{{hinhThuc}}</span>
                       </div>
@@ -310,12 +316,7 @@
                         data-bs-target="#addPlaceModal" onclick="showEditPlaceModal(this)" data-id="{{id}}"
                         data-dia-chi="{{diaChi}}" data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}"
                         data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}"></i>
-
-                      {{!-- <i
-                        onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}', '{{hinhAnh}}')"
-                        style="cursor: pointer" role="button" class="fa-solid fa-circle-info text-secondary fs-5"></i>
-                      --}}
-
+                      {{!-- view place detail modal --}}
                       <div class="modal detail-place fade" id="staticBackdropInfo" data-bs-backdrop="static"
                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelInfo"
                         aria-hidden="true">

@@ -389,3 +389,28 @@ document.getElementById('phuongDropdown').addEventListener('change', function ()
       });
   }
 });
+
+// sort places
+document.addEventListener("DOMContentLoaded", function () {
+    const tableBody = document.querySelector("#filteredContent tbody");
+    const sortButtons = document.querySelectorAll("[data-sort]");
+
+    sortButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const sortBy = this.getAttribute("data-sort");
+
+        const rows = Array.from(tableBody.querySelectorAll("tr"));
+        const sortedRows = rows.sort((a, b) => {
+          const valueA = a.querySelector(`[data-sort="${sortBy}"]`).textContent.trim().toLowerCase();
+          const valueB = b.querySelector(`[data-sort="${sortBy}"]`).textContent.trim().toLowerCase();
+          return valueA.localeCompare(valueB);
+        });
+        tableBody.innerHTML = "";
+        sortedRows.forEach((row) => {
+          tableBody.appendChild(row);
+        });
+      });
+    });
+  });
+
+
