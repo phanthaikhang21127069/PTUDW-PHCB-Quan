@@ -75,7 +75,7 @@
     background-color: var(--bs-dropdown-link-hover-bg);
 }
 
-.detail-ward .modal-lg {
+.detail-ward .modal-lg, .detail-place .modal-lg {
     max-width: 500px;
 }
 
@@ -83,10 +83,46 @@
     margin-bottom: 10px;
 }
 
-#addWardModal .form-label {
+#addWardModal .form-label, #editWardModal .form-label,
+#addPlaceModal .form-label, #editPlaceModal .form-label,
+#addAccountModal .form-label, #editAccountModal .form-label {
     text-transform: uppercase;
     font-weight: 500;
 }
-#addWardModal .modal-header, #addWardModal .modal-footer {
+#addWardModal .modal-header, #addWardModal .modal-footer, 
+#editWardModal .modal-header, #editWardModal .modal-footer,
+#addPlaceModal .modal-header, #addPlaceModal .modal-footer, 
+#editPlaceModal .modal-header, #editPlaceModal .modal-footer,
+#addAccountModal .modal-header, #addAccountModal .modal-footer {
     border: none;
 }
+
+.form-check {
+    padding-left: 0.125rem;
+}
+
+.form-check-label {
+    color: rgb(0, 116, 217);
+}
+
+.bg-label-primary {
+    background-color: rgba(0, 116, 217, 0.2);
+}
+
+.select-form-control {
+    background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 100% 50%;
+}
+
+
+
+#lockIcon {
+    display: none; /* Ẩn biểu tượng khóa ban đầu */
+  }
+  
+  .toast-btn:hover #lockIcon {
+    display: inline; /* Hiển thị biểu tượng khóa khi di chuột vào */
+  }
+
+  .toast-btn:hover {
+    cursor: not-allowed; /* Đặt kiểu con trỏ thành nút vô hiệu hóa khi di chuột vào */
+  }

@@ -1,5 +1,7 @@
 const controller = {};
 const models = require("../models");
+const { Op } = require('sequelize');
+
 
 controller.show = async (req, res) => {
   res.locals.wards = await models.Ward.findAll({
@@ -11,55 +13,77 @@ controller.show = async (req, res) => {
       "population",
       "imagePath",
     ],
+    where: {
+      districtName: "Quận 1",
+    },
     order: [["createdAt", "DESC"]],
   });
+  res.locals.places = await models.Place.findAll({
+    attributes: [
+      "id",
+      "diaChi",
+      "khuVuc",
+      "loaiVT",
+      "hinhThuc",
+      "quyHoach",
+      "hinhAnh",
+    ],
+    where: {
+      khuVuc: {
+        [Op.like]: '%Quận 1%', // Use the like operator to check for 'Quận 5' in khuVuc
+      },
+    },
+    order: [["createdAt", "DESC"]],
+  });
+
   res.render("manage-list");
 };
 
-controller.addWard = async (req, res) => {
-  let {wardName, districtName, zipCode, population} = req.body;
+controller.requestEditPlace = async (req, res) => {
+  let {diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua} = req.body;
   try {
-    await models.Ward.create({
-      wardName, 
-      districtName, 
-      zipCode, 
-      population
+    await models.Requesteditplace.create({
+      diaChi, 
+      khuVuc, 
+      loaiVT, 
+      hinhThuc, 
+      quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
+      liDoChinhSua
     });
     res.redirect("/danh-sach");
   } catch (error) {
-    res.send("Can't add ward");
+    res.send("Không thể thêm điểm đặt");
     console.error(error);
   }
-  // res.send(req.body);
-  // console.log(req);
-  // res.redirect("/phuong-quan");
 }
+// controller.addWard = async (req, res) => {
+//   let {wardName, districtName, zipCode, population} = req.body;
+//   try {
+//     await models.Ward.create({
+//       wardName, 
+//       districtName, 
+//       zipCode, 
+//       population
+//     });
+//     res.redirect("/danh-sach");
+//   } catch (error) {
+//     res.send("Can't add ward");
+//     console.error(error);
+//   }
+// }
 
-controller.editWard = async (req, res) => {
-  let {id, wardName, districtName, zipCode, population} = req.body;
-  try {
-    await models.Ward.update(
-      {wardName, districtName, zipCode, population},
-      {where: {id}}
-    );
-    res.send("Ward updated!");
-  } catch (error) {
-    res.send("Can't update ward!");
-    console.error(error);
-  }
-}
 
-controller.deleteWard = async (req, res) => {
-  let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
-  try {
-    await models.Ward.destroy(
-      {where: {id}}
-    );
-    res.send("Ward deleted!");
-  } catch (error) {
-    res.send("Can't delete ward!");
-    console.error(error);
-  }
-}
+// controller.deleteWard = async (req, res) => {
+//   let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
+//   try {
+//     await models.Ward.destroy(
+//       {where: {id}}
+//     );
+//     res.send("Ward deleted!");
+//   } catch (error) {
+//     res.send("Can't delete ward!");
+//     console.error(error);
+//   }
+// }
 
 module.exports = controller;

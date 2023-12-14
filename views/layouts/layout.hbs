@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x56" href="../assets/img/logo-only.png">
   <link rel="icon" type="image/png" href="../assets/img/logo-only.png">
   <title>
-    Bảng điều khiển
+    Phân Hệ Cán Bộ Quận
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css"
@@ -18,18 +18,27 @@
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/material-dashboard.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../assets/css/form_edit.css" />
+  <link rel="stylesheet" href="/assets/css/style.css" rel="stylesheet" />
+  <link id="pagestyle" href="/assets/css/material-dashboard.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/form_edit.css" />
 
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
     {{{body}}}
   <!--   Core JS Files   -->
-  <script src="../assets/js/popper.min.js"></script>
-  <script src="../assets/js/bootstrap.min.js"></script>
-  <script src="../assets/js/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/smooth-scrollbar.min.js"></script>
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/perfect-scrollbar.min.js"></script>
+  <script src="/assets/js/smooth-scrollbar.min.js"></script>
+  <script src="/assets/js/script.js"></script>
+<script>
+  document.querySelector('.toast-btn').addEventListener('click', function(event) {
+    if (document.querySelector('#lockIcon').style.display === 'inline') {
+      event.preventDefault(); // Ngăn chặn sự kiện click khi biểu tượng khóa hiển thị
+    }
+  });
+</script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -61,32 +70,27 @@
         });
     </script>
 
-    <script>
-        document.getElementById('phuongDropdown').addEventListener('change', function () {
-            var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+    <!-- Add this script in your HTML file or include it in your JavaScript file -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
 
-            // Check if "All Phường" is selected
-            if (selectedOptions.includes('all')) {
-                // Show all rows
-                document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
-                    row.style.display = '';
-                });
-            } else {
-                // Hide all rows
-                document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
-                    row.style.display = 'none';
-                });
+    searchInput.addEventListener("input", function () {
+      const searchText = searchInput.value.toLowerCase();
+      const tableRows = document.querySelectorAll("#filteredContent tbody tr");
 
-                // Show rows for selected Phường values
-                selectedOptions.forEach(function (phuong) {
-                    var rowsToShow = document.querySelectorAll('#filteredContent tbody tr[data-phuong="' + phuong + '"]');
-                    rowsToShow.forEach(function (row) {
-                        row.style.display = '';
-                    });
-                });
-            }
-        });
-    </script>
+      tableRows.forEach((row) => {
+        const rowText = row.textContent.toLowerCase();
+        if (rowText.includes(searchText)) {
+          row.style.display = ""; // Show the row if it matches the search
+        } else {
+          row.style.display = "none"; // Hide the row if it doesn't match
+        }
+      });
+    });
+  });
+</script>
+
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
