@@ -351,6 +351,28 @@ function openViewPlaceDetail(elm, diaChi, khuVuc, loaiVT, hinhThuc, quyHoach, hi
 
 }
 
+function openViewAdsDetail(elm, adName, diaChi, khuVuc, adSize, adQuantity, formattedExpireDay) {
+  console.log("openViewAdsDetail");
+  let div = document.createElement('div');
+  div.classList.add('modal-backdrop', 'fade', 'show');
+  document.body.appendChild(div);
+
+  let ancElm = elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal');
+  ancElm.classList.add('show');
+  elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal.detail-ads').style.display = "block";
+
+  ancElm.querySelector('.detail-card :nth-child(1)').textContent = adName;
+  ancElm.querySelector('.detail-card :nth-child(2) .span-content').textContent = diaChi + ", " + khuVuc;
+  ancElm.querySelector('.detail-card :nth-child(4) .span-content').textContent = adSize;
+  ancElm.querySelector('.detail-card :nth-child(5) .span-content').textContent = adQuantity;
+  ancElm.querySelector('.detail-card :nth-child(6) .span-content').textContent = formattedExpireDay;
+
+  // ancElm.querySelector('.img-card :nth-child(1)').textContent = diaChi;
+
+  if (hinhAnh) ancElm.querySelector('img').src = hinhAnh;
+
+}
+
 function closeViewDetail(elm) {
   elm.closest('.modal.detail-ward').classList.remove('show');
   elm.closest('.modal.detail-ward').style.display = "none";
@@ -363,6 +385,11 @@ function closeViewDetailPlace(elm) {
   document.querySelector('.modal-backdrop.fade.show').remove();
 }
 
+function closeViewDetailAds(elm) {
+  elm.closest('.modal.detail-ads').classList.remove('show');
+  elm.closest('.modal.detail-ads').style.display = "none";
+  document.querySelector('.modal-backdrop.fade.show').remove();
+}
 
 // searching
 document.getElementById('phuongDropdown').addEventListener('change', function () {

@@ -126,3 +126,8 @@
   .toast-btn:hover {
     cursor: not-allowed; /* Đặt kiểu con trỏ thành nút vô hiệu hóa khi di chuột vào */
   }
+
+
+  .detail-ward .modal-lg, .detail-place .modal-lg, .detail-ads .modal-lg  {
+    max-width: 500px;
+}

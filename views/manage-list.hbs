@@ -121,7 +121,7 @@
             <div class="col mb-3">
               <label for="expireDayEdit" class="form-label">Ngày hết hạn</label>
               <input type="text" id="expireDayEdit" name="expireDay" class="form-control"
-                placeholder="Quảng cáo thương mại" oninput="checkValidDate(this, event)"/>
+                placeholder="Quảng cáo thương mại" oninput="checkValidDate(this, event)" />
             </div>
           </div>
           <div class="text-center badge bg-label-danger" id="errorMessage"></div>
@@ -883,9 +883,9 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <div>
-                        <h5 class="modal-title" id="staticBackdropLabel">Xem chi tiết</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Chi Tiết Bảng Quảng Cáo</h5>
                       </div>
-                      <button class="btn-close toast-btn" type="button" onclick="closeViewPlaceDetail(this)"
+                      <button class="btn-close toast-btn" type="button" onclick="closeViewDetailAds(this)"
                         data-bs-dismiss="modal" aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
                         <i class="fa fa-times text-dark  fs-4" aria-hidden="true"></i>
                       </button>
@@ -895,26 +895,29 @@
                       <div class="container-fluid">
                         <div class="row">
                           <div class="col-12">
-                            <h6>Thông Tin Chung</h6>
                             <div class="card">
                               <div class="card-body">
                                 <div class="d-flex flex-column justify-content-center detail-card">
+                                  <h6 class="text-info mb-3"
+                                    style="text-align: left;word-wrap: break-word; white-space: normal;"></h6>
                                   <h6 class="text-sm font-weight-normal mb-1">
-                                    <span class="font-weight-bold"></span>
+                                    <span class="font-weight-bold">Địa chỉ: </span>
+                                    <span class="span-content"></span>
                                   </h6>
                                   <h6 class="text-sm font-weight-normal mb-1">
                                     <span class="font-weight-bold">Khu vực: </span> TP Hồ Chí Minh, Việt Nam
                                   </h6>
                                   <h6 class="text-sm font-weight-normal mb-1">
-                                    <span class="font-weight-bold">Loại vị trí: </span>
+                                    <span class="font-weight-bold">Kích thước </span>
                                     <span class="span-content"></span>
                                   </h6>
                                   <h6 class="text-sm font-weight-normal mb-1">
-                                    <span class="font-weight-bold">Hình thức: </span>
+                                    <span class="font-weight-bold">Số lượng </span>
                                     <span class="span-content"></span>
                                   </h6>
                                   <h6 class="text-sm font-weight-normal mb-1">
-                                    <span class="font-weight-bold"></span>
+                                    <span class="font-weight-bold">Ngày hết hạn </span>
+                                    <span class="span-content"></span>
                                   </h6>
                                 </div>
                               </div>
@@ -961,7 +964,7 @@
                   {{#each placedetails}}
                   <tr>
                     <td style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;"
-                      onclick="openViewPlaceDetail(this, '{{adName}}', '{{adSize}}', '{{adQuantity}}', '{{expireDay}}')">
+                      onclick="openViewAdsDetail(this, '{{adName}}', '{{Place.diaChi}}', '{{Place.khuVuc}}', '{{adSize}}', '{{adQuantity}}', '{{formattedExpireDay}}')">
                       <div class="d-flex px-2">
                         <div>
                           <img src="{{#if imagePath}}{{imagePath}}{{else}}/assets/img/ads/ads.jpeg{{/if}}"
