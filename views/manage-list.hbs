@@ -80,6 +80,66 @@
 </div>
 
 
+<div class="modal fade" id="editAdsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form action="/danh-sach/editads" id="editAdsForm" method="POST" onsubmit="editAds(event)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Chỉnh sửa thông tin bảng quảng cáo
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-2">
+            <div class="col mb-3">
+              <label for="adNameEdit" class="form-label">Tên bảng QC</label>
+              <input type="text" id="adNameEdit" name="adName" class="form-control" placeholder="Chợ An Đông"
+                required />
+            </div>
+            <div class="col mb-3">
+              <label for="adSizeEdit" class="form-label">Kích thước</label>
+              <input type="text" id="adSizeEdit" name="adSize" class="form-control" placeholder="Phường 9, Quận 5"
+                required />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-3">
+              <label for="diaChiAdsEdit" class="form-label">Địa chỉ</label>
+              <select id="diaChiAdsEdit" name="diaChiAds" class="form-control select-form-control">
+                {{#each places}}
+                <option value="{{diaChi}}" selected="selected">{{diaChi}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="row g-2">
+            <div class="col mb-3">
+              <label for="adQuantityEdit" class="form-label">Số lượng</label>
+              <input type="text" id="adQuantityEdit" name="adQuantity" class="form-control" placeholder="Chợ" />
+            </div>
+            <div class="col mb-3">
+              <label for="expireDayEdit" class="form-label">Ngày hết hạn</label>
+              <input type="text" id="expireDayEdit" name="expireDay" class="form-control"
+                placeholder="Quảng cáo thương mại" oninput="checkValidDate(this, event)"/>
+            </div>
+          </div>
+          <div class="text-center badge bg-label-danger" id="errorMessage"></div>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" name="id" id="idAds" value="" />
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeBtnEdit">
+            Đóng
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Lưu
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 {{>sidebar curPage="Quản lý danh sách"}}
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
   <!-- Navbar -->
@@ -924,13 +984,13 @@
                       </div>
                     </td>
                     <td class="align-middle text-center">
-                      <span class="text-xs text-secondary">{{expireDay}}</span>
+                      <span class="text-xs text-secondary">{{formattedExpireDay}}</span>
                     </td>
                     <td class="align-middle text-center">
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
-                        data-bs-target="#editPlaceModal" onclick="showEditPlaceModal(this)" data-id="{{id}}"
-                        data-ad-name="{{adName}}" data-ad-size="{{adSize}}" data-ad-quantity="{{adQuantity}}"
-                        data-expire-day="{{expireDay}}"></i>
+                        data-bs-target="#editAdsModal" onclick="showEditAdsModal(this)" data-id="{{id}}"
+                        data-ad-name="{{adName}}" data-dia-chi="{{Place.diaChi}}" data-ad-size="{{adSize}}"
+                        data-ad-quantity="{{adQuantity}}" data-expire-day="{{formattedExpireDay}}"></i>
                     </td>
                   </tr>
                   {{/each}}

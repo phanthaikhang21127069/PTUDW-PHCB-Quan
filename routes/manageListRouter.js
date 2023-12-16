@@ -8,6 +8,7 @@ router.get("/", controller.show);
 // router.delete("/:id", controller.deleteWard);
 
 router.post("/editplace", controller.requestEditPlace);
+router.post("/editads", controller.requestEditAds);
 
 
 module.exports = router;

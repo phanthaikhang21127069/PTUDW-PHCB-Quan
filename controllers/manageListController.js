@@ -1,6 +1,7 @@
 const controller = {};
 const models = require("../models");
 const { Op } = require('sequelize');
+const moment = require('moment');
 
 
 controller.show = async (req, res) => {
@@ -61,7 +62,12 @@ controller.show = async (req, res) => {
     // limit: 10,
   });
 
-  res.render("manage-list");
+  res.render("manage-list", {
+    placedetails: res.locals.placedetails.map(detail => ({
+      ...detail.toJSON(),
+      formattedExpireDay: moment(detail.expireDay).format('MM/DD/YYYY'),
+    })),  
+  });
 };
 
 controller.requestEditPlace = async (req, res) => {
@@ -81,34 +87,37 @@ controller.requestEditPlace = async (req, res) => {
     console.error(error);
   }
 }
-// controller.addWard = async (req, res) => {
-//   let {wardName, districtName, zipCode, population} = req.body;
-//   try {
-//     await models.Ward.create({
-//       wardName, 
-//       districtName, 
-//       zipCode, 
-//       population
-//     });
-//     res.redirect("/danh-sach");
-//   } catch (error) {
-//     res.send("Can't add ward");
-//     console.error(error);
-//   }
-// }
 
+controller.requestEditAds = async (req, res) => {
+  let {adName, diaChiAds, adSize, adQuantity, expireDay} = req.body;
 
-// controller.deleteWard = async (req, res) => {
-//   let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
-//   try {
-//     await models.Ward.destroy(
-//       {where: {id}}
-//     );
-//     res.send("Ward deleted!");
-//   } catch (error) {
-//     res.send("Can't delete ward!");
-//     console.error(error);
-//   }
-// }
+  const parsedDate = moment(expireDay, 'MM/DD/YYYY', true);
+  const isValidDate = parsedDate.isValid();
+
+  if (!isValidDate) {
+    return res.json({ error: true, message: 'Ngày không hợp lệ!' });
+  }
+
+  const adsPlace = await models.Place.findOne({ 
+    attributes: ["id"],
+    where: {diaChi: diaChiAds} 
+  });
+
+  let placeId = adsPlace.getDataValue("id");
+
+  try {
+    await models.Requesteditads.create({
+      placeId: placeId,
+      adName, 
+      adSize, 
+      adQuantity, 
+      expireDay, 
+    });
+    res.redirect("/danh-sach");
+  } catch (error) {
+    res.send("Không thể gửi yêu cầu chỉnh sửa bảng QC");
+    console.error(error);
+}
+}
 
 module.exports = controller;

@@ -240,6 +240,14 @@ if (editPlaceEle) {
   });
 }
 
+let editAdsEle = document.querySelector("#editAdsModal");
+if (editAdsEle) {
+  editAdsEle.addEventListener("shown.bs.modal", () => {
+    document.querySelector("#adNameEdit").focus();
+  });
+}
+
+
 // Hàm khởi tạo giá trị và trạng thái của form khi mở modal
 function initializeEditForm() {
   let saveBtn = document.querySelector("#addPlaceForm button[type='submit']");
@@ -291,27 +299,15 @@ function showEditPlaceModal(btn) {
 
 }
 
+function showEditAdsModal(btn) {
+  document.querySelector("#idAds").value = btn.dataset.id;
+  document.querySelector("#adNameEdit").value = btn.dataset.adName;
+  document.querySelector("#diaChiAdsEdit").value = btn.dataset.diaChi;
+  document.querySelector("#adSizeEdit").value = btn.dataset.adSize;
+  document.querySelector("#adQuantityEdit").value = btn.dataset.adQuantity;
+  document.querySelector("#expireDayEdit").value = btn.dataset.expireDay;
+}
 
-
-// async function editPlace(e) {
-//   e.preventDefault();
-
-//   const formData = new FormData(document.getElementById("addPlaceModal"));
-//   const data = Object.fromEntries(formData.entries());
-
-//   // data = {
-//   //   wardName: document.querySelector('#wardNameEdit').value,
-//   // }
-
-//   let res = await fetch('/danh-sach/editplace', {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data),
-//   });
-//   location.reload();
-// }
 
 function openCustomDown(elm) {
   if (elm.parentElement.querySelector('.customDown').style.display === "none")
@@ -415,4 +411,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+// check valid date in ads edit
+function checkValidDate(elm, event) {
+  event.preventDefault();
 
+  const inputDate = elm.value;
+  const isValidDate = moment(inputDate, 'MM/DD/YYYY', true).isValid();
+
+  if (!isValidDate) {
+    elm.setCustomValidity('Ngày không hợp lệ');
+  } else {
+    elm.setCustomValidity('');
+  }
+}
