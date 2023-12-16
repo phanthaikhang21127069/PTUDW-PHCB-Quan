@@ -36,11 +36,6 @@
                 placeholder="Quảng cáo thương mại" />
             </div>
           </div>
-          <div class="row g-2 mb-3">
-            <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
-            <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
-              placeholder="Sai thông tin / Chỉnh sửa hình ảnh" />
-          </div>
           <div class="row">
             <div class="col mb-0">
               <div class="form-check form-check-inline" style="padding-left:0">
@@ -50,6 +45,12 @@
               </div>
             </div>
           </div>
+          <div class="row g-2 mb-3">
+            <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
+            <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
+              placeholder="Sai thông tin / Chỉnh sửa hình ảnh" />
+          </div>
+
           <div class="row g-2">
             <div class="row mb-3 mt-3">
               <h6><span>Thời điểm chỉnh sửa: </span>
@@ -71,7 +72,7 @@
             Đóng
           </button>
           <button type="submit" class="btn btn-primary">
-            Lưu
+            Gửi Yêu Cầu
           </button>
         </div>
       </div>
@@ -86,7 +87,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            Chỉnh sửa thông tin bảng quảng cáo
+            Chỉnh Sửa Thông Tin Bảng Quảng Cáo
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -124,6 +125,25 @@
                 placeholder="Quảng cáo thương mại" oninput="checkValidDate(this, event)" />
             </div>
           </div>
+          <div class="row g-2 mb-3">
+            <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
+            <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
+              placeholder="Sai thông tin / Chỉnh sửa hình ảnh" />
+          </div>
+
+          <div class="row g-2">
+            <div class="row mb-3 mt-3">
+              <h6><span>Thời điểm chỉnh sửa: </span>
+                <script>
+                  document.write(new Date().getDate());
+                  document.write('/');
+                  document.write(new Date().getMonth());
+                  document.write('/');
+                  document.write(new Date().getFullYear());
+                </script>
+              </h6>
+            </div>
+          </div>
           <div class="text-center badge bg-label-danger" id="errorMessage"></div>
         </div>
         <div class="modal-footer">
@@ -132,7 +152,7 @@
             Đóng
           </button>
           <button type="submit" class="btn btn-primary">
-            Lưu
+            Gửi Yêu Cầu
           </button>
         </div>
       </div>

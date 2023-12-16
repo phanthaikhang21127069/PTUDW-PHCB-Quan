@@ -89,7 +89,7 @@ controller.requestEditPlace = async (req, res) => {
 }
 
 controller.requestEditAds = async (req, res) => {
-  let {adName, diaChiAds, adSize, adQuantity, expireDay} = req.body;
+  let {adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua} = req.body;
 
   const parsedDate = moment(expireDay, 'MM/DD/YYYY', true);
   const isValidDate = parsedDate.isValid();
@@ -112,6 +112,7 @@ controller.requestEditAds = async (req, res) => {
       adSize, 
       adQuantity, 
       expireDay, 
+      liDoChinhSua
     });
     res.redirect("/danh-sach");
   } catch (error) {

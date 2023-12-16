@@ -1,236 +1,3 @@
-// document
-//   .querySelector("#editUserModal")
-//   .addEventListener("shown.bs.modal", () => {
-//     document.querySelector("#firstNameEdit").focus();
-//   });
-
-// document
-//   .querySelector("#addUserModal")
-//   .addEventListener("shown.bs.modal", () => {
-//     document.querySelector("#firstName").focus();
-//   });
-
-
-// ---------
-// document
-//   .querySelector("#editWardModal")
-//   .addEventListener("shown.bs.modal", () => {
-//     document.querySelector("#wardNameEdit").focus();
-//   });
-
-// document
-//   .querySelector("#addWardModal")
-//   .addEventListener("shown.bs.modal", () => {
-//     document.querySelector("#wardName").focus();
-//   });
-
-// document
-//   .querySelector("#addPlaceModal")
-//   .addEventListener("shown.bs.modal", () => {
-//     document.querySelector("#diaChi").focus();
-//   });
-
-// document
-//   .querySelector("#editPlaceModal")
-//   .addEventListener("shown.bs.modal", () => {
-//     document.querySelector("#diaChiEdit").focus();
-//   });
-
-// document.querySelectorAll(".user-delete-btn").forEach((btnConfirm) => {
-//   btnConfirm.addEventListener("click", (e) => {
-//     let id = e.target.dataset.id;
-//     const options = {
-//       title: "Bạn có chắc chắn muốn xoá?",
-//       type: "danger",
-//       btnOkText: "Xoá",
-//       btnCancelText: "Thoát",
-//       onConfirm: () => {
-//         console.log("Confirm");
-//         console.log(id);
-//         deleteUser(id);
-//       },
-//       onCancel: () => {
-//         console.log("Cancel");
-//       },
-//     };
-//     const {
-//       el,
-//       content,
-//       options: confirmedOptions,
-//     } = bs5dialog.confirm("Bạn có chắc chắn muốn xoá?", options);
-//   });
-// });
-
-// document.querySelectorAll(".ward-delete-btn").forEach((btnConfirm) => {
-//   btnConfirm.addEventListener("click", (e) => {
-//     let id = e.target.dataset.id;
-//     const options = {
-//       title: "Bạn có chắc chắn xoá phường này?",
-//       type: "danger",
-//       btnOkText: "Xoá",
-//       btnCancelText: "Thoát",
-//       onConfirm: () => {
-//         console.log("Confirm");
-//         console.log(id);
-//         deleteWard(id);
-//       },
-//       onCancel: () => {
-//         console.log("Cancel");
-//       },
-//     };
-//     const {
-//       el,
-//       content,
-//       options: confirmedOptions,
-//     } = bs5dialog.confirm("Bạn có chắc chắn xoá phường này?", options);
-//   });
-// });
-
-// document.querySelectorAll(".place-delete-btn").forEach((btnConfirm) => {
-//   btnConfirm.addEventListener("click", (e) => {
-//     let id = e.target.dataset.id;
-//     const options = {
-//       title: "Bạn có chắc chắn muốn xoá?",
-//       type: "danger",
-//       btnOkText: "Xoá",
-//       btnCancelText: "Thoát",
-//       onConfirm: () => {
-//         console.log("Confirm");
-//         console.log(id);
-//         deletePlace(id);
-//       },
-//       onCancel: () => {
-//         console.log("Cancel");
-//       },
-//     };
-//     const {
-//       el,
-//       content,
-//       options: confirmedOptions,
-//     } = bs5dialog.confirm("Bạn có chắc chắn muốn xoá?", options);
-//   });
-// });
-
-// function showEditWardModal(btn) {
-//   document.querySelector("#idWard").value = btn.dataset.id;
-//   document.querySelector("#wardNameEdit").value = btn.dataset.wardName;
-//   document.querySelector("#districtNameEdit").value = btn.dataset.districtName;
-//   document.querySelector("#zipCodeEdit").value = btn.dataset.zipCode;
-//   document.querySelector("#populationEdit").value = btn.dataset.population;
-// }
-
-// function showEditPlaceModal(btn) {
-//   document.querySelector("#idPlace").value = btn.dataset.id;
-//   document.querySelector("#diaChiEdit").value = btn.dataset.diaChi;
-//   document.querySelector("#khuVucEdit").value = btn.dataset.khuVuc;
-//   document.querySelector("#loaiVTEdit").value = btn.dataset.loaiVt;
-//   document.querySelector("#hinhThucEdit").value = btn.dataset.hinhThuc;
-//   document.querySelector("#quyHoachEdit").checked = btn.dataset.quyHoach == "ĐÃ QUY HOẠCH" ? true : false;
-// }
-
-// function showEditUserModal(btn) {
-//   document.querySelector("#id").value = btn.dataset.id;
-//   document.querySelector("#usernameEdit").value = btn.dataset.username;
-//   document.querySelector("#firstNameEdit").value = btn.dataset.firstName;
-//   document.querySelector("#lastNameEdit").value = btn.dataset.lastName;
-//   document.querySelector("#mobileEdit").value = btn.dataset.mobile;
-//   document.querySelector("#isAdminEdit").checked = btn.dataset.isAdmin == "true" ? true : false;
-// }
-
-// async function editWard(e) {
-//   e.preventDefault();
-
-//   const formData = new FormData(document.getElementById("editWardForm"));
-//   const data = Object.fromEntries(formData.entries());
-
-//   // data = {
-//   //   wardName: document.querySelector('#wardNameEdit').value,
-//   // }
-
-//   let res = await fetch('/danh-sach/wards', {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data),
-//   });
-
-//   location.reload();
-// }
-
-// async function editPlace(e) {
-//   e.preventDefault();
-
-//   const formData = new FormData(document.getElementById("editPlaceForm"));
-//   const data = Object.fromEntries(formData.entries());
-
-//   // data = {
-//   //   wardName: document.querySelector('#wardNameEdit').value,
-//   // }
-
-//   let res = await fetch('/danh-sach/places', {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data),
-//   });
-
-//   location.reload();
-// }
-
-// async function editUser(e) {
-//   e.preventDefault();
-
-//   const formData = new FormData(document.getElementById("editUserForm"));
-//   const data = Object.fromEntries(formData.entries());
-
-//   // data = {
-//   //   firstName: document.querySelector('#firstNameEdit').value,
-//   // }
-
-//   let res = await fetch('/users', {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data),
-//   });
-
-//   location.reload();
-// }
-
-// async function deleteUser(id) {
-//   let res = await fetch(`/users/${id}`, {
-//     method: "DELETE",
-//   });
-
-//   location.reload();
-// }
-
-// async function deleteWard(id) {
-//   let res = await fetch(`/danh-sach/wards/${id}`, {
-//     method: "DELETE",
-//   });
-
-//   location.reload();
-// }
-
-// async function deletePlace(id) {
-//   let res = await fetch(`/danh-sach/places/${id}`, {
-//     method: "DELETE",
-//   });
-
-//   location.reload();
-// }
-// ---------
-// let editPlaceEle = document.querySelector("#editPlaceModal");
-// if (editPlaceEle) {
-//   editPlaceEle.addEventListener("shown.bs.modal", () => {
-//     document.querySelector("#diaChiEdit").focus();
-//   });
-// }
-
 let editPlaceEle = document.querySelector("#editPlaceModal");
 
 if (editPlaceEle) {
@@ -243,12 +10,12 @@ if (editPlaceEle) {
 let editAdsEle = document.querySelector("#editAdsModal");
 if (editAdsEle) {
   editAdsEle.addEventListener("shown.bs.modal", () => {
+    initializeEditForm_ads();
     document.querySelector("#adNameEdit").focus();
   });
 }
 
-
-// Hàm khởi tạo giá trị và trạng thái của form khi mở modal
+// ---------------------disable nút gửi yêu cầu chỉnh sửa place
 function initializeEditForm() {
   let saveBtn = document.querySelector("#addPlaceForm button[type='submit']");
   saveBtn.disabled = true;
@@ -288,6 +55,41 @@ function checkFormChanges(currentValues) {
   saveBtn.disabled = !isFormChanged;
 }
 
+// ---------------------disable nút gửi yêu cầu chỉnh sửa ads
+function initializeEditForm_ads() {
+  let saveBtn = document.querySelector("#editAdsForm button[type='submit']");
+  saveBtn.disabled = true;
+
+  let currentValues = {
+    diaChi: document.querySelector("#adNameEdit").value,
+    khuVuc: document.querySelector("#adSizeEdit").value,
+    loaiVT: document.querySelector("#diaChiAdsEdit").value,
+    hinhThuc: document.querySelector("#adQuantityEdit").value,
+    quyHoach: document.querySelector("#expireDayEdit").value,
+  };
+
+  document.querySelectorAll("#editAdsForm input").forEach((input) => {
+    input.addEventListener("input", () => {
+      checkFormChanges_ads(currentValues);
+    });
+  });
+}
+
+function checkFormChanges_ads(currentValues) {
+  let saveBtn = document.querySelector("#editAdsForm button[type='submit']");
+  let isFormChanged = false;
+
+  if (currentValues.diaChi !== document.querySelector("#adNameEdit").value ||
+      currentValues.khuVuc !== document.querySelector("#adSizeEdit").value ||
+      currentValues.loaiVT !== document.querySelector("#diaChiAdsEdit").value ||
+      currentValues.hinhThuc !== document.querySelector("#adQuantityEdit").value ||
+      currentValues.quyHoach !== document.querySelector("#expireDayEdit").value) {
+    isFormChanged = true;
+  }
+
+  saveBtn.disabled = !isFormChanged;
+}
+// -------------------edit modal
 function showEditPlaceModal(btn) {
   document.querySelector("#idPlace").value = btn.dataset.id;
   document.querySelector("#diaChiEdit").value = btn.dataset.diaChi;
@@ -308,7 +110,7 @@ function showEditAdsModal(btn) {
   document.querySelector("#expireDayEdit").value = btn.dataset.expireDay;
 }
 
-
+// ---------------------open view modal, and close modal
 function openCustomDown(elm) {
   if (elm.parentElement.querySelector('.customDown').style.display === "none")
       elm.parentElement.querySelector('.customDown').style.display = "block";
@@ -391,7 +193,7 @@ function closeViewDetailAds(elm) {
   document.querySelector('.modal-backdrop.fade.show').remove();
 }
 
-// searching
+// ---------------------searching
 document.getElementById('phuongDropdown').addEventListener('change', function () {
   var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
   // Check if "All Phường" is selected
@@ -415,7 +217,7 @@ document.getElementById('phuongDropdown').addEventListener('change', function ()
   }
 });
 
-// sort places
+// ---------------------sort places
 document.addEventListener("DOMContentLoaded", function () {
     const tableBody = document.querySelector("#filteredContent tbody");
     const sortButtons = document.querySelectorAll("[data-sort]");
@@ -438,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-// check valid date in ads edit
+// ---------------------check valid date in ads edit
 function checkValidDate(elm, event) {
   event.preventDefault();
 
