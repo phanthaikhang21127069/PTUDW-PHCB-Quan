@@ -153,25 +153,48 @@ function openViewPlaceDetail(elm, diaChi, khuVuc, loaiVT, hinhThuc, quyHoach, hi
 
 }
 
-function openViewAdsDetail(elm, adName, diaChi, khuVuc, adSize, adQuantity, formattedExpireDay) {
-  console.log("openViewAdsDetail");
+function openViewRequestDetail(elm, congTy,
+  diaChiCongTy,
+  dienThoai,
+  email,
+  diaChi,
+  khuVuc,
+  loaiVT,
+  longitude,
+  latitude,
+  tenBangQuangCao,
+  loaiQC,
+  kichThuoc,
+  soLuong,
+  ngayBatDau,
+  ngayKetThuc,
+  tinhTrang) {
   let div = document.createElement('div');
   div.classList.add('modal-backdrop', 'fade', 'show');
   document.body.appendChild(div);
 
   let ancElm = elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal');
   ancElm.classList.add('show');
-  elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal.detail-ads').style.display = "block";
+  elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal.detail-request').style.display = "block";
+  ancElm.querySelector('#tinhTrang').textContent = tinhTrang;
+  ancElm.querySelector('.detail-card-part-1 :nth-child(1) .span-content').textContent = congTy;
+  ancElm.querySelector('.detail-card-part-1 :nth-child(2) .span-content').textContent = diaChiCongTy;
+  ancElm.querySelector('.detail-card-part-1 :nth-child(3) .span-content').textContent = dienThoai;
+  ancElm.querySelector('.detail-card-part-1 :nth-child(4) .span-content').textContent = email;
 
-  ancElm.querySelector('.detail-card :nth-child(1)').textContent = adName;
-  ancElm.querySelector('.detail-card :nth-child(2) .span-content').textContent = diaChi + ", " + khuVuc;
-  ancElm.querySelector('.detail-card :nth-child(4) .span-content').textContent = adSize;
-  ancElm.querySelector('.detail-card :nth-child(5) .span-content').textContent = adQuantity;
-  ancElm.querySelector('.detail-card :nth-child(6) .span-content').textContent = formattedExpireDay;
+  ancElm.querySelector('.detail-card-part-2 :nth-child(1) .span-content').textContent = diaChi;
+  ancElm.querySelector('.detail-card-part-2 :nth-child(2) .span-content').textContent = khuVuc;
+  ancElm.querySelector('.detail-card-part-2 :nth-child(3) .span-content').textContent = loaiVT;
+  ancElm.querySelector('.detail-card-part-2 :nth-child(4) .span-content').textContent = "(" + longitude + " , " + latitude + ")";
 
-  // ancElm.querySelector('.img-card :nth-child(1)').textContent = diaChi;
+  ancElm.querySelector('.detail-card-part-3 :nth-child(1) .span-content').textContent = loaiQC;
+  ancElm.querySelector('.detail-card-part-3 :nth-child(2) .span-content').textContent = tenBangQuangCao;
+  ancElm.querySelector('.detail-card-part-3 :nth-child(3) .span-content').textContent = kichThuoc;
+  ancElm.querySelector('.detail-card-part-3 :nth-child(4) .span-content').textContent = soLuong;
+  ancElm.querySelector('.detail-card-part-3 :nth-child(5) .span-content').textContent = ngayBatDau;
+  ancElm.querySelector('.detail-card-part-3 :nth-child(6) .span-content').textContent = ngayKetThuc;
 
-  if (hinhAnh) ancElm.querySelector('img').src = hinhAnh;
+  ancElm.querySelector('#img-title').textContent = diaChi;
 
 }
 
@@ -187,9 +210,9 @@ function closeViewDetailPlace(elm) {
   document.querySelector('.modal-backdrop.fade.show').remove();
 }
 
-function closeViewDetailAds(elm) {
-  elm.closest('.modal.detail-ads').classList.remove('show');
-  elm.closest('.modal.detail-ads').style.display = "none";
+function closeViewRequestDetail(elm) {
+  elm.closest('.modal.detail-request').classList.remove('show');
+  elm.closest('.modal.detail-request').style.display = "none";
   document.querySelector('.modal-backdrop.fade.show').remove();
 }
 

@@ -23,12 +23,12 @@ controller.addRequest = async (req, res) => {
   } = req.body;
   console.log(req.body);
 
-  const requestPlace = await models.Place.findOne({ 
+  const requestPlace = await models.Place.findOne({
     attributes: ["id"],
-    where: {diaChi: diaChiRequest} 
+    where: { diaChi: diaChiRequest }
   });
   let placeId = requestPlace.getDataValue("id");
-  
+
 
   try {
     await models.Requestadsquan.create({
@@ -36,7 +36,7 @@ controller.addRequest = async (req, res) => {
       diaChiCongTy,
       dienThoai,
       email,
-      placeId:placeId,
+      placeId: placeId,
       tenBangQuangCao,
       loaiQC,
       kichThuoc,
@@ -51,9 +51,8 @@ controller.addRequest = async (req, res) => {
     console.error(error);
   }
 };
-controller.show= async (req,res)=>{
+controller.show = async (req, res) => {
   res.locals.places = await models.Place.findAll({
-    
     attributes: [
       "id",
       "diaChi",
@@ -66,45 +65,45 @@ controller.show= async (req,res)=>{
       "latitude"
     ],
     order: [["diaChi", "ASC"]],
-    where:{
+    where: {
       '$Place.khuVuc$': {
         [Op.like]: '%Quận 1%',
       },
     }
   });
-    res.locals.requestadsquans = await models.Requestadsquan.findAll({
-      include: [{
-        model: models.Place,
-        attributes: [
-          "diaChi",
-          "khuVuc",
-          "loaiVT",
-          "longitude",
-          "latitude"
-        ],
-      }],
-        attributes: [
-            "id",
-            "congTy",
-            "diaChiCongTy",
-            "dienThoai",
-            "email",
-            "tenBangQuangCao",
-            "loaiQC",
-            "kichThuoc",
-            "soLuong",
-            "ngayBatDau",
-            "ngayKetThuc",
-            "tinhTrang"
-        ],
-        order: [["congTy", "ASC"]],
-        // where:{
-        //   khuVuc:"Phường 4, Quận 5"
-        // }
-      });
-    
-      res.locals.places = await models.Place.findAll({
-    
+  res.locals.requestadsquans = await models.Requestadsquan.findAll({
+    include: [{
+      model: models.Place,
+      attributes: [
+        "diaChi",
+        "khuVuc",
+        "loaiVT",
+        "longitude",
+        "latitude"
+      ],
+    }],
+    attributes: [
+      "id",
+      "congTy",
+      "diaChiCongTy",
+      "dienThoai",
+      "email",
+      "tenBangQuangCao",
+      "loaiQC",
+      "kichThuoc",
+      "soLuong",
+      "ngayBatDau",
+      "ngayKetThuc",
+      "tinhTrang"
+    ],
+    order: [["congTy", "ASC"]],
+    // where:{
+    //   khuVuc:"Phường 4, Quận 5"
+    // }
+  });
+
+  res.locals.places = await models.Place.findAll({
+
     attributes: [
       "id",
       "diaChi",
@@ -117,13 +116,13 @@ controller.show= async (req,res)=>{
       "latitude"
     ],
     order: [["diaChi", "ASC"]],
-    where:{
+    where: {
       '$Place.khuVuc$': {
         [Op.like]: '%Quận 1%',
       },
     }
   });
-      res.render("request");
+  res.render("request");
 };
 
 module.exports = controller;
