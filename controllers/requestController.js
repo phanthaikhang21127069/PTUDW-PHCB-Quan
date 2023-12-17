@@ -2,6 +2,22 @@ const controller = {};
 const { Op } = require('sequelize');
 const models = require("../models");
 
+
+controller.deleteRequest=async(req,res)=>{
+  console.log("ok");
+  let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
+  try {
+    await models.Requestadsquan.destroy(
+      {where: {id}}
+    );
+    res.send("Đã xoá yêu cầu!");
+  } catch (error) {
+    res.send("Không thể xoá yêu cầu!");
+    console.error(error);
+  }
+}
+
+
 controller.addRequest = async (req, res) => {
   if (!req.body || typeof req.body !== 'object') {
     res.send('Invalid request body');
@@ -101,9 +117,7 @@ controller.show = async (req, res) => {
     //   khuVuc:"Phường 4, Quận 5"
     // }
   });
-
   res.locals.places = await models.Place.findAll({
-
     attributes: [
       "id",
       "diaChi",
@@ -123,6 +137,51 @@ controller.show = async (req, res) => {
     }
   });
   res.render("request");
+};
+
+controller.editRequest = async (req, res) => {
+  let {id,
+    congTy,
+    diaChiCongTy,
+    dienThoai,
+    email,
+    diaChiRequest,
+    tenBangQuangCao,
+    loaiQC,
+    kichThuoc,
+    soLuong,
+    ngayBatDau,
+    ngayKetThuc,
+    tinhTrang} = req.body;
+  
+    const requestPlace = await models.Place.findOne({ 
+      attributes: ["id"],
+      where: {diaChi: diaChiRequest} 
+    });
+    let placeId = requestPlace.getDataValue("id");
+  try {
+    await models.Requestadsquan.update(
+      { 
+        congTy,
+        diaChiCongTy,
+        dienThoai,
+        email,
+        placeId:placeId,
+        tenBangQuangCao,
+        loaiQC,
+        kichThuoc,
+        soLuong,
+        ngayBatDau,
+        ngayKetThuc,
+        tinhTrang
+      },
+      {where: {id}}
+    );
+    res.send("Đã cập nhật yêu cầu!");
+  } catch (error) {
+    res.send("Không thể cập nhật yêu cầu!");
+    console.error(error);
+  }
 };
 
 module.exports = controller;

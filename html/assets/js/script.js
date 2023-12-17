@@ -55,6 +55,39 @@ function checkFormChanges(currentValues) {
   saveBtn.disabled = !isFormChanged;
 }
 
+document.querySelectorAll(".delete-request-btn").forEach((btnConfirm) => {
+  btnConfirm.addEventListener("click", (e) => {
+    let id = e.target.dataset.id;
+    const options = {
+      title: "Bạn có chắc chắn xoá yêu cầu này?",
+      type: "danger",
+      btnOkText: "Xoá",
+      btnCancelText: "Thoát",
+      onConfirm: () => {
+        console.log("Confirm");
+        console.log(id);
+        deleteRequest(id);
+      },
+      onCancel: () => {
+        console.log("Cancel");
+      },
+    };
+    const {
+      el,
+      content,
+      options: confirmedOptions,
+    } = bs5dialog.confirm("Bạn có chắc chắn xoá yêu cầu này?", options);
+  });
+});
+
+
+async function deleteRequest(id) {
+  let res = await fetch(`/yeu-cau/deleterequest/${id}`, {
+    method: "DELETE",
+  });
+  location.reload();
+}
+
 // ---------------------disable nút gửi yêu cầu chỉnh sửa ads
 function initializeEditForm_ads() {
   let saveBtn = document.querySelector("#editAdsForm button[type='submit']");
@@ -108,6 +141,44 @@ function showEditAdsModal(btn) {
   document.querySelector("#adSizeEdit").value = btn.dataset.adSize;
   document.querySelector("#adQuantityEdit").value = btn.dataset.adQuantity;
   document.querySelector("#expireDayEdit").value = btn.dataset.expireDay;
+}
+
+
+function showEditRequestModal(btn) {
+  document.querySelector("#idRequest").value = btn.dataset.id;
+  document.querySelector("#congTYEditRequest").value = btn.dataset.congTy;
+  document.querySelector("#diaChiCongTyEditRequest").value = btn.dataset.diaChiCongTy;
+  document.querySelector("#dienThoaiEditRequest").value = btn.dataset.dienThoai;
+  document.querySelector("#emailEditRequest").value = btn.dataset.email;
+  document.querySelector("#diaChiEditRequest").value = btn.dataset.diaChi;
+  
+  document.querySelector("#tenBangQuangCaoEditRequest").value = btn.dataset.tenBangQuangCao;
+  document.querySelector("#loaiQCEditRequest").value = btn.dataset.loaiQC;
+  document.querySelector("#kichThuocEditRequest").value = btn.dataset.kichThuoc;
+  document.querySelector("#soLuongEditRequest").value = btn.dataset.soLuong;
+  document.querySelector("#ngayBatDauEditRequest").value = btn.dataset.ngayBatDau;
+  document.querySelector("#ngayKetThucEditRequest").value = btn.dataset.ngayKetThuc;
+}
+
+// submit form to server
+async function editRequest(e) {
+  
+  e.preventDefault();
+
+  const formData = new FormData(document.getElementById("editRequestForm"));
+  const data = Object.fromEntries(formData.entries());
+  
+
+  let res = await fetch(`/yeu-cau/editrequest`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+    
+  });
+
+  location.reload();
 }
 
 // ---------------------open view modal, and close modal
