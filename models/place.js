@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
         Place.hasMany(models.Placedetail, {
             foreignKey: 'placeId'
         });
+        Place.hasMany(models.Requestadsquan, {
+            foreignKey: 'placeId'
+        });
         // Tag.belongsToMany(models.Blog, {
         //   through: "BlogTag",
         //   foreignKey: "tagId",

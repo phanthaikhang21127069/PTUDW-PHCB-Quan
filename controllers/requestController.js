@@ -1,54 +1,129 @@
 const controller = {};
+const { Op } = require('sequelize');
 const models = require("../models");
 
-controller.show = async (req, res) => {
-  res.render("request");
+controller.addRequest = async (req, res) => {
+  if (!req.body || typeof req.body !== 'object') {
+    res.send('Invalid request body');
+    return;
+  }
+
+  const {
+    congTy,
+    diaChiCongTy,
+    dienThoai,
+    email,
+    diaChiRequest,
+    tenBangQuangCao,
+    loaiQC,
+    kichThuoc,
+    soLuong,
+    ngayBatDau,
+    ngayKetThuc
+  } = req.body;
+  console.log(req.body);
+
+  const requestPlace = await models.Place.findOne({ 
+    attributes: ["id"],
+    where: {diaChi: diaChiRequest} 
+  });
+  let placeId = requestPlace.getDataValue("id");
+  
+
+  try {
+    await models.Requestadsquan.create({
+      congTy,
+      diaChiCongTy,
+      dienThoai,
+      email,
+      placeId:placeId,
+      tenBangQuangCao,
+      loaiQC,
+      kichThuoc,
+      soLuong,
+      ngayBatDau,
+      ngayKetThuc,
+      tinhTrang: 'Chờ phê duyệt'
+    });
+    res.redirect('/yeu-cau');
+  } catch (error) {
+    res.send('Không thể thêm');
+    console.error(error);
+  }
 };
-
-// controller.addWard = async (req, res) => {
-//   let {wardName, districtName, zipCode, population} = req.body;
-//   try {
-//     await models.Ward.create({
-//       wardName, 
-//       districtName, 
-//       zipCode, 
-//       population
-//     });
-//     res.redirect("/danh-sach");
-//   } catch (error) {
-//     res.send("Can't add ward");
-//     console.error(error);
-//   }
-//   // res.send(req.body);
-//   // console.log(req);
-//   // res.redirect("/phuong-quan");
-// }
-
-// controller.editWard = async (req, res) => {
-//   let {id, wardName, districtName, zipCode, population} = req.body;
-//   try {
-//     await models.Ward.update(
-//       {wardName, districtName, zipCode, population},
-//       {where: {id}}
-//     );
-//     res.send("Ward updated!");
-//   } catch (error) {
-//     res.send("Can't update ward!");
-//     console.error(error);
-//   }
-// }
-
-// controller.deleteWard = async (req, res) => {
-//   let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
-//   try {
-//     await models.Ward.destroy(
-//       {where: {id}}
-//     );
-//     res.send("Ward deleted!");
-//   } catch (error) {
-//     res.send("Can't delete ward!");
-//     console.error(error);
-//   }
-// }
+controller.show= async (req,res)=>{
+  res.locals.places = await models.Place.findAll({
+    
+    attributes: [
+      "id",
+      "diaChi",
+      "khuVuc",
+      "loaiVT",
+      "hinhThuc",
+      "quyHoach",
+      "hinhAnh",
+      "longitude",
+      "latitude"
+    ],
+    order: [["diaChi", "ASC"]],
+    where:{
+      '$Place.khuVuc$': {
+        [Op.like]: '%Quận 1%',
+      },
+    }
+  });
+    res.locals.requestadsquans = await models.Requestadsquan.findAll({
+      include: [{
+        model: models.Place,
+        attributes: [
+          "diaChi",
+          "khuVuc",
+          "loaiVT",
+          "longitude",
+          "latitude"
+        ],
+      }],
+        attributes: [
+            "id",
+            "congTy",
+            "diaChiCongTy",
+            "dienThoai",
+            "email",
+            "tenBangQuangCao",
+            "loaiQC",
+            "kichThuoc",
+            "soLuong",
+            "ngayBatDau",
+            "ngayKetThuc",
+            "tinhTrang"
+        ],
+        order: [["congTy", "ASC"]],
+        // where:{
+        //   khuVuc:"Phường 4, Quận 5"
+        // }
+      });
+    
+      res.locals.places = await models.Place.findAll({
+    
+    attributes: [
+      "id",
+      "diaChi",
+      "khuVuc",
+      "loaiVT",
+      "hinhThuc",
+      "quyHoach",
+      "hinhAnh",
+      "longitude",
+      "latitude"
+    ],
+    order: [["diaChi", "ASC"]],
+    where:{
+      '$Place.khuVuc$': {
+        [Op.like]: '%Quận 1%',
+      },
+    }
+  });
+      res.render("request");
+};
 
 module.exports = controller;
