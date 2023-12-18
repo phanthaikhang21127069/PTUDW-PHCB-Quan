@@ -136,6 +136,14 @@ controller.show = async (req, res) => {
       },
     }
   });
+
+  res.locals.adstypes = await models.Adstype.findAll({
+    attributes: [
+      "id",
+      "name",
+    ],
+    order: [["createdAt", "DESC"]],
+  });
   res.render("request");
 };
 

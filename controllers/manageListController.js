@@ -226,7 +226,7 @@ controller.addRequest = async (req, res) => {
       ngayKetThuc,
       tinhTrang: 'Chờ phê duyệt'
     });
-    res.redirect('/yeu-cau');
+    res.redirect('/danh-sach');
   } catch (error) {
     res.send('Không thể thêm');
     console.error(error);

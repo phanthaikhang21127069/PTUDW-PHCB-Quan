@@ -158,6 +158,7 @@ function showEditRequestModal(btn) {
   document.querySelector("#soLuongEditRequest").value = btn.dataset.soLuong;
   document.querySelector("#ngayBatDauEditRequest").value = btn.dataset.ngayBatDau;
   document.querySelector("#ngayKetThucEditRequest").value = btn.dataset.ngayKetThuc;
+  console.log(btn.dataset.loaiQC);
 }
 
 // submit form to server
