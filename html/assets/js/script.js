@@ -224,6 +224,24 @@ function openViewPlaceDetail(elm, diaChi, khuVuc, loaiVT, hinhThuc, quyHoach, hi
 
 }
 
+function openViewAdsDetail(elm, adName, diaChi, khuVuc, adSize, adQuantity, expireDay, imagePath) {
+  let div = document.createElement('div');
+  div.classList.add('modal-backdrop', 'fade', 'show');
+  document.body.appendChild(div);
+
+  let ancElm = elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal');
+  ancElm.classList.add('show');
+  elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal.detail-ads').style.display = "block";
+
+  ancElm.querySelector('.detail-card :nth-child(1) span').textContent = adName;
+  ancElm.querySelector('.detail-card :nth-child(2) .span-content').textContent = diaChi + ", " + khuVuc;
+  ancElm.querySelector('.detail-card :nth-child(3) .span-content').textContent = adSize;
+  ancElm.querySelector('.detail-card :nth-child(4) .span-content').textContent = adQuantity;
+  ancElm.querySelector('.detail-card :nth-child(5) .span-content').textContent = expireDay;
+
+  if (imagePath) ancElm.querySelector('img').src = imagePath;
+}
+
 function openViewRequestDetail(elm, congTy,
   diaChiCongTy,
   dienThoai,
@@ -286,6 +304,13 @@ function closeViewRequestDetail(elm) {
   elm.closest('.modal.detail-request').style.display = "none";
   document.querySelector('.modal-backdrop.fade.show').remove();
 }
+
+function closeViewAdsDetail(elm) {
+  elm.closest('.modal.detail-ads').classList.remove('show');
+  elm.closest('.modal.detail-ads').style.display = "none";
+  document.querySelector('.modal-backdrop.fade.show').remove();
+}
+
 
 // ---------------------searching
 document.getElementById('phuongDropdown').addEventListener('change', function () {

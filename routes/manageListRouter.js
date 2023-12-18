@@ -11,4 +11,8 @@ router.post("/editplace", controller.requestEditPlace);
 router.post("/editads", controller.requestEditAds);
 
 
+// router.post("/addrequest", controller.addRequest);
+// router.put("/editrequest", controller.editRequest);
+// router.delete("/deleterequest/:id", controller.deleteRequest);
+
 module.exports = router;
