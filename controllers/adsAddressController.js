@@ -18,6 +18,14 @@ controller.show = async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
 
+  res.locals.adstypes = await models.Adstype.findAll({
+    attributes: [
+      "id",
+      "name",
+    ],
+    order: [["createdAt", "DESC"]],
+  });
+
   res.locals.places = await models.Place.findAll({
     attributes: [
       "id",

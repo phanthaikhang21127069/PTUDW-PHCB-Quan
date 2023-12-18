@@ -32,8 +32,11 @@
             </div>
             <div class="col mb-3">
               <label for="hinhThucEdit" class="form-label">Hình Thức</label>
-              <input type="text" id="hinhThucEdit" name="hinhThuc" class="form-control"
-                placeholder="Quảng cáo thương mại" />
+              <select name="hinhThuc" id="hinhThucEdit" class="form-control select-form-control">
+                                {{#each adstypes}}
+                                <option value="{{name}}" selected="selected">{{name}}</option>
+                                {{/each}}
+                            </select>
             </div>
           </div>
           <div class="row g-2 mb-3">
