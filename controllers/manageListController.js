@@ -62,6 +62,22 @@ controller.show = async (req, res) => {
     // limit: 10,
   });
 
+  res.locals.adstypes = await models.Adstype.findAll({
+    attributes: [
+      "id",
+      "name",
+    ],
+    order: [["createdAt", "DESC"]],
+  });
+
+  res.locals.reporttypes = await models.Reporttype.findAll({
+    attributes: [
+      "id",
+      "name",
+    ],
+    order: [["createdAt", "DESC"]],
+  });
+
   res.render("manage-list", {
     placedetails: res.locals.placedetails.map(detail => ({
       ...detail.toJSON(),
