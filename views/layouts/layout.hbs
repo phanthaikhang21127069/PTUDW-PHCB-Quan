@@ -22,6 +22,8 @@
   <link rel="stylesheet" href="/assets/css/style.css" rel="stylesheet" />
   <link id="pagestyle" href="/assets/css/material-dashboard.css" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/form_edit.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 
 </head>
 
@@ -34,6 +36,12 @@
   <script src="/assets/js/perfect-scrollbar.min.js"></script>
   <script src="/assets/js/smooth-scrollbar.min.js"></script>
   <script src="/assets/js/script.js"></script>
+  <script>
+  flatpickr("#expireDayEdit", {
+    dateFormat: "Y-m-d", // Định dạng ngày theo ý muốn
+    // Các tùy chọn khác nếu bạn muốn tuỳ chỉnh thêm
+  });
+</script>
 <script>
   document.querySelector('.toast-btn').addEventListener('click', function(event) {
     if (document.querySelector('#lockIcon').style.display === 'inline') {
@@ -120,6 +128,10 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
+
+  
+<!-- Add this before the closing body tag -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
 
 </html>

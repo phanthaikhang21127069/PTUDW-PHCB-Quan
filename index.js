@@ -4,6 +4,11 @@ const port = 2220;
 const expressHbs = require('express-handlebars');
 const Handlebars = require('handlebars');
 
+Handlebars.registerHelper('getUniqueValues', function (array, property, options) {
+    const uniqueValues = [...new Set(array.map(item => item[property]))];
+    return uniqueValues.map(value => options.fn(value));
+  });
+
 Handlebars.registerHelper('if_eq', function (a, b, options) {
     if (a == b) {
         return options.fn(this);
@@ -14,10 +19,11 @@ Handlebars.registerHelper('if_eq', function (a, b, options) {
 
 Handlebars.registerHelper('unlessCond', function (v1, v2, options) {
     if (v1 !== v2) {
-      return options.fn(this);
+        return options.fn(this);
     }
     return options.inverse(this);
-  });
+});
+
 
 app.use(express.static(__dirname + '/html'));
 
@@ -28,7 +34,7 @@ app.engine('hbs', expressHbs.engine({
     extname: 'hbs',
     runtimeOptions: {
         allowProtoPropertiesByDefault: true,
-    }, 
+    },
     helpers: {
         showDate: (date) => {
             return date.toLocaleDateString('en-US', {
@@ -43,7 +49,7 @@ app.engine('hbs', expressHbs.engine({
 app.set('view engine', 'hbs');
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => res.redirect('/danh-sach'));
 app.use('/danh-sach', require('./routes/manageListRouter'));

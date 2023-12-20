@@ -135,3 +135,20 @@
 .add-modal .modal-lg{
     max-width: auto;
 }
+
+.dropdown-menu {
+    width: 200px; 
+  }
+
+.form-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    height: 110px;
+  }
+
+.form-select option:checked {
+    background-color: #007bff; 
+    color: #fff; 
+  }

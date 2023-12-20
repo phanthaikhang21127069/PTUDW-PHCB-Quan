@@ -111,9 +111,9 @@
             <div class="col mb-3">
               <label for="diaChiAdsEdit" class="form-label">Địa chỉ</label>
               <select id="diaChiAdsEdit" name="diaChiAds" class="form-control select-form-control">
-                {{#each places}}
-                <option value="{{diaChi}}" selected="selected">{{diaChi}}</option>
-                {{/each}}
+                {{#getUniqueValues places 'diaChi'}}
+    <option value="{{this}}" selected="selected">{{this}}</option>
+  {{/getUniqueValues}}
               </select>
             </div>
           </div>
@@ -391,7 +391,7 @@
                       </div>
                     </td>
                     <td class="align-middle text-center">
-                      <i class="fa {{#if_eq quyHoach " ĐÃ QUY HOẠCH"}}fa-check-circle text-success {{else}}
+                      <i class="fa {{#if_eq quyHoach "ĐÃ QUY HOẠCH"}}fa-check-circle text-success {{else}}
                         fa-times-circle text-danger {{/if_eq}}" aria-hidden="true"></i>
                     </td>
                     <td class="align-middle text-center">
@@ -967,9 +967,9 @@
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên bảng</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Địa chỉ</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
                       Kích thước</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Số
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">Số
                       lượng</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">Ngày hết
                       hạn</th>
@@ -999,9 +999,7 @@
                       <span class="text-xs text-secondary">{{adSize}}</span>
                     </td>
                     <td class="align-middle text-center">
-                      <div class="d-flex align-items-center">
-                        <span class="me-2 text-xs text-secondary">{{adQuantity}}</span>
-                      </div>
+                        <span class="text-xs text-secondary">{{adQuantity}}</span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-xs text-secondary">{{formattedExpireDay}}</span>
@@ -1080,9 +1078,9 @@
                       <div class="input">
                         <label class="form-label">Địa chỉ điểm đặt</label>
                         <select id="diaChiEditRequest" name="diaChiRequest" class="form-control select-form-control">
-                          {{#each places}}
-                          <option value="{{diaChi}}" selected="selected">{{diaChi}}</option>
-                          {{/each}}
+                         {{#getUniqueValues places 'diaChi'}}
+    <option value="{{this}}" selected="selected">{{this}}</option>
+  {{/getUniqueValues}}
                         </select>
                       </div>
                     </div>
@@ -1334,10 +1332,9 @@
                               <label class="input-lable">Địa chỉ điểm đặt</label>
                               <select id="diaChiEditRequest" name="diaChiRequest"
                                 class="form-control select-form-control">
-                                {{#each places}}
-                                <option value="{{diaChi}}" selected="selected">
-                                  {{diaChi}}</option>
-                                {{/each}}
+                                {{#getUniqueValues places 'diaChi'}}
+    <option value="{{this}}" selected="selected">{{this}}</option>
+  {{/getUniqueValues}}
                               </select>
                             </div>
                           </div>
@@ -1640,14 +1637,14 @@
                       </div>
                     </td>
                     <td>
-                      <p class="text-sm font-weight-bold mb-0">{{congTy}}</p>
+                      <span class="text-xs">{{congTy}}</span>
                     </td>
                     <td>
-                      <span class="text-xs font-weight-bold">{{loaiQC}}</span>
+                      <span class="text-xs">{{loaiQC}}</span>
                     </td>
                     <td class="align-middle text-center">
                       <div class="d-flex align-items-center">
-                        <span class="me-2 text-warning text-xs font-weight-bold">{{tinhTrang}}</span>
+                        <span class="me-2 text-warning text-xs">{{tinhTrang}}</span>
                       </div>
                     </td>
                     <td class="align-middle" style="white-space : normal; ">

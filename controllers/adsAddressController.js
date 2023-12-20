@@ -43,6 +43,13 @@ controller.show = async (req, res) => {
     },
     order: [["createdAt", "DESC"]],
   });
+  // const distinctKhuVuc = await models.Place.findAll({
+  //   attributes: [
+  //     [models.sequelize.fn('DISTINCT', models.sequelize.col('khuVuc')), 'khuVuc'],
+  //   ],
+  // });
+
+  // res.locals.places = distinctKhuVuc.map(({ khuVuc }) => ({ khuVuc })); // Map to the required format
   res.render("adsAddress");
 };
 

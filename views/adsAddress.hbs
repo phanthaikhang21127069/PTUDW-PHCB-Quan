@@ -33,10 +33,10 @@
             <div class="col mb-3">
               <label for="hinhThucEdit" class="form-label">Hình Thức</label>
               <select name="hinhThuc" id="hinhThucEdit" class="form-control select-form-control">
-                                {{#each adstypes}}
-                                <option value="{{name}}" selected="selected">{{name}}</option>
-                                {{/each}}
-                            </select>
+                {{#each adstypes}}
+                <option value="{{name}}" selected="selected">{{name}}</option>
+                {{/each}}
+              </select>
             </div>
           </div>
           <div class="row g-2 mb-3">
@@ -108,9 +108,9 @@
             <div class="dropdown-menu dropdown-menu-end px-1 py-1" aria-labelledby="dropdownMenuButton">
               <select class="form-control form-select" id="phuongDropdown" multiple>
                 <option value="all">All Phường</option>
-                {{#each places}}
-                <option value="{{khuVuc}}">{{khuVuc}}</option>
-                {{/each}}
+                {{#getUniqueValues places 'khuVuc'}}
+                <option value="{{this}}">{{this}}</option>
+                {{/getUniqueValues}}
               </select>
             </div>
           </li>
@@ -145,29 +145,29 @@
                     <ul class="dropdown-menu  dropdown-menu-end px-1 py-1" aria-labelledby="dropdownMenuButton">
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast" data-sort="diaChi"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Địa chỉ
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="diaChi"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Địa chỉ
                           </button>
                         </a>
                       </li>
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast" data-sort="khuVuc"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Khu vực
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="khuVuc"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Khu vực
                           </button>
                         </a>
                       </li>
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast" data-sort="loaiVT"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Loại Vị Trí
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="loaiVT"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Loại Vị Trí
                           </button>
                         </a>
                       </li>
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"data-sort="hinhThuc"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Hình thức 
+                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"
+                            data-sort="hinhThuc"><i class="fa-solid fa-arrow-up-a-z pe-1"></i>Hình thức
                           </button>
                         </a>
                       </li>
@@ -184,10 +184,13 @@
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Địa chỉ</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Khu vực</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Loại vị trí</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Loại vị trí
+                    </th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hình thức</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">Quyhoạch</th>
-                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">Tuỳ chọn</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">Quyhoạch
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">Tuỳ chọn
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -209,7 +212,7 @@
                     <td data-sort="khuVuc" style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
                       <span class="text-xs text-secondary mb-0">{{khuVuc}}</span>
                     </td>
-                    <td data-sort="loaiVT"  style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
+                    <td data-sort="loaiVT" style="max-width: 160px; overflow: hidden; text-overflow: ellipsis;">
                       <span class="text-xs text-secondary">{{loaiVT}}</span>
                     </td>
                     <td data-sort="hinhThuc" class="align-middle text-center">
