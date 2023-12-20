@@ -130,6 +130,7 @@ function showEditPlaceModal(btn) {
   document.querySelector("#loaiVTEdit").value = btn.dataset.loaiVt;
   document.querySelector("#hinhThucEdit").value = btn.dataset.hinhThuc;
   document.querySelector("#quyHoachEdit").checked = btn.dataset.quyHoach == "ĐÃ QUY HOẠCH" ? true : false;
+  document.querySelector("#liDoChinhSua").value = '';
   initializeEditForm();
 
 }
@@ -141,6 +142,8 @@ function showEditAdsModal(btn) {
   document.querySelector("#adSizeEdit").value = btn.dataset.adSize;
   document.querySelector("#adQuantityEdit").value = btn.dataset.adQuantity;
   document.querySelector("#expireDayEdit").value = btn.dataset.expireDay;
+  document.querySelector("#liDoChinhSua").value = '';
+
 }
 
 
@@ -338,27 +341,27 @@ document.getElementById('phuongDropdown').addEventListener('change', function ()
 });
 
 // ---------------------sort places
-document.addEventListener("DOMContentLoaded", function () {
-    const tableBody = document.querySelector("#filteredContent tbody");
-    const sortButtons = document.querySelectorAll("[data-sort]");
+// document.addEventListener("DOMContentLoaded", function () {
+//     const tableBody = document.querySelector("#filteredContent tbody");
+//     const sortButtons = document.querySelectorAll("[data-sort]");
 
-    sortButtons.forEach((button) => {
-      button.addEventListener("click", function () {
-        const sortBy = this.getAttribute("data-sort");
+//     sortButtons.forEach((button) => {
+//       button.addEventListener("click", function () {
+//         const sortBy = this.getAttribute("data-sort");
 
-        const rows = Array.from(tableBody.querySelectorAll("tr"));
-        const sortedRows = rows.sort((a, b) => {
-          const valueA = a.querySelector(`[data-sort="${sortBy}"]`).textContent.trim().toLowerCase();
-          const valueB = b.querySelector(`[data-sort="${sortBy}"]`).textContent.trim().toLowerCase();
-          return valueA.localeCompare(valueB);
-        });
-        tableBody.innerHTML = "";
-        sortedRows.forEach((row) => {
-          tableBody.appendChild(row);
-        });
-      });
-    });
-  });
+//         const rows = Array.from(tableBody.querySelectorAll("tr"));
+//         const sortedRows = rows.sort((a, b) => {
+//           const valueA = a.querySelector(`[data-sort="${sortBy}"]`).textContent.trim().toLowerCase();
+//           const valueB = b.querySelector(`[data-sort="${sortBy}"]`).textContent.trim().toLowerCase();
+//           return valueA.localeCompare(valueB);
+//         });
+//         tableBody.innerHTML = "";
+//         sortedRows.forEach((row) => {
+//           tableBody.appendChild(row);
+//         });
+//       });
+//     });
+//   });
 
 // ---------------------check valid date in ads edit
 function checkValidDate(elm, event) {
@@ -373,3 +376,72 @@ function checkValidDate(elm, event) {
     elm.setCustomValidity('');
   }
 }
+
+
+
+// ---------------sort
+// function sortTable(column) {
+//   console.log('Sorting by column:', column);
+
+//   const table = document.querySelector('.table tbody');
+//   const rows = Array.from(table.getElementsByTagName('tr'));
+
+//   const sortedRows = rows.sort((a, b) => {
+//     const aValue = a.getAttribute(`data-${column}`);
+//     const bValue = b.getAttribute(`data-${column}`);
+//     return aValue.localeCompare(bValue);
+//   });
+
+//   console.log('Sorted rows:', sortedRows);
+
+//   // Clear the existing rows in the table
+//   while (table.firstChild) {
+//     table.removeChild(table.firstChild);
+//   }
+
+//   // Append the sorted rows back to the table
+//   sortedRows.forEach(row => {
+//     table.appendChild(row.cloneNode(true)); // Clone the node to avoid moving the original nodes
+//   });
+// }
+
+// function sortTableManage(tableId, column) {
+//   console.log(`Sorting ${tableId} by column ${column}`);
+
+//   const table = document.getElementById(tableId);
+//   const rows = Array.from(table.getElementsByTagName('tr'));
+
+//   const sortedRows = rows.sort((a, b) => {
+//     const aValue = a.getAttribute(`data-${column}`);
+//     const bValue = b.getAttribute(`data-${column}`);
+//     return aValue.localeCompare(bValue);
+//   });
+
+//   // Clear the existing rows in the table
+//   while (table.firstChild) {
+//     table.removeChild(table.firstChild);
+//   }
+
+//   // Append the sorted rows back to the table
+//   sortedRows.forEach(row => {
+//     table.appendChild(row.cloneNode(true)); // Clone the node to avoid moving the original nodes
+//   });
+// }
+
+
+function sortTable(column, tableId) {
+    console.log('Sorting by column:', column);
+
+    const table = document.querySelector(`#${tableId} tbody`);
+    const rows = Array.from(table.getElementsByTagName('tr'));
+
+    rows.sort((a, b) => {
+      const aValue = a.getAttribute(`data-${column}`);
+      const bValue = b.getAttribute(`data-${column}`);
+      return aValue.localeCompare(bValue);
+    });
+
+    rows.forEach(row => {
+      table.appendChild(row);
+    });
+  }
