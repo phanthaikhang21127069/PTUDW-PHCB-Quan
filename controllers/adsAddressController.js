@@ -1,6 +1,7 @@
 const controller = {};
 const models = require("../models");
 const { Op } = require('sequelize');
+const moment = require('moment');
 
 controller.show = async (req, res) => {
   res.locals.wards = await models.Ward.findAll({
@@ -43,6 +44,24 @@ controller.show = async (req, res) => {
     },
     order: [["createdAt", "DESC"]],
   });
+
+  res.locals.requesteditplaces = await models.Requesteditplace.findAll({
+    attributes: [
+      "id",
+      "diaChi",
+      "khuVuc",
+      "loaiVT",
+      "hinhThuc",
+      "quyHoach",
+      "hinhAnh",
+    ],
+    where: {
+      khuVuc: {
+        [Op.like]: '%Quận 1%', // Use the like operator to check for 'Quận 5' in khuVuc
+      },
+    },
+    order: [["createdAt", "DESC"]],
+  });
   // const distinctKhuVuc = await models.Place.findAll({
   //   attributes: [
   //     [models.sequelize.fn('DISTINCT', models.sequelize.col('khuVuc')), 'khuVuc'],
@@ -55,9 +74,11 @@ controller.show = async (req, res) => {
 
 
 controller.requestEditPlace = async (req, res) => {
-  let {diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua} = req.body;
+  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua} = req.body;
+
   try {
     await models.Requesteditplace.create({
+      placeId: id,
       diaChi, 
       khuVuc, 
       loaiVT, 
@@ -71,50 +92,40 @@ controller.requestEditPlace = async (req, res) => {
     console.error(error);
   }
 }
-// controller.addWard = async (req, res) => {
-//   let {wardName, districtName, zipCode, population} = req.body;
+
+controller.continueEditRequest = async (req, res) => {
+  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach} = req.body;
+  try {
+    await models.Requesteditplace.update(
+      { 
+        diaChi, 
+        khuVuc, 
+        loaiVT, 
+        hinhThuc, 
+        quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH"
+      },
+      {where: {id}}
+    );
+    res.send("Đã cập nhật điểm đặt!");
+  } catch (error) {
+    res.send("Không thể cập nhật điểm đặt!");
+    console.error(error);
+  }
+}
+
+// controller.checkDiaChiExistsInRequesteditplace = async (diaChi) => {
 //   try {
-//     await models.Ward.create({
-//       wardName, 
-//       districtName, 
-//       zipCode, 
-//       population
+//     const count = await models.Requesteditplace.count({
+//       where: {
+//         diaChi: diaChi
+//       }
 //     });
-//     res.redirect("/danh-sach");
-//   } catch (error) {
-//     res.send("Can't add ward");
-//     console.error(error);
-//   }
-//   // res.send(req.body);
-//   // console.log(req);
-//   // res.redirect("/phuong-quan");
-// }
 
-// controller.editWard = async (req, res) => {
-//   let {id, wardName, districtName, zipCode, population} = req.body;
-//   try {
-//     await models.Ward.update(
-//       {wardName, districtName, zipCode, population},
-//       {where: {id}}
-//     );
-//     res.send("Ward updated!");
+//     return count > 0; // Returns true if diaChi exists, false otherwise
 //   } catch (error) {
-//     res.send("Can't update ward!");
 //     console.error(error);
+//     return false; // Assume an error means diaChi doesn't exist (handle errors as needed)
 //   }
-// }
-
-// controller.deleteWard = async (req, res) => {
-//   let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
-//   try {
-//     await models.Ward.destroy(
-//       {where: {id}}
-//     );
-//     res.send("Ward deleted!");
-//   } catch (error) {
-//     res.send("Can't delete ward!");
-//     console.error(error);
-//   }
-// }
+// };
 
 module.exports = controller;

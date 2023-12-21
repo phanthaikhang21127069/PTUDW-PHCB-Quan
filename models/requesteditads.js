@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     Requesteditads.init(
         {
             placeId: DataTypes.INTEGER,
+            originId: DataTypes.INTEGER,
             adName: DataTypes.STRING,
             adSize: DataTypes.STRING,
             adQuantity: DataTypes.INTEGER,

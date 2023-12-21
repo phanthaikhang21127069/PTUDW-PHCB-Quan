@@ -1,7 +1,7 @@
 {{!-- modal request_edit_place --}}
 <div class="modal fade" id="addPlaceModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form action="/danh-sach/editplace" id="addPlaceForm" method="POST" onsubmit="editPlace(event)">
+    <form action="/danh-sach/editplace" id="addPlaceForm" method="POST">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
@@ -523,6 +523,26 @@
                       </li>
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;"
+                          onclick="sortTable('diaChi', 'tableAds')">
+                          <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
+                            data-target="infoToast"
+                            style="font-size: 11px; height: 30px;margin-bottom:0px; color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)"><i
+                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Địa chỉ
+                          </button>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item text-center" href="javascript:;"
+                          onclick="sortTable('adSize', 'tableAds')">
+                          <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
+                            data-target="infoToast"
+                            style="font-size: 11px; height: 30px; margin-bottom: 0; color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)">
+                            <i class="fa-solid fa-arrow-up-a-z pe-1"></i>Kích thước
+                          </button>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item text-center" href="javascript:;"
                           onclick="sortTable('adQuantity', 'tableAds')">
                           <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
                             data-target="infoToast"
@@ -530,26 +550,19 @@
                           </button>
                         </a>
                       </li>
-                      {{!-- <li>
+                      
+                      
+
+                      <li>
                         <a class="dropdown-item text-center" href="javascript:;"
-                          onclick="sortTable('formattedExpireDay', 'tablePlace')">
-                          <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
-                            data-target="infoToast"
-                            style="font-size: 11px; height: 30px; margin-bottom: 0; color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)">
-                            <i class="fa-solid fa-arrow-up-a-z pe-1"></i>Ngày
-                          </button>
-                        </a>
-                      </li> --}}
-                      {{!-- <li>
-                        <a class="dropdown-item text-center" href="javascript:;"
-                          onclick="sortTable('hinhThuc', 'tablePlace')">
+                          onclick="sortTable('formattedExpireDay', 'tableAds')">
                           <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
                             data-target="infoToast"
                             style="font-size: 11px; height: 30px;margin-bottom:0px; color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Hình thức
+                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Ngày hết hạn
                           </button>
                         </a>
-                      </li> --}}
+                      </li>
                     </ul>
                   </li>
                 </div>
@@ -638,7 +651,7 @@
                 </thead>
                 <tbody>
                   {{#each placedetails}}
-                  <tr data-adName="{{adName}}" data-adQuantity="{{adQuantity}}" data-formattedExpireDay="{{formattedExpireDay}}">
+                  <tr data-adName="{{adName}}" data-adQuantity="{{adQuantity}}" data-formattedExpireDay="{{formattedExpireDay}}" data-adSize="{{adSize}}" data-diaChi="{{Place.diaChi}}">
                     <td style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;"
                       onclick="openViewAdsDetail(this, '{{adName}}', '{{Place.diaChi}}', '{{Place.khuVuc}}', '{{adSize}}', '{{adQuantity}}', '{{formattedExpireDay}}')">
                       <div class="d-flex px-2">

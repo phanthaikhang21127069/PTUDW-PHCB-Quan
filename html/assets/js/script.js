@@ -135,6 +135,18 @@ function showEditPlaceModal(btn) {
 
 }
 
+
+function showContinueEditPlaceModal(btn) {
+  document.querySelector("#idPlaceRequest").value = btn.dataset.id;
+  document.querySelector("#diaChiEditContinue").value = btn.dataset.diaChi;
+  document.querySelector("#khuVucEditContinue").value = btn.dataset.khuVuc;
+  document.querySelector("#loaiVTEditContinue").value = btn.dataset.loaiVt;
+  document.querySelector("#hinhThucEditContinue").value = btn.dataset.hinhThuc;
+  document.querySelector("#quyHoachEditContinue").checked = btn.dataset.quyHoach == "ĐÃ QUY HOẠCH" ? true : false;
+  document.querySelector("#liDoChinhSuaContinue").value = '';
+  // initializeEditForm();
+}
+
 function showEditAdsModal(btn) {
   document.querySelector("#idAds").value = btn.dataset.id;
   document.querySelector("#adNameEdit").value = btn.dataset.adName;
@@ -376,72 +388,72 @@ function checkValidDate(elm, event) {
     elm.setCustomValidity('');
   }
 }
+// -------sort
 
+// async function editPlace(e) {
+//   e.preventDefault();
 
+//   const formData = new FormData(document.getElementById("addPlaceForm"));
+//   const data = Object.fromEntries(formData.entries());
 
-// ---------------sort
-// function sortTable(column) {
-//   console.log('Sorting by column:', column);
-
-//   const table = document.querySelector('.table tbody');
-//   const rows = Array.from(table.getElementsByTagName('tr'));
-
-//   const sortedRows = rows.sort((a, b) => {
-//     const aValue = a.getAttribute(`data-${column}`);
-//     const bValue = b.getAttribute(`data-${column}`);
-//     return aValue.localeCompare(bValue);
+//   let res = await fetch('/diem-dat-bang-quang-cao/editplace', {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(data),
 //   });
 
-//   console.log('Sorted rows:', sortedRows);
-
-//   // Clear the existing rows in the table
-//   while (table.firstChild) {
-//     table.removeChild(table.firstChild);
-//   }
-
-//   // Append the sorted rows back to the table
-//   sortedRows.forEach(row => {
-//     table.appendChild(row.cloneNode(true)); // Clone the node to avoid moving the original nodes
-//   });
+//   location.reload();
 // }
 
-// function sortTableManage(tableId, column) {
-//   console.log(`Sorting ${tableId} by column ${column}`);
+async function editPlace(e) {
+  e.preventDefault();
 
-//   const table = document.getElementById(tableId);
-//   const rows = Array.from(table.getElementsByTagName('tr'));
+  const formData = new FormData(document.getElementById("editPlaceForm"));
+  const data = Object.fromEntries(formData.entries());
 
-//   const sortedRows = rows.sort((a, b) => {
-//     const aValue = a.getAttribute(`data-${column}`);
-//     const bValue = b.getAttribute(`data-${column}`);
-//     return aValue.localeCompare(bValue);
-//   });
+  let res = await fetch('/diem-dat-bang-quang-cao/editplacerequest', {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
-//   // Clear the existing rows in the table
-//   while (table.firstChild) {
-//     table.removeChild(table.firstChild);
-//   }
-
-//   // Append the sorted rows back to the table
-//   sortedRows.forEach(row => {
-//     table.appendChild(row.cloneNode(true)); // Clone the node to avoid moving the original nodes
-//   });
-// }
+  location.reload();
+}
 
 
 function sortTable(column, tableId) {
-    console.log('Sorting by column:', column);
+  console.log('Sorting by column:', column);
 
-    const table = document.querySelector(`#${tableId} tbody`);
-    const rows = Array.from(table.getElementsByTagName('tr'));
+  const table = document.querySelector(`#${tableId} tbody`);
+  const rows = Array.from(table.getElementsByTagName('tr'));
 
-    rows.sort((a, b) => {
+  rows.sort((a, b) => {
       const aValue = a.getAttribute(`data-${column}`);
       const bValue = b.getAttribute(`data-${column}`);
-      return aValue.localeCompare(bValue);
-    });
 
-    rows.forEach(row => {
+      if (aValue === null || bValue === null) {
+          return 0;
+      }
+
+      // Convert the formatted date to a JavaScript Date object for comparison
+      const dateA = new Date(aValue);
+      const dateB = new Date(bValue);
+
+      // Check if the conversion is successful
+      if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+          // If conversion fails, fall back to localeCompare
+          return aValue.localeCompare(bValue);
+      }
+
+      // Compare dates
+      return dateA - dateB;
+  });
+
+  rows.forEach(row => {
       table.appendChild(row);
-    });
-  }
+  });
+}

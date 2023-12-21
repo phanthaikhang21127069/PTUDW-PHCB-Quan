@@ -118,9 +118,11 @@ controller.show = async (req, res) => {
 };
 
 controller.requestEditPlace = async (req, res) => {
-  let {diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua} = req.body;
+  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua} = req.body;
+
   try {
     await models.Requesteditplace.create({
+      placeId: id,
       diaChi, 
       khuVuc, 
       loaiVT, 
@@ -152,9 +154,17 @@ controller.requestEditAds = async (req, res) => {
 
   let placeId = adsPlace.getDataValue("id");
 
+  const adsOriginPlace = await models.Placedetail.findOne({ 
+    attributes: ["id"],
+    where: {placeId: placeId} 
+  });
+
+  let originId = adsOriginPlace.getDataValue("id");
+
   try {
     await models.Requesteditads.create({
       placeId: placeId,
+      originId: originId,
       adName, 
       adSize, 
       adQuantity, 

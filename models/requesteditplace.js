@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Requesteditplace.init({
+    placeId: DataTypes.INTEGER,
     diaChi: DataTypes.STRING,
     khuVuc: DataTypes.STRING,
     loaiVT: DataTypes.STRING,
