@@ -57,6 +57,8 @@ app.use('/yeu-cau', require('./routes/requestRouter'));
 app.use('/bao-cao', require('./routes/reportRouter'));
 app.use('/thong-bao', require('./routes/notificationRouter'));
 app.use('/diem-dat-bang-quang-cao', require('./routes/adsAddressRouter'));
+app.use('/bang-quang-cao', require('./routes/adsManageRouter'));
+
 
 app.get('/createTables', (req, res) => {
     let models = require('./models');

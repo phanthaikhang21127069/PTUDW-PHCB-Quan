@@ -113,19 +113,4 @@ controller.continueEditRequest = async (req, res) => {
   }
 }
 
-// controller.checkDiaChiExistsInRequesteditplace = async (diaChi) => {
-//   try {
-//     const count = await models.Requesteditplace.count({
-//       where: {
-//         diaChi: diaChi
-//       }
-//     });
-
-//     return count > 0; // Returns true if diaChi exists, false otherwise
-//   } catch (error) {
-//     console.error(error);
-//     return false; // Assume an error means diaChi doesn't exist (handle errors as needed)
-//   }
-// };
-
 module.exports = controller;

@@ -155,9 +155,17 @@ function showEditAdsModal(btn) {
   document.querySelector("#adQuantityEdit").value = btn.dataset.adQuantity;
   document.querySelector("#expireDayEdit").value = btn.dataset.expireDay;
   document.querySelector("#liDoChinhSua").value = '';
-
 }
 
+function showContinueEditAdsModal(btn) {
+  document.querySelector("#idAdsRequest").value = btn.dataset.id;
+  document.querySelector("#adNameEditContinue").value = btn.dataset.adName;
+  document.querySelector("#diaChiAdsEditContinue").value = btn.dataset.diaChi;
+  document.querySelector("#adSizeEditContinue").value = btn.dataset.adSize;
+  document.querySelector("#adQuantityEditContinue").value = btn.dataset.adQuantity;
+  document.querySelector("#expireDayEditContinue").value = btn.dataset.expireDay;
+  document.querySelector("#liDoChinhSuaContinue").value = '';
+}
 
 function showEditRequestModal(btn) {
   document.querySelector("#idRequest").value = btn.dataset.id;
@@ -196,6 +204,7 @@ async function editRequest(e) {
 
   location.reload();
 }
+
 
 // ---------------------open view modal, and close modal
 function openCustomDown(elm) {
@@ -414,6 +423,23 @@ async function editPlace(e) {
   const data = Object.fromEntries(formData.entries());
 
   let res = await fetch('/diem-dat-bang-quang-cao/editplacerequest', {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  location.reload();
+}
+
+async function editAds(e) {
+  e.preventDefault();
+
+  const formData = new FormData(document.getElementById("editAdsFormRequest"));
+  const data = Object.fromEntries(formData.entries());
+
+  let res = await fetch('/bang-quang-cao/editadsrequest', {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

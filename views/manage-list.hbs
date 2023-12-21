@@ -86,7 +86,7 @@
 
 <div class="modal fade" id="editAdsModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form action="/danh-sach/editads" id="editAdsForm" method="POST" onsubmit="editAds(event)">
+    <form action="/danh-sach/editads" id="editAdsForm" method="POST">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
@@ -680,7 +680,7 @@
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
                         data-bs-target="#editAdsModal" onclick="showEditAdsModal(this)" data-id="{{id}}"
                         data-ad-name="{{adName}}" data-dia-chi="{{Place.diaChi}}" data-ad-size="{{adSize}}"
-                        data-ad-quantity="{{adQuantity}}" data-expire-day="{{formattedExpireDay}}"></i>
+                        data-ad-quantity="{{adQuantity}}" data-expire-day="{{formattedExpireDay}}" data-origin="{{originId}}"></i>
                     </td>
                   </tr>
                   {{/each}}

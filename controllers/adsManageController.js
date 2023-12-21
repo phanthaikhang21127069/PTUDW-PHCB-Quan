@@ -62,6 +62,31 @@ controller.show = async (req, res) => {
     // limit: 10,
   });
 
+  res.locals.requesteditads = await models.Requesteditads.findAll({
+    include: [{
+      model: models.Place,
+      attributes: [
+        "diaChi",
+        "khuVuc",
+      ],
+    }],
+    attributes: [
+      "id",
+      "adName",
+      "adSize",
+      "adQuantity",
+      "expireDay",
+      "imagePath",
+    ],
+    where: {
+      '$Place.khuVuc$': {
+        [Op.like]: '%Quận 1%', // Use the like operator to check for 'Quận 5' in khuVuc
+      },
+    },
+    order: [["createdAt", "DESC"]],
+    // limit: 10,
+  });
+
   res.locals.adstypes = await models.Adstype.findAll({
     attributes: [
       "id",
@@ -109,33 +134,17 @@ controller.show = async (req, res) => {
     // }
   });
 
-  res.render("manage-list", {
+  res.render("manage-ads", {
     placedetails: res.locals.placedetails.map(detail => ({
       ...detail.toJSON(),
       formattedExpireDay: moment(detail.expireDay).format('MM/DD/YYYY'),
-    })),  
+    })),
+    requesteditads: res.locals.requesteditads.map(detail => ({
+      ...detail.toJSON(),
+      formattedExpireDay: moment(detail.expireDay).format('MM/DD/YYYY'),
+    })),   
   });
 };
-
-controller.requestEditPlace = async (req, res) => {
-  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua} = req.body;
-
-  try {
-    await models.Requesteditplace.create({
-      placeId: id,
-      diaChi, 
-      khuVuc, 
-      loaiVT, 
-      hinhThuc, 
-      quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
-      liDoChinhSua
-    });
-    res.redirect("/danh-sach");
-  } catch (error) {
-    res.send("Không thể thêm điểm đặt");
-    console.error(error);
-  }
-}
 
 controller.requestEditAds = async (req, res) => {
   let {id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua} = req.body;
@@ -154,6 +163,13 @@ controller.requestEditAds = async (req, res) => {
 
   let placeId = adsPlace.getDataValue("id");
 
+  // const adsOriginPlace = await models.Placedetail.findOne({ 
+  //   attributes: ["id"],
+  //   where: {placeId: placeId} 
+  // });
+
+  // let originId = adsOriginPlace.getDataValue("id");
+
   try {
     await models.Requesteditads.create({
       placeId: placeId,
@@ -164,120 +180,46 @@ controller.requestEditAds = async (req, res) => {
       expireDay, 
       liDoChinhSua
     });
-    res.redirect("/danh-sach");
+    res.redirect("/bang-quang-cao");
   } catch (error) {
     res.send("Không thể gửi yêu cầu chỉnh sửa bảng QC");
     console.error(error);
 }
 }
 
-controller.deleteRequest=async(req,res)=>{
-  console.log("ok");
-  let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
-  try {
-    await models.Requestadsquan.destroy(
-      {where: {id}}
-    );
-    res.send("Đã xoá yêu cầu!");
-  } catch (error) {
-    res.send("Không thể xoá yêu cầu!");
-    console.error(error);
-  }
-}
+controller.continueRequestEditAds = async (req, res) => {
+  let {id, originId, adName, diaChiAds, adSize, adQuantity, expireDay} = req.body;
 
+  const parsedDate = moment(expireDay, 'MM/DD/YYYY', true);
+  const isValidDate = parsedDate.isValid();
 
-controller.addRequest = async (req, res) => {
-  if (!req.body || typeof req.body !== 'object') {
-    res.send('Invalid request body');
-    return;
+  if (!isValidDate) {
+    return res.json({ error: true, message: 'Ngày không hợp lệ!' });
   }
 
-  const {
-    congTy,
-    diaChiCongTy,
-    dienThoai,
-    email,
-    diaChiRequest,
-    tenBangQuangCao,
-    loaiQC,
-    kichThuoc,
-    soLuong,
-    ngayBatDau,
-    ngayKetThuc
-  } = req.body;
-  console.log(req.body);
-
-  const requestPlace = await models.Place.findOne({
+  const adsPlace = await models.Place.findOne({ 
     attributes: ["id"],
-    where: { diaChi: diaChiRequest }
+    where: {diaChi: diaChiAds} 
   });
-  let placeId = requestPlace.getDataValue("id");
 
+  let placeId = adsPlace.getDataValue("id");
 
   try {
-    await models.Requestadsquan.create({
-      congTy,
-      diaChiCongTy,
-      dienThoai,
-      email,
-      placeId: placeId,
-      tenBangQuangCao,
-      loaiQC,
-      kichThuoc,
-      soLuong,
-      ngayBatDau,
-      ngayKetThuc,
-      tinhTrang: 'Chờ phê duyệt'
-    });
-    res.redirect('/danh-sach');
-  } catch (error) {
-    res.send('Không thể thêm');
-    console.error(error);
-  }
-};
-
-controller.editRequest = async (req, res) => {
-  let {id,
-    congTy,
-    diaChiCongTy,
-    dienThoai,
-    email,
-    diaChiRequest,
-    tenBangQuangCao,
-    loaiQC,
-    kichThuoc,
-    soLuong,
-    ngayBatDau,
-    ngayKetThuc,
-    tinhTrang} = req.body;
-  
-    const requestPlace = await models.Place.findOne({ 
-      attributes: ["id"],
-      where: {diaChi: diaChiRequest} 
-    });
-    let placeId = requestPlace.getDataValue("id");
-  try {
-    await models.Requestadsquan.update(
+    await models.Requesteditads.update(
       { 
-        congTy,
-        diaChiCongTy,
-        dienThoai,
-        email,
-        placeId:placeId,
-        tenBangQuangCao,
-        loaiQC,
-        kichThuoc,
-        soLuong,
-        ngayBatDau,
-        ngayKetThuc,
-        tinhTrang
+        placeId: placeId,
+        originId: originId,
+        adName, 
+        adSize, 
+        adQuantity, 
+        expireDay,
       },
       {where: {id}}
     );
-    res.send("Đã cập nhật yêu cầu!");
+    res.send("Đã cập nhật bảng QC!");
   } catch (error) {
-    res.send("Không thể cập nhật yêu cầu!");
+    res.send("Không thể cập nhật bảng QC!");
     console.error(error);
   }
-};
+}
 module.exports = controller;
