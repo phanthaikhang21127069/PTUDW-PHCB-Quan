@@ -149,6 +149,12 @@ controller.show = async (req, res) => {
 controller.requestEditAds = async (req, res) => {
   let {id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua} = req.body;
 
+  const existingPlace = await models.Requesteditads.findOne({
+    where: {
+      originId: id,
+    },
+  });
+
   const parsedDate = moment(expireDay, 'MM/DD/YYYY', true);
   const isValidDate = parsedDate.isValid();
 
@@ -163,28 +169,27 @@ controller.requestEditAds = async (req, res) => {
 
   let placeId = adsPlace.getDataValue("id");
 
-  // const adsOriginPlace = await models.Placedetail.findOne({ 
-  //   attributes: ["id"],
-  //   where: {placeId: placeId} 
-  // });
-
-  // let originId = adsOriginPlace.getDataValue("id");
-
   try {
-    await models.Requesteditads.create({
-      placeId: placeId,
-      originId: id,
-      adName, 
-      adSize, 
-      adQuantity, 
-      expireDay, 
-      liDoChinhSua
-    });
-    res.redirect("/bang-quang-cao");
+    if (existingPlace) {
+      // Nếu id đã tồn tại, có thể xử lý thông báo hoặc chuyển hướng
+      res.send("Vui lòng chỉnh sửa thêm ở danh sách yêu cầu chỉnh sửa bảng quảng cáo");
+    }
+    else {
+      await models.Requesteditads.create({
+        placeId: placeId,
+        originId: id,
+        adName, 
+        adSize, 
+        adQuantity, 
+        expireDay, 
+        liDoChinhSua
+      });
+      res.redirect("/bang-quang-cao");
+    }
   } catch (error) {
     res.send("Không thể gửi yêu cầu chỉnh sửa bảng QC");
     console.error(error);
-}
+  }
 }
 
 controller.continueRequestEditAds = async (req, res) => {

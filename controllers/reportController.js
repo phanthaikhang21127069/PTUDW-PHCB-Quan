@@ -1,8 +1,23 @@
 const controller = {};
 const models = require("../models");
+const pool = require("../database/database");
 
 controller.show = async (req, res) => {
-  res.render("report");
+  const report = pool.query(`SELECT id, "lat", "lng", "reportername", "typeofreport", "reporteremail", "reporterphonenumber", "reportcontent", "imagepath1", "imagepath2", "locationreport", "adbannerreportid", "handlemethod", "reportlocation"
+        FROM "reports"`);
+  try {
+    const [reportResult] = await Promise.all([report]);
+
+    // res.locals.reports = reportResult.rows.map((row) => ({
+    //   ...row,
+    //   expireDay: moment(row.expireDay).format('MM/DD/YYYY'),
+    // }));
+
+    res.locals.reports = reportResult.rows;
+    res.render("report");
+  } catch (error) {
+    console.log("Error: ", error);
+  }
 };
 
 // controller.addWard = async (req, res) => {

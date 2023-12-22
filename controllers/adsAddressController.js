@@ -75,18 +75,28 @@ controller.show = async (req, res) => {
 
 controller.requestEditPlace = async (req, res) => {
   let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua} = req.body;
-
-  try {
-    await models.Requesteditplace.create({
+  const existingPlace = await models.Requesteditplace.findOne({
+    where: {
       placeId: id,
-      diaChi, 
-      khuVuc, 
-      loaiVT, 
-      hinhThuc, 
-      quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
-      liDoChinhSua
-    });
-    res.redirect("/diem-dat-bang-quang-cao");
+    },
+  });
+  try {
+    if (existingPlace) {
+      // Nếu id đã tồn tại, có thể xử lý thông báo hoặc chuyển hướng
+      res.send("Vui lòng chỉnh sửa thêm ở danh sách yêu cầu chỉnh sửa điểm đặt bảng quảng cáo");
+    }
+    else {
+      await models.Requesteditplace.create({
+        placeId: id,
+        diaChi, 
+        khuVuc, 
+        loaiVT, 
+        hinhThuc, 
+        quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
+        liDoChinhSua
+      });
+      res.redirect("/diem-dat-bang-quang-cao");
+    }
   } catch (error) {
     res.send("Không thể thêm điểm đặt");
     console.error(error);

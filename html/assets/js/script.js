@@ -1,3 +1,4 @@
+
 let editPlaceEle = document.querySelector("#editPlaceModal");
 
 if (editPlaceEle) {
@@ -182,6 +183,37 @@ function showEditRequestModal(btn) {
   document.querySelector("#ngayBatDauEditRequest").value = btn.dataset.ngayBatDau;
   document.querySelector("#ngayKetThucEditRequest").value = btn.dataset.ngayKetThuc;
   console.log(btn.dataset.loaiQC);
+}
+
+function showHandleMethod(btn) {
+  document.querySelector("#idReport").value = btn.dataset.id;
+  document.querySelector("#reportername").value = btn.dataset.reportername;
+  document.querySelector("#reporterphonenumber").value = btn.dataset.reporterphonenumber;
+  document.querySelector("#reporteremail").value = btn.dataset.reporteremail;
+  document.querySelector("#typeofreport").value = btn.dataset.typeofreport;
+  document.querySelector("#reportcontent").value = btn.dataset.reportcontent;
+  document.querySelector("#handlemethod").value = btn.dataset.handlemethod;
+
+  var reportcontentInput = document.querySelector("#handlemethod");
+  if (btn.dataset.handlemethod.trim() === '') {
+    // If handlemethod is empty, remove the 'disabled' attribute
+    reportcontentInput.removeAttribute('disabled');
+  } else {
+    // If handlemethod is not empty, add the 'disabled' attribute
+    reportcontentInput.setAttribute('disabled', 'disabled');
+  }
+
+  if (btn.dataset.handlemethod){
+    document.querySelector('.status :nth-child(1) .span-content').textContent =  "Đã xử lý";
+    document.querySelector('.status :nth-child(1) .span-content').style.color = "green";
+  }
+  else {
+    document.querySelector('.status :nth-child(1) .span-content').textContent =  "Đang xử lý";
+    document.querySelector('.status :nth-child(1) .span-content').style.color = "red";
+  }
+  document.querySelector('.reportlocation').textContent =  btn.dataset.reportlocation;
+
+
 }
 
 // submit form to server

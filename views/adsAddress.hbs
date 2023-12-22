@@ -599,3 +599,13 @@
     {{>footer}}
   </div>
 </main>
+
+<script>
+  // Đọc thông báo lỗi từ JSON trả về
+  var errorMessage = {{errorMessage}};
+
+  // Nếu có thông báo lỗi, hiển thị cảnh báo
+  if (errorMessage) {
+    alert(errorMessage);
+  }
+</script>

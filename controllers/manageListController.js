@@ -119,26 +119,44 @@ controller.show = async (req, res) => {
 
 controller.requestEditPlace = async (req, res) => {
   let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua} = req.body;
-
-  try {
-    await models.Requesteditplace.create({
+  const existingPlace = await models.Requesteditplace.findOne({
+    where: {
       placeId: id,
-      diaChi, 
-      khuVuc, 
-      loaiVT, 
-      hinhThuc, 
-      quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
-      liDoChinhSua
-    });
-    res.redirect("/danh-sach");
+    },
+  });
+  try {
+    if (existingPlace) {
+      // Nếu id đã tồn tại, có thể xử lý thông báo hoặc chuyển hướng
+      res.send("Vui lòng chỉnh sửa thêm ở danh sách yêu cầu chỉnh sửa điểm đặt bảng quảng cáo");
+    }
+    else {
+      await models.Requesteditplace.create({
+        placeId: id,
+        diaChi, 
+        khuVuc, 
+        loaiVT, 
+        hinhThuc, 
+        quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
+        liDoChinhSua
+      });
+      res.redirect("/diem-dat-bang-quang-cao");
+    }
   } catch (error) {
     res.send("Không thể thêm điểm đặt");
     console.error(error);
   }
 }
 
+
+
 controller.requestEditAds = async (req, res) => {
   let {id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua} = req.body;
+
+  const existingPlace = await models.Requesteditads.findOne({
+    where: {
+      originId: id,
+    },
+  });
 
   const parsedDate = moment(expireDay, 'MM/DD/YYYY', true);
   const isValidDate = parsedDate.isValid();
@@ -155,20 +173,26 @@ controller.requestEditAds = async (req, res) => {
   let placeId = adsPlace.getDataValue("id");
 
   try {
-    await models.Requesteditads.create({
-      placeId: placeId,
-      originId: id,
-      adName, 
-      adSize, 
-      adQuantity, 
-      expireDay, 
-      liDoChinhSua
-    });
-    res.redirect("/danh-sach");
+    if (existingPlace) {
+      // Nếu id đã tồn tại, có thể xử lý thông báo hoặc chuyển hướng
+      res.send("Vui lòng chỉnh sửa thêm ở danh sách yêu cầu chỉnh sửa bảng quảng cáo");
+    }
+    else {
+      await models.Requesteditads.create({
+        placeId: placeId,
+        originId: id,
+        adName, 
+        adSize, 
+        adQuantity, 
+        expireDay, 
+        liDoChinhSua
+      });
+      res.redirect("/danh-sach");
+    }
   } catch (error) {
     res.send("Không thể gửi yêu cầu chỉnh sửa bảng QC");
     console.error(error);
-}
+  }
 }
 
 controller.deleteRequest=async(req,res)=>{
