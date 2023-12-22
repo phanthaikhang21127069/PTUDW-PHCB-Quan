@@ -11,9 +11,9 @@
             data-bs-dismiss="modal" aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
             <i class="fa fa-times text-dark  fs-4" aria-hidden="true"></i>
           </button> --}}
-          <button class="btn-close toast-btn" type="button" onclick="closeViewDetail(this)" data-bs-dismiss="modal" aria-label="Close"
-            data-target="infoToast" style="margin-bottom: 0;"><i class="fa fa-times-circle text-dark  fs-4"
-              aria-hidden="true"></i></button>
+          <button class="btn-close toast-btn" type="button" onclick="closeViewDetail(this)" data-bs-dismiss="modal"
+            aria-label="Close" data-target="infoToast" style="margin-bottom: 0;"><i
+              class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i></button>
         </div>
         <div class="modal-body">
           <div class="row g-2">
@@ -118,11 +118,6 @@
             </div>
           </li>
         </div>
-        <!-- <div class="col-lg-3">
-                        <button class="btn bg-gradient-success w-100 mb-0 toast-btn" type="button"
-                            data-target="infoToast">Xem yêu
-                            cầu </i></button>
-                    </div> -->
       </div>
     </div>
     <div class="row">
@@ -238,7 +233,7 @@
                       </div>
                     </td>
                     <td class="align-middle text-center">
-                      <i class="fa {{#if_eq quyHoach "ĐÃ QUY HOẠCH"}}fa-check-circle text-success {{else}}
+                      <i class="fa {{#if_eq quyHoach " ĐÃ QUY HOẠCH"}}fa-check-circle text-success {{else}}
                         fa-times-circle text-danger {{/if_eq}}" aria-hidden="true"></i>
                     </td>
                     <td class="align-middle text-center">
@@ -318,91 +313,92 @@
       </div>
     </div>
 
-  <div class="modal fade" id="editPlaceModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <form action="" id="editPlaceForm" onsubmit="editPlace(event)">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">
-            Chỉnh Sửa Điểm Đặt Bảng Quảng Cáo
-          </h5>
-          {{!-- <button class="btn-close toast-btn" type="button" onclick="closeViewDetail(this)"
-            data-bs-dismiss="modal" aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
-            <i class="fa fa-times text-dark  fs-4" aria-hidden="true"></i>
-          </button> --}}
-          <button class="btn-close toast-btn" type="button" onclick="closeViewDetail(this)" data-bs-dismiss="modal" aria-label="Close"
-            data-target="infoToast" style="margin-bottom: 0;"><i class="fa fa-times-circle text-dark  fs-4"
-              aria-hidden="true"></i></button>
-        </div>
-        <div class="modal-body">
-          <div class="row g-2">
-            <div class="col mb-3">
-              <label for="diaChiEditContinue" class="form-label">Địa Chỉ</label>
-              <input type="text" id="diaChiEditContinue" name="diaChi" class="form-control" placeholder="Chợ An Đông"
-                required />
+    <div class="modal fade" id="editPlaceModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <form action="" id="editPlaceForm" onsubmit="editPlace(event)">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                Chỉnh Sửa Điểm Đặt Bảng Quảng Cáo
+              </h5>
+              {{!-- <button class="btn-close toast-btn" type="button" onclick="closeViewDetail(this)"
+                data-bs-dismiss="modal" aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
+                <i class="fa fa-times text-dark  fs-4" aria-hidden="true"></i>
+              </button> --}}
+              <button class="btn-close toast-btn" type="button" onclick="closeViewDetail(this)" data-bs-dismiss="modal"
+                aria-label="Close" data-target="infoToast" style="margin-bottom: 0;"><i
+                  class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i></button>
             </div>
-            <div class="col mb-3">
-              <label for="khuVucEditContinue" class="form-label">Khu Vực</label>
-              <input type="text" id="khuVucEditContinue" name="khuVuc" class="form-control" placeholder="Phường 9, Quận 5"
-                required />
-            </div>
-          </div>
-          <div class="row g-2">
-            <div class="col mb-3">
-              <label for="loaiVTEditContinue" class="form-label">Loại Vị Trí</label>
-              <input type="text" id="loaiVTEditContinue" name="loaiVT" class="form-control" placeholder="Chợ" />
-            </div>
-            <div class="col mb-3">
-              <label for="hinhThucEditContinue" class="form-label">Hình Thức</label>
-              <select name="hinhThuc" id="hinhThucEditContinue" class="form-control select-form-control">
-                {{#each adstypes}}
-                <option value="{{name}}" selected="selected">{{name}}</option>
-                {{/each}}
-              </select>
-            </div>
-          </div>
-          <div class="row g-2 mb-3">
-            <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
-            <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
-              placeholder="Sai thông tin / Chỉnh sửa hình ảnh" />
-          </div>
-          <div class="row">
-            <div class="col mb-0">
-              <div class="form-check form-check-inline" style="padding-left:0">
-                <input class="form-check-input" type="checkbox" id="quyHoachEditContinue" name="isQuyHoach" value="1" />
-                <label class="form-check-label badge bg-label-primary" for="quyHoachEdit">Quy
-                  Hoạch</label>
+            <div class="modal-body">
+              <div class="row g-2">
+                <div class="col mb-3">
+                  <label for="diaChiEditContinue" class="form-label">Địa Chỉ</label>
+                  <input type="text" id="diaChiEditContinue" name="diaChi" class="form-control"
+                    placeholder="Chợ An Đông" required />
+                </div>
+                <div class="col mb-3">
+                  <label for="khuVucEditContinue" class="form-label">Khu Vực</label>
+                  <input type="text" id="khuVucEditContinue" name="khuVuc" class="form-control"
+                    placeholder="Phường 9, Quận 5" required />
+                </div>
               </div>
+              <div class="row g-2">
+                <div class="col mb-3">
+                  <label for="loaiVTEditContinue" class="form-label">Loại Vị Trí</label>
+                  <input type="text" id="loaiVTEditContinue" name="loaiVT" class="form-control" placeholder="Chợ" />
+                </div>
+                <div class="col mb-3">
+                  <label for="hinhThucEditContinue" class="form-label">Hình Thức</label>
+                  <select name="hinhThuc" id="hinhThucEditContinue" class="form-control select-form-control">
+                    {{#each adstypes}}
+                    <option value="{{name}}" selected="selected">{{name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+              <div class="row g-2 mb-3">
+                <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
+                <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
+                  placeholder="Sai thông tin / Chỉnh sửa hình ảnh" />
+              </div>
+              <div class="row">
+                <div class="col mb-0">
+                  <div class="form-check form-check-inline" style="padding-left:0">
+                    <input class="form-check-input" type="checkbox" id="quyHoachEditContinue" name="isQuyHoach"
+                      value="1" />
+                    <label class="form-check-label badge bg-label-primary" for="quyHoachEdit">Quy
+                      Hoạch</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row g-2">
+                <div class="row mb-3 mt-3">
+                  <h6><span>Thời điểm chỉnh sửa: </span>
+                    <script>
+                      document.write(new Date().getDate());
+                      document.write('/');
+                      document.write(new Date().getMonth());
+                      document.write('/');
+                      document.write(new Date().getFullYear());
+                    </script>
+                  </h6>
+                </div>
+              </div>
+              <div class="text-center badge bg-label-danger" id="errorMessage"></div>
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="id" id="idPlaceRequest" value="" />
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeBtnEdit">
+                Đóng
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Gửi Yêu Cầu
+              </button>
             </div>
           </div>
-          <div class="row g-2">
-            <div class="row mb-3 mt-3">
-              <h6><span>Thời điểm chỉnh sửa: </span>
-                <script>
-                  document.write(new Date().getDate());
-                  document.write('/');
-                  document.write(new Date().getMonth());
-                  document.write('/');
-                  document.write(new Date().getFullYear());
-                </script>
-              </h6>
-            </div>
-          </div>
-          <div class="text-center badge bg-label-danger" id="errorMessage"></div>
-        </div>
-        <div class="modal-footer">
-          <input type="hidden" name="id" id="idPlaceRequest" value="" />
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeBtnEdit">
-            Đóng
-          </button>
-          <button type="submit" class="btn btn-primary">
-            Gửi Yêu Cầu
-          </button>
-        </div>
+        </form>
       </div>
-    </form>
-  </div>
-</div>
+    </div>
 
     <div class="row">
       <div class="col-12">
@@ -517,7 +513,7 @@
                       </div>
                     </td>
                     <td class="align-middle text-center">
-                      <i class="fa {{#if_eq quyHoach "ĐÃ QUY HOẠCH"}}fa-check-circle text-success {{else}}
+                      <i class="fa {{#if_eq quyHoach " ĐÃ QUY HOẠCH"}}fa-check-circle text-success {{else}}
                         fa-times-circle text-danger {{/if_eq}}" aria-hidden="true"></i>
                     </td>
                     <td class="align-middle text-center">
@@ -602,7 +598,7 @@
 
 <script>
   // Đọc thông báo lỗi từ JSON trả về
-  var errorMessage = {{errorMessage}};
+  var errorMessage = {{ errorMessage }};
 
   // Nếu có thông báo lỗi, hiển thị cảnh báo
   if (errorMessage) {

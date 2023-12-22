@@ -195,25 +195,25 @@ function showHandleMethod(btn) {
   document.querySelector("#handlemethod").value = btn.dataset.handlemethod;
 
   var reportcontentInput = document.querySelector("#handlemethod");
+  var xulybutton = document.querySelector("#xuly");
+
   if (btn.dataset.handlemethod.trim() === '') {
-    // If handlemethod is empty, remove the 'disabled' attribute
     reportcontentInput.removeAttribute('disabled');
   } else {
-    // If handlemethod is not empty, add the 'disabled' attribute
     reportcontentInput.setAttribute('disabled', 'disabled');
   }
 
   if (btn.dataset.handlemethod){
     document.querySelector('.status :nth-child(1) .span-content').textContent =  "Đã xử lý";
     document.querySelector('.status :nth-child(1) .span-content').style.color = "green";
+    xulybutton.setAttribute('disabled', 'disabled');
   }
   else {
     document.querySelector('.status :nth-child(1) .span-content').textContent =  "Đang xử lý";
     document.querySelector('.status :nth-child(1) .span-content').style.color = "red";
+    xulybutton.removeAttribute('disabled');
   }
   document.querySelector('.reportlocation').textContent =  btn.dataset.reportlocation;
-
-
 }
 
 // submit form to server
@@ -455,6 +455,24 @@ async function editPlace(e) {
   const data = Object.fromEntries(formData.entries());
 
   let res = await fetch('/diem-dat-bang-quang-cao/editplacerequest', {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  location.reload();
+}
+
+async function editReport(e) {
+  console.log("ok");
+  e.preventDefault();
+
+  const formData = new FormData(document.getElementById("handleMethodForm"));
+  const data = Object.fromEntries(formData.entries());
+
+  let res = await fetch('/bao-cao/handle-report', {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

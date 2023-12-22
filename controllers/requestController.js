@@ -113,9 +113,11 @@ controller.show = async (req, res) => {
       "tinhTrang"
     ],
     order: [["congTy", "ASC"]],
-    // where:{
-    //   khuVuc:"Phường 4, Quận 5"
-    // }
+    where: {
+      '$Place.khuVuc$': {
+        [Op.like]: '%Quận 1%',
+      },
+    }
   });
   res.locals.places = await models.Place.findAll({
     attributes: [

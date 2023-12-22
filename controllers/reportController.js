@@ -1,10 +1,13 @@
 const controller = {};
 const models = require("../models");
+const { Op } = require('sequelize');
 const pool = require("../database/database");
 
 controller.show = async (req, res) => {
   const report = pool.query(`SELECT id, "lat", "lng", "reportername", "typeofreport", "reporteremail", "reporterphonenumber", "reportcontent", "imagepath1", "imagepath2", "locationreport", "adbannerreportid", "handlemethod", "reportlocation"
-        FROM "reports"`);
+        FROM "reports"
+        ORDER BY "reportlocation" ASC`
+        );
   try {
     const [reportResult] = await Promise.all([report]);
 
@@ -14,56 +17,45 @@ controller.show = async (req, res) => {
     // }));
 
     res.locals.reports = reportResult.rows;
+
+    res.locals.places = await models.Place.findAll({
+      attributes: [
+        "id",
+        "diaChi",
+        "khuVuc",
+        "loaiVT",
+        "hinhThuc",
+        "quyHoach",
+        "hinhAnh",
+      ],
+      where: {
+        khuVuc: {
+          [Op.like]: '%Quận 1%', // Use the like operator to check for 'Quận 5' in khuVuc
+        },
+      },
+      order: [["createdAt", "DESC"]],
+    });
+
     res.render("report");
   } catch (error) {
     console.log("Error: ", error);
   }
 };
 
-// controller.addWard = async (req, res) => {
-//   let {wardName, districtName, zipCode, population} = req.body;
-//   try {
-//     await models.Ward.create({
-//       wardName, 
-//       districtName, 
-//       zipCode, 
-//       population
-//     });
-//     res.redirect("/danh-sach");
-//   } catch (error) {
-//     res.send("Can't add ward");
-//     console.error(error);
-//   }
-//   // res.send(req.body);
-//   // console.log(req);
-//   // res.redirect("/phuong-quan");
-// }
-
-// controller.editWard = async (req, res) => {
-//   let {id, wardName, districtName, zipCode, population} = req.body;
-//   try {
-//     await models.Ward.update(
-//       {wardName, districtName, zipCode, population},
-//       {where: {id}}
-//     );
-//     res.send("Ward updated!");
-//   } catch (error) {
-//     res.send("Can't update ward!");
-//     console.error(error);
-//   }
-// }
-
-// controller.deleteWard = async (req, res) => {
-//   let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
-//   try {
-//     await models.Ward.destroy(
-//       {where: {id}}
-//     );
-//     res.send("Ward deleted!");
-//   } catch (error) {
-//     res.send("Can't delete ward!");
-//     console.error(error);
-//   }
-// }
+controller.handleReport = async (req, res) => {
+  let {id, handlemethodedit} = req.body;
+  try {
+          const updateQuery = `UPDATE "reports"
+                              SET "handlemethod" = $1
+                              WHERE id = $2`;
+          await pool.query(updateQuery, [
+            handlemethodedit,
+            id
+          ]);
+          res.send("Đã cập nhật bảng QC!");
+  } catch (error) {
+      console.error(error);
+  }
+}
 
 module.exports = controller;
