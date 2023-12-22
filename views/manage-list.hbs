@@ -1334,7 +1334,7 @@
                     </td>
                     <td class="align-middle text-center">
                       <div class="d-flex align-items-center">
-                        <span class="me-2 text-warning text-xs">{{tinhTrang}}</span>
+                        <span class="me-2 {{#if_eq tinhTrang "Chờ phê duyệt"}}text-warning{{/if_eq}} {{#if_eq tinhTrang "Đã phê duyệt"}}text-success{{/if_eq}} {{#if_eq tinhTrang "Không phê duyệt"}}text-danger{{/if_eq}} text-xs font-weight-bold">{{tinhTrang}}</span>
                       </div>
                     </td>
                     <td class="align-middle" style="white-space : normal; ">
@@ -1360,8 +1360,6 @@
       </div>
     </div>
 
-
-
     <div class="row">
       <div class="col-12">
         <div class="card my-4">
@@ -1379,33 +1377,51 @@
                   <li class="nav-item dropdown pe-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0 text-center" id="dropdownMenuButton"
                       data-bs-toggle="dropdown" aria-expanded="false">
-                      <button class="btn bg-gradient-success mb-0 me-4 toast-btn" type="button"
-                        data-target="infoToast"><i class="fa-solid fa-sort"></i></button>
+                      <button class="btn btn mb-0 me-4 toast-btn" type="button" data-target="infoToast"
+                        style="color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)"><i
+                          class="fa-solid fa-sort"></i></button>
                     </a>
-                    <ul class="dropdown-menu  dropdown-menu-end px-1 py-1" aria-labelledby="dropdownMenuButton">
+                    <ul class="dropdown-menu dropdown-menu-end px-1 py-1" aria-labelledby="dropdownMenuButton">
                       <li>
-                        <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"><i
+                        <a class="dropdown-item text-center" href="javascript:;"
+                          onclick="sortTable('reportlocation', 'tableReport')">
+                          <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
+                            data-target="infoToast"
+                            style="font-size: 11px; height: 30px;margin-bottom:0px; color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)"><i
                               class="fa-solid fa-arrow-up-a-z pe-1"></i>Địa chỉ
                           </button>
                         </a>
                       </li>
                       <li>
-                        <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Hình thức báo
-                            cáo
+                        <a class="dropdown-item text-center" href="javascript:;"
+                          onclick="sortTable('reportername', 'tableReport')">
+                          <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
+                            data-target="infoToast"
+                            style="font-size: 11px; height: 30px;margin-bottom:0px;color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)"><i
+                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Tên người gửi
                           </button>
                         </a>
                       </li>
                       <li>
-                        <a class="dropdown-item text-center" href="javascript:;">
-                          <button class="btn btn-outline-success w-100" type="button" data-target="infoToast"><i
-                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Tình trạng
+                        <a class="dropdown-item text-center" href="javascript:;"
+                          onclick="sortTable('typeofreport', 'tableReport')">
+                          <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
+                            data-target="infoToast"
+                            style="font-size: 11px; height: 30px; margin-bottom: 0; color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)">
+                            <i class="fa-solid fa-arrow-up-a-z pe-1"></i>Hình thức báo cáo
                           </button>
                         </a>
                       </li>
-
+                      {{!-- <li>
+                        <a class="dropdown-item text-center" href="javascript:;"
+                          onclick="sortTable('', 'tableReport')">
+                          <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
+                            data-target="infoToast"
+                            style="font-size: 11px; height: 30px;margin-bottom:0px; color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)"><i
+                              class="fa-solid fa-arrow-up-a-z pe-1"></i>Tình trạng
+                          </button>
+                        </a>
+                      </li> --}}
                     </ul>
                   </li>
                 </div>
@@ -1414,10 +1430,10 @@
 
           </div>
           <div class="card-body px-0 pb-2">
-            <div class="table-responsive p-0">
-              <table class="table align-items-center justify-content-center mb-0">
+            <div class="table-responsive p-0" id="filteredContent">
+              <table id = "tableReport" class="table align-items-center justify-content-center mb-0">
                 <thead>
-                  <tr>
+                  <tr >
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                       Địa chỉ</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -1430,7 +1446,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  {{#each reports}}
+                  <tr data-reportlocation="{{reportlocation}}" data-reportername="{{reportername}}" data-typeofreport="{{typeofreport}}">
                     <td>
                       <div class="d-flex px-2">
                         <div>
@@ -1438,259 +1455,149 @@
                             alt="spotify">
                         </div>
                         <div class="my-auto">
-                          <h6 class="mb-0 text-sm">128 Trần Phú</h6>
+                          <h6 class="mb-0 text-sm">{{reportlocation}}</h6>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <span class="text-xs font-weight-bold">Võ Chánh Tín</span>
+                      <span class="text-xs">{{reportername}}</span>
                     </td>
                     <td class="align-middle text-center">
                       <div class="d-flex align-items-center">
-                        <span class="me-2 text-xs font-weight-bold">Báo cáo sai phạm</span>
+                        <span class="me-2 text-xs">{{typeofreport}}</span>
                       </div>
                     </td>
                     <td class="align-middle text-center">
-                      <span class="me-2 text-xs font-weight-bold text-danger">Đang xử
-                        lý</span>
+                      <span
+                        class="me-2 text-xs font-weight-bold {{#if handlemethod}}text-success{{else}}text-danger{{/if}}">
+                        {{#if handlemethod}}
+                        Đã xử lý
+                        {{else}}
+                        Đang xử lý
+                        {{/if}}</span>
                     </td>
                     <td class="align-middle" style="white-space : normal; ">
-                      <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false"
-                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <i class="fa-solid fa-circle-info text-secondary fs-5"></i></button>
+                      <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal" 
+                        data-bs-target="#handleMethod" onclick="showHandleMethod(this)" data-id="{{id}}"
+                        data-reportername="{{reportername}}" data-typeofreport="{{typeofreport}}"
+                        data-reporterphonenumber="{{reporterphonenumber}}" data-reporteremail="{{reporteremail}}"
+                        data-reportcontent="{{{reportername}}}" data-handlemethod="{{handlemethod}}" data-reportlocation="{{reportlocation}}"></i>
                       <!-- modal -->
-                      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                      <div class="modal fade" id="handleMethod" data-bs-backdrop="static" data-bs-keyboard="false"
                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <div class="col-5 px-2">
-                                <h4 class="modal-title fw-bold" id="staticBackdropLabel">BÁO CÁO
-                                </h4>
+                          <form action="" id="handleMethodForm" onsubmit="editReport(event)">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <div class="col-5 px-2">
+                                  <h5 class="modal-title" id="staticBackdropLabelward">Báo Cáo</h5>
+                                </div>
+                                <div class="col-6 px-2 d-flex status">
+                                  <h6 class="modal-title text-danger">
+                                    <span class="font-weight-bold text-secondary">Tình
+                                      trạng:</span> 
+                                    <span class="me-2 font-weight-bold span-content"></span>
+                                  </h6>
+                                </div>
+                                <div class="col-1 px-4">
+                                  <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal"
+                                    aria-label="Close" data-target="infoToast" style="margin-bottom: 0;"><i
+                                      class="fa fa-times-circle text-danger  fs-4" aria-hidden="true"></i></button>
+                                </div>
                               </div>
-                              <div class="col-6 px-2 d-flex">
-                                <h5 class="modal-title text-danger"><span class="font-weight-bold text-secondary">Tình
-                                    trạng:</span> Đang xử lý</h5>
-
-                              </div>
-                              <div class="col-1 px-4">
-                                <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal"
-                                  aria-label="Close" data-target="infoToast" style="margin-bottom: 0;"><i
-                                    class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i></button>
-                              </div>
-                            </div>
-                            <div class="modal-body">
-                              <div class="container-fluid">
-
-                                <h5 class="text-primary p-3 text-center">128 Trần Phú, Phường 4, Quận 5</h5>
-                                <div class="row">
-                                  <div class="col-6">
+                              <div class="modal-body">
+                                <div class="container-fluid">
+                                  <h6 class="text-primary reportlocation"></h6>
+                                  <div class="row">
                                     <h6>Phần 1: Thông Tin Báo Cáo</h6>
                                     <div class="card h-100">
                                       <div class="card-body">
-                                        <div class="d-flex flex-column justify-content-center">
-                                          <h6 class="text-sm font-weight-normal mb-1">
-                                            <span class="font-weight-bold">Thời
-                                              điểm gửi: </span>
-                                            28/10/2023
-                                          </h6>
-                                          <h6 class="text-sm font-weight-normal mb-1">
-                                            <span class="font-weight-bold">Tên
-                                              người gửi: </span> Võ
-                                            Chánh Tín
-                                          </h6>
-                                          <h6 class="text-sm font-weight-normal mb-1">
-                                            <span class="font-weight-bold">Điện
-                                              thoại: </span>
-                                            0909123456
-                                          </h6>
-                                          <h6 class="text-sm font-weight-normal mb-1">
-                                            <span class="font-weight-bold">Email:
-                                            </span>
-                                            vctin.cdl@gmail.com
-                                          </h6>
-                                          <h6 class="text-sm font-weight-normal mb-1">
-                                            <span class="font-weight-bold">Hình
-                                              thức báo cáo:
-                                            </span>
-                                            Tố giác sai phạm
+                                        <div class="row g-2">
+                                          <div class="col mb-3">
+                                            <label for="reportername" class="form-label">Người báo cáo</label>
+                                            <input type="text" id="reportername" name="reportername"
+                                              class="form-control" placeholder="" disabled />
+                                          </div>
+                                          <div class="col mb-3">
+                                            <label for="reporterphonenumber" class="form-label">Số điện thoại</label>
+                                            <input type="text" id="reporterphonenumber" name="reporterphonenumber"
+                                              class="form-control" placeholder="" disabled />
+                                          </div>
+                                        </div>
+                                        <div class="row g-2">
+                                          <div class="col mb-3">
+                                            <label for="reporteremail" class="form-label">Email</label>
+                                            <input type="text" id="reporteremail" name="reporteremail"
+                                              class="form-control" placeholder="" disabled />
+                                          </div>
+                                          <div class="col mb-3">
+                                            <label for="typeofreport" class="form-label">Hình thức báo cáo</label>
+                                            <input type="text" id="typeofreport" name="typeofreport"
+                                              class="form-control" placeholder="" disabled />
+                                          </div>
+                                        </div>
+                                        <div class="row g-2">
+                                          <div class="col mb-3">
+                                            <label for="reportcontent" class="form-label">Nội dung báo cáo</label>
+                                            <input type="text" id="reportcontent" name="reportcontent"
+                                              class="form-control" placeholder="" disabled />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row pt-3">
+                                    <div class="col-6">
+                                      <h6>Phần 2: Hình ảnh </h6>
+                                      <div class="card">
+                                        <div class="card-body">
+                                          <div class="card bg-dark text-white">
+                                            <img src="../assets/img/stt19.png" class="card-img" alt="..." style="height: auto; object-fit: cover;
+                                                                                    ">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <h6>Phần 3: Xử lý báo cáo </h6>
+                                      <div class="card">
+                                        <div class="card-body">
+                                          <div class="col mb-3">
+                                            <label for="handlemethod" class="form-label">Cách thức xử lý</label>
+                                            <input type="text" id="handlemethod" name="handlemethodedit"
+                                              class="form-control form-reason" placeholder="" disabled/>
+                                          </div>
+                                          <h6><span class="ps-2">Thời điểm xử lý: </span>
+                                            <script>
+                                              document.write(new Date().getDate());
+                                              document.write('/');
+                                              document.write(new Date().getMonth());
+                                              document.write('/');
+                                              document.write(new Date().getFullYear());
+                                            </script>
                                           </h6>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-                                  <div class="col-6">
-                                    <h6>Phần 2: Nội dung báo cáo </h6>
-                                    <div class="card h-100 ">
-                                      <div class="card-body">
-                                        <span>Nghi ngờ quảng cáo không đúng
-                                          sự thật, yêu cầu cơ quan chức
-                                          năng có thẩm quyên vào cuộc điều
-                                          tra sai phạm trên.</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row mt-3">
-
-                                  <div class="container py-4">
-                                    <h6>Phần 3: Hình ảnh </h6>
-                                    <div class="card bg-dark text-white">
-                                      <img src="../assets/img/stt19.png" class="card-img" alt="..." style="height: 250px ;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover;
-                                                                            ">
-                                      <div class="card-img-overlay">
-                                        <h5 class="card-title text-white">
-                                          128 Trần Phú
-                                        </h5>
-
-                                      </div>
-                                    </div>
-                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="modal-footer" style="justify-content: space-around;">
-                              <button type="button" class="btn btn-primary" data-bs-target="#exampleModaltieptheo"
-                                data-bs-toggle="modal" data-bs-dismiss="modal">Xử
-                                lý</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="modal fade" id="exampleModaltieptheo" data-bs-backdrop="static"
-                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabeltieptheo"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <div class="col-6 px-2">
-                                <h4 class="modal-title fw-bold" id="staticBackdropLabel">XỬ LÝ BÁO CÁO</h4>
-                              </div>
-                              <div class="col-1 px-4">
-                                <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal"
-                                  aria-label="Close" data-target="infoToast" style="margin-bottom: 0;"><i
-                                    class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i></button>
+                              <div class="modal-footer" style="justify-content: space-around;">
+                                <input type="hidden" name="id" id="idReport" value="" />
+                                <button id = "xuly" type="submit" class="btn btn-primary"
+                                  data-bs-toggle="modal" data-bs-dismiss="modal" disabled>Xử
+                                  lý</button>
                               </div>
                             </div>
-                            <div class="modal-body">
-                              <div class="container">
-                                <h5><span class="ps-2">Thời điểm xử lý: </span>
-                                  <script>
-                                    document.write(new Date().getDate());
-                                    document.write('/');
-                                    document.write(new Date().getMonth());
-                                    document.write('/');
-                                    document.write(new Date().getFullYear());
-                                  </script>
-                                </h5>
-
-                                <div class="input">
-                                  <input type="text" class="input-field input-reason" required />
-                                  <label class="input-label">Cách thức xử lý:
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer" style="justify-content: space-around;">
-                              <button type="button" class="btn btn-info" data-bs-dismiss="modal"
-                                data-bs-target="#exampleModalToggletieptheo" data-bs-toggle="modal">CẬP NHẬT</button>
-                            </div>
-                          </div>
+                          </form>
                         </div>
                       </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex px-2">
-                        <div>
-                          <img src="../assets/img/city.jpeg" class="avatar avatar-sm me-3 border-radius-lg"
-                            alt="invision">
-                        </div>
-                        <div class="my-auto">
-                          <h6 class="mb-0 text-sm">Công viên Âu Lạc</h6>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <span class="text-xs font-weight-bold">Nguyễn Lê Tấn Phúc</span>
-                    </td>
-                    <td class="align-middle text-center">
-                      <div class="d-flex align-items-center">
-                        <span class="me-2 text-xs font-weight-bold">Đóng góp ý kiến</span>
-                      </div>
-                    </td>
-                    <td class="align-middle text-center">
-                      <span class="me-2 text-xs font-weight-bold text-danger">Đang xử
-                        lý</span>
-                    </td>
-                    <td class="align-middle">
-                      <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false"
-                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <i class="fa-solid fa-circle-info text-secondary fs-5"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex px-2">
-                        <div>
-                          <img src="../assets/img/city.jpeg" class="avatar avatar-sm me-3 border-radius-lg" alt="jira">
-                        </div>
-                        <div class="my-auto">
-                          <h6 class="mb-0 text-sm">Ngã Sáu Cộng Hòa</h6>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <span class="text-xs font-weight-bold">Phan Thái Khang</span>
-                    </td>
-                    <td class="align-middle text-center">
-                      <div class="d-flex align-items-center">
-                        <span class="me-2 text-xs font-weight-bold">Giải đáp thắc mắc</span>
-                      </div>
-                    </td>
-                    <td class="align-middle text-center">
-                      <span class="me-2 text-xs font-weight-bold text-success">Đã xử lý</span>
-                    </td>
-                    <td class="align-middle">
-                      <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false"
-                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <i class="fa-solid fa-circle-info text-secondary fs-5"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex px-2">
-                        <div>
-                          <img src="../assets/img/city.jpeg" class="avatar avatar-sm me-3 border-radius-lg"
-                            alt="webdev">
-                        </div>
-                        <div class="my-auto">
-                          <h6 class="mb-0 text-sm">11A Trần Phú</h6>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <span class="text-xs font-weight-bold">Phan Như Quỳnh</span>
-                    </td>
-                    <td class="align-middle text-center">
-                      <div class="d-flex align-items-center">
-                        <span class="me-2 text-xs font-weight-bold">Tố giác sai phạm</span>
-                      </div>
-                    </td>
-                    <td class="align-middle text-center">
-                      <span class="me-2 text-xs font-weight-bold text-success">Đã xử lý</span>
-                    </td>
-                    <td class="align-middle">
-                      <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false"
-                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <i class="fa-solid fa-circle-info text-secondary fs-5"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
+            </td>
+            </tr>
+            {{/each}}
+            </tbody>
+            </table>
           </div>
         </div>
       </div>

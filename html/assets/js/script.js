@@ -89,7 +89,7 @@ async function deleteRequest(id) {
   location.reload();
 }
 
-// ---------------------disable nút gửi yêu cầu chỉnh sửa ads
+// ---------------------disable gửi yêu cầu button
 function initializeEditForm_ads() {
   let saveBtn = document.querySelector("#editAdsForm button[type='submit']");
   saveBtn.disabled = true;
@@ -123,7 +123,8 @@ function checkFormChanges_ads(currentValues) {
 
   saveBtn.disabled = !isFormChanged;
 }
-// -------------------edit modal
+
+// -------------------show value of edit modal
 function showEditPlaceModal(btn) {
   document.querySelector("#idPlace").value = btn.dataset.id;
   document.querySelector("#diaChiEdit").value = btn.dataset.diaChi;
@@ -216,7 +217,7 @@ function showHandleMethod(btn) {
   document.querySelector('.reportlocation').textContent =  btn.dataset.reportlocation;
 }
 
-// submit form to server
+// -------------------------onsubmit() edit
 async function editRequest(e) {
   
   e.preventDefault();
@@ -232,6 +233,58 @@ async function editRequest(e) {
     },
     body: JSON.stringify(data),
     
+  });
+
+  location.reload();
+}
+
+async function editPlace(e) {
+  e.preventDefault();
+
+  const formData = new FormData(document.getElementById("editPlaceForm"));
+  const data = Object.fromEntries(formData.entries());
+
+  let res = await fetch('/diem-dat-bang-quang-cao/editplacerequest', {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  location.reload();
+}
+
+async function editReport(e) {
+  console.log("ok");
+  e.preventDefault();
+
+  const formData = new FormData(document.getElementById("handleMethodForm"));
+  const data = Object.fromEntries(formData.entries());
+
+  let res = await fetch('/bao-cao/handle-report', {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  location.reload();
+}
+
+async function editAds(e) {
+  e.preventDefault();
+
+  const formData = new FormData(document.getElementById("editAdsFormRequest"));
+  const data = Object.fromEntries(formData.entries());
+
+  let res = await fetch('/bang-quang-cao/editadsrequest', {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   });
 
   location.reload();
@@ -323,6 +376,15 @@ function openViewRequestDetail(elm, congTy,
   ancElm.classList.add('show');
   elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal.detail-request').style.display = "block";
   ancElm.querySelector('#tinhTrang').textContent = tinhTrang;
+  if (tinhTrang="Chờ phê duyệt") {
+    ancElm.querySelector('#tinhTrang').classList.add('text-warning');
+  }
+  else if (tinhTrang="Đã phê duyệt") {
+    ancElm.querySelector('#tinhTrang').classList.add('text-success');
+  }
+  else if (tinhTrang="Không phê duyệt") {
+    ancElm.querySelector('#tinhTrang').classList.add('text-danger');
+  }
   ancElm.querySelector('.detail-card-part-1 :nth-child(1) .span-content').textContent = congTy;
   ancElm.querySelector('.detail-card-part-1 :nth-child(2) .span-content').textContent = diaChiCongTy;
   ancElm.querySelector('.detail-card-part-1 :nth-child(3) .span-content').textContent = dienThoai;
@@ -393,28 +455,6 @@ document.getElementById('phuongDropdown').addEventListener('change', function ()
   }
 });
 
-// ---------------------sort places
-// document.addEventListener("DOMContentLoaded", function () {
-//     const tableBody = document.querySelector("#filteredContent tbody");
-//     const sortButtons = document.querySelectorAll("[data-sort]");
-
-//     sortButtons.forEach((button) => {
-//       button.addEventListener("click", function () {
-//         const sortBy = this.getAttribute("data-sort");
-
-//         const rows = Array.from(tableBody.querySelectorAll("tr"));
-//         const sortedRows = rows.sort((a, b) => {
-//           const valueA = a.querySelector(`[data-sort="${sortBy}"]`).textContent.trim().toLowerCase();
-//           const valueB = b.querySelector(`[data-sort="${sortBy}"]`).textContent.trim().toLowerCase();
-//           return valueA.localeCompare(valueB);
-//         });
-//         tableBody.innerHTML = "";
-//         sortedRows.forEach((row) => {
-//           tableBody.appendChild(row);
-//         });
-//       });
-//     });
-//   });
 
 // ---------------------check valid date in ads edit
 function checkValidDate(elm, event) {
@@ -429,78 +469,10 @@ function checkValidDate(elm, event) {
     elm.setCustomValidity('');
   }
 }
-// -------sort
-
-// async function editPlace(e) {
-//   e.preventDefault();
-
-//   const formData = new FormData(document.getElementById("addPlaceForm"));
-//   const data = Object.fromEntries(formData.entries());
-
-//   let res = await fetch('/diem-dat-bang-quang-cao/editplace', {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data),
-//   });
-
-//   location.reload();
-// }
-
-async function editPlace(e) {
-  e.preventDefault();
-
-  const formData = new FormData(document.getElementById("editPlaceForm"));
-  const data = Object.fromEntries(formData.entries());
-
-  let res = await fetch('/diem-dat-bang-quang-cao/editplacerequest', {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  location.reload();
-}
-
-async function editReport(e) {
-  console.log("ok");
-  e.preventDefault();
-
-  const formData = new FormData(document.getElementById("handleMethodForm"));
-  const data = Object.fromEntries(formData.entries());
-
-  let res = await fetch('/bao-cao/handle-report', {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  location.reload();
-}
-
-async function editAds(e) {
-  e.preventDefault();
-
-  const formData = new FormData(document.getElementById("editAdsFormRequest"));
-  const data = Object.fromEntries(formData.entries());
-
-  let res = await fetch('/bang-quang-cao/editadsrequest', {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  location.reload();
-}
 
 
+
+// -----------------------------sort
 function sortTable(column, tableId) {
   console.log('Sorting by column:', column);
 
@@ -515,17 +487,12 @@ function sortTable(column, tableId) {
           return 0;
       }
 
-      // Convert the formatted date to a JavaScript Date object for comparison
       const dateA = new Date(aValue);
       const dateB = new Date(bValue);
 
-      // Check if the conversion is successful
       if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
-          // If conversion fails, fall back to localeCompare
           return aValue.localeCompare(bValue);
       }
-
-      // Compare dates
       return dateA - dateB;
   });
 
@@ -533,3 +500,73 @@ function sortTable(column, tableId) {
       table.appendChild(row);
   });
 }
+
+
+
+// --------------sendEmail when request ads
+
+// document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
+//   btnConfirm.addEventListener("click", (e) => {
+//     let email=e.target.dataset.email;
+//     let tinhTrang = e.target.dataset.tinhTrang;
+//     let diaChi = e.target.dataset.diaChi;
+//     let khuVuc = e.target.dataset.khuVuc;
+//     let tenBangQuangCao = e.target.dataset.tenBangQuangCao;
+//     let loaiQC = e.target.dataset.loaiQC;
+//     let kichThuoc=e.target.dataset.kichThuoc;
+//     let soLuong = e.target.dataset.soLuong;
+//     let ngayBatDau = e.target.dataset.ngayBatDau;
+//     let ngayKetThuc = e.target.dataset.ngayKetThuc;
+//     console.log(email);
+
+//     const options = {
+//       title: `Gửi email`,
+//       type: "info",
+//       btnOkText: "Gửi",
+//       btnCancelText: "Thoát",
+//       onConfirm: () => {
+//         console.log("Confirm");
+//         sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,loaiQC,soLuong,kichThuoc,ngayBatDau,ngayKetThuc);
+//       },
+//       onCancel: () => {
+//         console.log("Cancel");
+//       },
+//     };
+//     const {
+//       el,
+//       content,
+//       options: confirmedOptions,
+//     } = bs5dialog.confirm(`Bạn có muốn gửi kết quả đến email: ${email} `, options);
+//   });
+// });
+
+// function sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,loaiQC,soLuong,kichThuoc,ngayBatDau,ngayKetThuc){
+//   (function(){
+//     emailjs.init("Hqyh0rZzbl332P-vy"); // Account Public Key
+//   })();
+
+//   var params = {
+//     tinhTrang: tinhTrang,
+//     sendername: 'Trung tâm quản lý bảng quảng cáo',
+//     to: email,
+//     subject: 'KẾT QUẢ CẤP PHÉP QUẢNG CÁO CHO CÔNG TY',
+//     replyto: 'ptudw.group.4@gmail.com',
+//     diaChi: diaChi,
+//     khuVuc: khuVuc,
+//     tenBangQuangCao: tenBangQuangCao,
+//     loaiQC: loaiQC,
+//     kichThuoc: kichThuoc,
+//     soLuong: soLuong,
+//     ngayBatDau: ngayBatDau,
+//     ngayKetThuc: ngayKetThuc,
+//   };
+
+//   var serviceID = "service_zx9km1o"; // Email Service ID
+//   var templateID = "template_uevq8pa"; // Email Template ID
+
+//   emailjs.send(serviceID, templateID, params)
+//   .then( res => {
+//       alert("Email sent successfully!!")
+//   })
+//   .catch();
+// }

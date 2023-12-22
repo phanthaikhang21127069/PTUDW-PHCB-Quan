@@ -2,6 +2,7 @@ const controller = {};
 const models = require("../models");
 const { Op } = require('sequelize');
 const moment = require('moment');
+const pool = require("../database/database");
 
 
 controller.show = async (req, res) => {
@@ -108,6 +109,15 @@ controller.show = async (req, res) => {
     //   khuVuc:"Phường 4, Quận 5"
     // }
   });
+
+
+  // report
+  const report = pool.query(`SELECT id, "lat", "lng", "reportername", "typeofreport", "reporteremail", "reporterphonenumber", "reportcontent", "imagepath1", "imagepath2", "locationreport", "adbannerreportid", "handlemethod", "reportlocation"
+        FROM "reports"
+        ORDER BY "reportlocation" ASC`
+        );
+  const [reportResult] = await Promise.all([report]);
+  res.locals.reports = reportResult.rows;
 
   res.render("manage-list", {
     placedetails: res.locals.placedetails.map(detail => ({
@@ -304,4 +314,21 @@ controller.editRequest = async (req, res) => {
     console.error(error);
   }
 };
+
+
+controller.handleReport = async (req, res) => {
+  let {id, handlemethodedit} = req.body;
+  try {
+          const updateQuery = `UPDATE "reports"
+                              SET "handlemethod" = $1
+                              WHERE id = $2`;
+          await pool.query(updateQuery, [
+            handlemethodedit,
+            id
+          ]);
+          res.send("Đã cập nhật bảng QC!");
+  } catch (error) {
+      console.error(error);
+  }
+}
 module.exports = controller;

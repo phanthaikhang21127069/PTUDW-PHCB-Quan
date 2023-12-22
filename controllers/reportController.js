@@ -10,12 +10,6 @@ controller.show = async (req, res) => {
         );
   try {
     const [reportResult] = await Promise.all([report]);
-
-    // res.locals.reports = reportResult.rows.map((row) => ({
-    //   ...row,
-    //   expireDay: moment(row.expireDay).format('MM/DD/YYYY'),
-    // }));
-
     res.locals.reports = reportResult.rows;
 
     res.locals.places = await models.Place.findAll({
@@ -30,7 +24,7 @@ controller.show = async (req, res) => {
       ],
       where: {
         khuVuc: {
-          [Op.like]: '%Quận 1%', // Use the like operator to check for 'Quận 5' in khuVuc
+          [Op.like]: '%Quận 1%', 
         },
       },
       order: [["createdAt", "DESC"]],

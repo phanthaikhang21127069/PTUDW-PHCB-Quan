@@ -14,7 +14,7 @@
         </div>
         <div class="col-lg-2">
           <button class="btn bg-gradient-secondary w-100 mb-0 toast-btn" type="button" data-target="infoToast"><span
-              class="icon" id="lockIcon">&#128274;</span>Quận 5</i></button>
+              class="icon" id="lockIcon">&#128274;</span>Quận 1</i></button>
         </div>
         <div class="col-lg-2">
           <li class="nav-item dropdown align-items-center" style="display: inline;">
@@ -673,7 +673,7 @@
                     </td>
                     <td class="align-middle text-center">
                       <div class="d-flex align-items-center">
-                        <span class="me-2 text-warning text-xs">{{tinhTrang}}</span>
+                        <span class="me-2 {{#if_eq tinhTrang "Chờ phê duyệt"}}text-warning{{/if_eq}} {{#if_eq tinhTrang "Đã phê duyệt"}}text-success{{/if_eq}} {{#if_eq tinhTrang "Không phê duyệt"}}text-danger{{/if_eq}} font-weight-bold text-xs">{{tinhTrang}}</span>
                       </div>
                     </td>
                     <td class="align-middle" style="white-space : normal; ">
