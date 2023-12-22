@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-    class Requestadsquan extends Model {
+    class Requestads extends Model {
         static associate(models) {
         // define association here
         // Tag.belongsToMany(models.Blog, {
@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
         //   foreignKey: "tagId",
         //   otherKey: "blogId",
         // });
-        Requestadsquan.belongsTo(models.Place, { foreignKey: "placeId" });
+        Requestads.belongsTo(models.Place, { foreignKey: "placeId" });
 
         }
     }
-    Requestadsquan.init(
+    Requestads.init(
         {
             congTy: DataTypes.STRING,
             diaChiCongTy: DataTypes.STRING,
@@ -35,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             sequelize,
-            modelName: "Requestadsquan",
+            modelName: "Requestads",
         }
     );
-    return Requestadsquan;
+    return Requestads;
 };

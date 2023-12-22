@@ -7,7 +7,7 @@ controller.deleteRequest=async(req,res)=>{
   console.log("ok");
   let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
   try {
-    await models.Requestadsquan.destroy(
+    await models.Requestads.destroy(
       {where: {id}}
     );
     res.send("Đã xoá yêu cầu!");
@@ -47,7 +47,7 @@ controller.addRequest = async (req, res) => {
 
 
   try {
-    await models.Requestadsquan.create({
+    await models.Requestads.create({
       congTy,
       diaChiCongTy,
       dienThoai,
@@ -87,7 +87,7 @@ controller.show = async (req, res) => {
       },
     }
   });
-  res.locals.requestadsquans = await models.Requestadsquan.findAll({
+  res.locals.requestads = await models.Requestads.findAll({
     include: [{
       model: models.Place,
       attributes: [
@@ -168,7 +168,7 @@ controller.editRequest = async (req, res) => {
     });
     let placeId = requestPlace.getDataValue("id");
   try {
-    await models.Requestadsquan.update(
+    await models.Requestads.update(
       { 
         congTy,
         diaChiCongTy,

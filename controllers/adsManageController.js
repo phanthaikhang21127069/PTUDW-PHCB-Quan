@@ -103,7 +103,7 @@ controller.show = async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
 
-  res.locals.requestadsquans = await models.Requestadsquan.findAll({
+  res.locals.requestadsquans = await models.Requestads.findAll({
     include: [{
       model: models.Place,
       attributes: [

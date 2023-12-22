@@ -55,9 +55,10 @@ app.get('/', (req, res) => res.redirect('/danh-sach'));
 app.use('/danh-sach', require('./routes/manageListRouter'));
 app.use('/yeu-cau', require('./routes/requestRouter'));
 app.use('/bao-cao', require('./routes/reportRouter'));
-app.use('/thong-bao', require('./routes/notificationRouter'));
 app.use('/diem-dat-bang-quang-cao', require('./routes/adsAddressRouter'));
 app.use('/bang-quang-cao', require('./routes/adsManageRouter'));
+app.use('/ho-so',require('./routes/profileRouter'));
+app.use('/doi-mat-khau',require('./routes/changePasswordRouter'));
 
 
 app.get('/createTables', (req, res) => {
