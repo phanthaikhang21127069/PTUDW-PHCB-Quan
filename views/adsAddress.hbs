@@ -208,7 +208,7 @@
                   {{#each places}}
                   <tr data-phuong="{{khuVuc}}" data-diaChi="{{diaChi}}" data-khuVuc="{{khuVuc}}"
                     data-loaiVT="{{loaiVT}}" data-hinhThuc="{{hinhThuc}}">
-                    <td
+                    <td data-bs-toggle="modal" data-bs-target="#viewPlaceDetailModal"
                       onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}', '{{hinhAnh}}')"
                       style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">
                       <div class="d-flex px-2">
@@ -242,7 +242,7 @@
                         data-dia-chi="{{diaChi}}" data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}"
                         data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinhAnh="{{hinhAnh}}"></i>
                       {{!-- view place detail modal --}}
-                      <div class="modal detail-place fade" id="staticBackdrop" data-bs-backdrop="static"
+                      <div class="modal detail-place fade" id="viewPlaceDetailModal" data-bs-backdrop="static"
                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
@@ -252,7 +252,7 @@
                                   Điểm Đặt Bảng Quảng Cáo</h5>
                               </div>
                               <div class="col-1 px-4">
-                                <button class="btn-close toast-btn" type="button" onclick="closeViewDetailPlace(this)"
+                                <button class="btn-close toast-btn" type="button"
                                   data-bs-dismiss="modal" aria-label="Close" data-target="infoToast"
                                   style="margin-bottom: 0;">
                                   <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>

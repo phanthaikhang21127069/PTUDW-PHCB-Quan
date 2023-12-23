@@ -183,7 +183,7 @@
           <div class="card-body px-0 pb-2">
             <div class="table-responsive p-0">
               {{!-- view ward detail --}}
-              <div class="modal fade detail-ward" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+              <div class="modal fade detail-ward" id="viewWardDetailModal" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
@@ -191,7 +191,7 @@
                       <div>
                         <h5 class="modal-title" id="staticBackdropLabelward">Xem chi tiết</h5>
                       </div>
-                      <button class="btn-close toast-btn" type="button" onclick="closeViewDetail(this)"
+                      <button class="btn-close toast-btn" type="button"
                         data-bs-dismiss="modal" aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
                         <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>
                       </button>
@@ -257,7 +257,8 @@
                 <tbody>
                   {{#each wards}}
                   <tr>
-                    <td
+                    <td data-bs-toggle="modal" data-bs-target="#viewWardDetailModal"
+
                       onclick="openViewDetail(this, '{{wardName}}', '{{districtName}}', '{{zipCode}}', '{{population}}')"
                       style="cursor: pointer;">
                       <div class="d-flex px-2 py-1">
@@ -381,10 +382,10 @@
                 </thead>
                 <tbody>
                   {{#each places}}
-                  <tr data-diaChi="{{diaChi}}" data-khuVuc="{{khuVuc}}" data-loaiVT="{{loaiVT}}"
-                    data-hinhThuc="{{hinhThuc}}">
-                    <td
-                      onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}', '{{hinhAnh}}'))"
+                  <tr data-phuong="{{khuVuc}}" data-diaChi="{{diaChi}}" data-khuVuc="{{khuVuc}}"
+                    data-loaiVT="{{loaiVT}}" data-hinhThuc="{{hinhThuc}}">
+                    <td data-bs-toggle="modal" data-bs-target="#viewPlaceDetailModal"
+                      onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}', '{{hinhAnh}}')"
                       style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">
                       <div class="d-flex px-2">
                         <div>
@@ -415,23 +416,23 @@
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
                         data-bs-target="#addPlaceModal" onclick="showEditPlaceModal(this)" data-id="{{id}}"
                         data-dia-chi="{{diaChi}}" data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}"
-                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}"></i>
+                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinhAnh="{{hinhAnh}}"></i>
                       {{!-- view place detail modal --}}
-                      <div class="modal detail-place fade" id="staticBackdropInfo" data-bs-backdrop="static"
-                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelInfo"
-                        aria-hidden="true">
+                      <div class="modal detail-place fade" id="viewPlaceDetailModal" data-bs-backdrop="static"
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title fw-bold" id="staticBackdropLabelInfo">
-                                Điểm Đặt Bảng Quảng Cáo</h5>
+                              <div>
+                                <h5 class="modal-title fw-bold" id="staticBackdropLabel">
+                                  Điểm Đặt Bảng Quảng Cáo</h5>
+                              </div>
                               <div class="col-1 px-4">
-                                <button class="btn-close toast-btn" type="button" onclick="closeViewDetailPlace(this)"
+                                <button class="btn-close toast-btn" type="button"
                                   data-bs-dismiss="modal" aria-label="Close" data-target="infoToast"
                                   style="margin-bottom: 0;">
                                   <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>
                                 </button>
-
                               </div>
                             </div>
                             <div class="modal-body">
@@ -459,7 +460,6 @@
                                     </div>
                                   </div>
                                 </div>
-
                                 <div class="card bg-dark text-white">
                                   <img id = "hinhAnhPlace"
                                     class="card-img" alt="..."
@@ -566,7 +566,7 @@
           <div class="card-body px-0 pb-2">
             <div class="table-responsive p-0" id="filteredContent">
               <!-- Detail Ads Modal -->
-              <div class="modal detail-ads fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+              <div class="modal detail-ads fade" id="viewAdsDetailModal" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
@@ -574,7 +574,7 @@
                       <div>
                         <h5 class="modal-title" id="staticBackdropLabel">Chi Tiết Bảng Quảng Cáo</h5>
                       </div>
-                      <button class="btn-close toast-btn" type="button" onclick="closeViewAdsDetail(this)"
+                      <button class="btn-close toast-btn" type="button"
                         data-bs-dismiss="modal" aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
                         <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>
                       </button>
@@ -646,7 +646,8 @@
                 <tbody>
                   {{#each placedetails}}
                   <tr data-adName="{{adName}}" data-adQuantity="{{adQuantity}}" data-formattedExpireDay="{{formattedExpireDay}}" data-adSize="{{adSize}}" data-diaChi="{{Place.diaChi}}">
-                    <td style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;"
+                    <td data-bs-toggle="modal" data-bs-target="#viewAdsDetailModal"
+ style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;"
                       onclick="openViewAdsDetail(this, '{{adName}}', '{{Place.diaChi}}', '{{Place.khuVuc}}', '{{adSize}}', '{{adQuantity}}', '{{formattedExpireDay}}')">
                       <div class="d-flex px-2">
                         <div>
@@ -1142,7 +1143,7 @@
           <div class="card-body px-0 pb-2">
             <div class="table-responsive-lg p-0" id="filteredContent">
               {{!-- detail request ads --}}
-              <div class="modal detail-request fade" id="chiTietYeuCau" data-bs-backdrop="static"
+              <div class="modal detail-request fade" id="viewRequestAdsDetailModal" data-bs-backdrop="static"
                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
@@ -1158,7 +1159,7 @@
 
                       </div>
                       <div class="col-1 px-4">
-                        <button class="btn-close toast-btn" type="button" onclick="closeViewRequestDetail(this)"
+                        <button class="btn-close toast-btn" type="button"
                           data-bs-dismiss="modal" aria-label="Close" data-target="infoToast"
                           style="margin-bottom: 0;"><i class="fa fa-times-circle text-dark  fs-4"
                             aria-hidden="true"></i></button>
@@ -1308,7 +1309,7 @@
                   {{#each requestads}}
                   <tr data-phuong="{{Place.khuVuc}}" data-diaChi="{{Place.diaChi}}" data-congTy="{{congTy}}"
                     data-loaiQC="{{loaiQC}}" data-tinhTrang="{{tinhTrang}}">
-                    <td style="cursor: pointer;"
+                    <td data-bs-toggle="modal" data-bs-target="#viewRequestAdsDetailModal" style="cursor: pointer;"
                       onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{loaiQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}')">
                       <div class="d-flex px-2">
                         <div>
