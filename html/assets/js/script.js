@@ -316,6 +316,8 @@ function openViewDetail(elm, wardName, districtName, zipCode, population) {
   ancElm.querySelector('.detail-card :nth-child(4) .span-content').textContent = population;
 }
 
+
+
 function openViewPlaceDetail(elm, diaChi, khuVuc, loaiVT, hinhThuc, quyHoach, hinhAnh) {
   let div = document.createElement('div');
   div.classList.add('modal-backdrop', 'fade', 'show');
@@ -329,12 +331,14 @@ function openViewPlaceDetail(elm, diaChi, khuVuc, loaiVT, hinhThuc, quyHoach, hi
   ancElm.querySelector('.detail-card :nth-child(3) .span-content').textContent = loaiVT;
   ancElm.querySelector('.detail-card :nth-child(4) .span-content').textContent = hinhThuc;
   ancElm.querySelector('.detail-card :nth-child(5) .span-content').textContent = quyHoach;
+  document.querySelector('#hinhAnhPlace').src = hinhAnh;
 
-  ancElm.querySelector('.img-card :nth-child(1)').textContent = diaChi;
-
-  if (hinhAnh) ancElm.querySelector('img').src = hinhAnh;
-
+  // if (hinhAnh) ancElm.querySelector('img').src = hinhAnh;
 }
+
+
+
+
 
 function openViewAdsDetail(elm, adName, diaChi, khuVuc, adSize, adQuantity, expireDay, imagePath) {
   let div = document.createElement('div');
@@ -405,7 +409,6 @@ function openViewRequestDetail(elm, congTy,
   ancElm.querySelector('.detail-card-part-3 :nth-child(6) .span-content').textContent = ngayKetThuc;
 
   ancElm.querySelector('#img-title').textContent = diaChi;
-
 }
 
 function closeViewDetail(elm) {
@@ -433,7 +436,7 @@ function closeViewAdsDetail(elm) {
 }
 
 
-// ---------------------searching
+// ---------------------filter
 document.getElementById('phuongDropdown').addEventListener('change', function () {
   var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
   // Check if "All Phường" is selected
@@ -502,3 +505,22 @@ function sortTable(column, tableId) {
       table.appendChild(row);
   });
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const searchInput = document.getElementById("searchInput");
+
+  searchInput.addEventListener("input", function () {
+    const searchText = searchInput.value.toLowerCase();
+    const tableRows = document.querySelectorAll("#filteredContent tbody tr");
+
+    tableRows.forEach((row) => {
+      const rowText = row.textContent.toLowerCase();
+      if (rowText.includes(searchText)) {
+        row.style.display = ""; 
+      } else {
+        row.style.display = "none";
+      }
+    });
+  });
+});

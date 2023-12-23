@@ -183,7 +183,7 @@
                       <div class="input">
                         <label class="form-label">Ngày bắt đầu hợp đồng:</label>
                         <input type="text" class="form-control " name="ngayBatDau" id="ngayBatDauEditRequest"
-                          required />
+                          oninput="checkValidDate(this, event)" required />
 
                       </div>
                     </div>
@@ -191,7 +191,7 @@
                       <div class="input">
                         <label class="form-label">Ngày kết thúc hợp đồng:</label>
                         <input type="text" class="form-control " name="ngayKetThuc" id="ngayKetThucEditRequest"
-                          required />
+                          oninput="checkValidDate(this, event)" required />
 
                       </div>
                     </div>
@@ -443,7 +443,7 @@
                               <label class="form-label">Ngày bắt đầu hợp đồng:</label>
 
 
-                              <input type="text" class=" form-control " value="" id="ngayBatDau" name="ngayBatDau"
+                              <input type="text" class=" form-control " value="" id="ngayBatDau" name="ngayBatDau" placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)"
                                 required />
                             </div>
                           </div>
@@ -452,7 +452,7 @@
                               <label class="form-label">Ngày kết thúc hợp
                                 đồng:</label>
                               <input type="text" class="form-control " value="" id="ngayKetThuc" name="ngayKetThuc"
-                                required />
+                               placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
 
                             </div>
                           </div>
@@ -654,7 +654,7 @@
                   <tr data-phuong="{{Place.khuVuc}}" data-diaChi="{{Place.diaChi}}" data-congTy="{{congTy}}"
                     data-loaiQC="{{loaiQC}}" data-tinhTrang="{{tinhTrang}}">
                     <td style="cursor: pointer;"
-                      onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{loaiQC}}','{{kichThuoc}}','{{soLuong}}','{{ngayBatDau}}','{{ngayKetThuc}}','{{tinhTrang}}')">
+                      onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{loaiQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}')">
                       <div class="d-flex px-2">
                         <div>
                           <img src="../assets/img/city.jpeg" class="avatar avatar-sm me-3 border-radius-lg"
@@ -685,8 +685,8 @@
                         data-khu-vuc="{{Place.khuVuc}}" data-loai-v-t="{{Place.loaiVT}}"
                         data-longitude="{{Place.longitude}}" data-latitude="{{Place.latitude}}"
                         data-ten-bang-quang-cao="{{tenBangQuangCao}}" data-loai-q-c="{{loaiQC}}"
-                        data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}" data-ngay-bat-dau="{{ngayBatDau}}"
-                        data-ngay-ket-thuc="{{ngayKetThuc}}"></i>
+                        data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}" data-ngay-bat-dau="{{formattedNgayBatDau}}"
+                        data-ngay-ket-thuc="{{formattedNgayKetThuc}}"></i>
                       <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn" data-id={{id}}></i>
                     </td>
                   </tr>

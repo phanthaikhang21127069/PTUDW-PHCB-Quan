@@ -105,9 +105,11 @@ controller.show = async (req, res) => {
       "tinhTrang"
     ],
     order: [["congTy", "ASC"]],
-    // where:{
-    //   khuVuc:"Phường 4, Quận 5"
-    // }
+    where: {
+      '$Place.khuVuc$': {
+        [Op.like]: '%Quận 1%', // Use the like operator to check for 'Quận 5' in khuVuc
+      },
+    },
   });
 
 
@@ -123,7 +125,12 @@ controller.show = async (req, res) => {
     placedetails: res.locals.placedetails.map(detail => ({
       ...detail.toJSON(),
       formattedExpireDay: moment(detail.expireDay).format('MM/DD/YYYY'),
-    })),  
+    })),
+    requestads: res.locals.requestads.map(detail => ({
+      ...detail.toJSON(),
+      formattedNgayBatDau: moment(detail.ngayBatDau).format('MM/DD/YYYY'),
+      formattedNgayKetThuc: moment(detail.ngayKetThuc).format('MM/DD/YYYY'),
+    })),   
   });
 };
 
@@ -241,6 +248,22 @@ controller.addRequest = async (req, res) => {
   } = req.body;
   console.log(req.body);
 
+  const ngayBatDauDate = moment(ngayBatDau, 'MM/DD/YYYY', true);
+  const ngayKetThucDate = moment(ngayKetThuc, 'MM/DD/YYYY', true);
+
+  const isValidDateBD = ngayBatDauDate.isValid();
+  const isValidDateKT = ngayKetThucDate.isValid();
+
+  if (!isValidDateBD) {
+    return res.json({ error: true, message: 'Ngày Bắt Đầu không hợp lệ!' });
+  }
+
+  if (!isValidDateKT) {
+    return res.json({ error: true, message: 'Ngày Kết Thúc không hợp lệ!' });
+  }
+  if (ngayBatDauDate.isAfter(ngayKetThucDate)) {
+    return res.json({ error: true, message: 'Ngày Bắt Đầu không thể sau Ngày Kết Thúc!' });
+  }
   const requestPlace = await models.Place.findOne({
     attributes: ["id"],
     where: { diaChi: diaChiRequest }
@@ -284,7 +307,25 @@ controller.editRequest = async (req, res) => {
     ngayBatDau,
     ngayKetThuc,
     tinhTrang} = req.body;
+
+    const ngayBatDauDate = moment(ngayBatDau, 'MM/DD/YYYY', true);
+    const ngayKetThucDate = moment(ngayKetThuc, 'MM/DD/YYYY', true);
   
+    const isValidDateBD = ngayBatDauDate.isValid();
+    const isValidDateKT = ngayKetThucDate.isValid();
+  
+    if (!isValidDateBD) {
+      return res.json({ error: true, message: 'Ngày Bắt Đầu không hợp lệ!' });
+    }
+  
+    if (!isValidDateKT) {
+      return res.json({ error: true, message: 'Ngày Kết Thúc không hợp lệ!' });
+    }
+    
+    if (ngayBatDauDate.isAfter(ngayKetThucDate)) {
+      return res.json({ error: true, message: 'Ngày Bắt Đầu không thể sau Ngày Kết Thúc!' });
+    }
+
     const requestPlace = await models.Place.findOne({ 
       attributes: ["id"],
       where: {diaChi: diaChiRequest} 
@@ -314,7 +355,6 @@ controller.editRequest = async (req, res) => {
     console.error(error);
   }
 };
-
 
 controller.handleReport = async (req, res) => {
   let {id, handlemethodedit} = req.body;

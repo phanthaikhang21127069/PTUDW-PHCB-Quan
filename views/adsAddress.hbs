@@ -209,7 +209,7 @@
                   <tr data-phuong="{{khuVuc}}" data-diaChi="{{diaChi}}" data-khuVuc="{{khuVuc}}"
                     data-loaiVT="{{loaiVT}}" data-hinhThuc="{{hinhThuc}}">
                     <td
-                      onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}')"
+                      onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}', '{{hinhAnh}}')"
                       style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">
                       <div class="d-flex px-2">
                         <div>
@@ -240,16 +240,17 @@
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
                         data-bs-target="#addPlaceModal" onclick="showEditPlaceModal(this)" data-id="{{id}}"
                         data-dia-chi="{{diaChi}}" data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}"
-                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}"></i>
+                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinhAnh="{{hinhAnh}}"></i>
                       {{!-- view place detail modal --}}
-                      <div class="modal detail-place fade" id="staticBackdropInfo" data-bs-backdrop="static"
-                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelInfo"
-                        aria-hidden="true">
+                      <div class="modal detail-place fade" id="staticBackdrop" data-bs-backdrop="static"
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title fw-bold" id="staticBackdropLabelInfo">
-                                Điểm Đặt Bảng Quảng Cáo</h5>
+                              <div>
+                                <h5 class="modal-title fw-bold" id="staticBackdropLabel">
+                                  Điểm Đặt Bảng Quảng Cáo</h5>
+                              </div>
                               <div class="col-1 px-4">
                                 <button class="btn-close toast-btn" type="button" onclick="closeViewDetailPlace(this)"
                                   data-bs-dismiss="modal" aria-label="Close" data-target="infoToast"
@@ -283,21 +284,14 @@
                                     </div>
                                   </div>
                                 </div>
-
                                 <div class="card bg-dark text-white">
-                                  <img src="{{#if hinhAnh}}{{hinhAnh}}{{else}}/assets/img/places/place.png{{/if}}"
+                                  <img id = "hinhAnhPlace"
                                     class="card-img" alt="..."
                                     style="height: 200px ;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover;">
-                                  <div class="card-img-overlay img-card">
-                                    <h5 class="card-title text-white">
-                                    </h5>
-                                  </div>
                                 </div>
                               </div>
                             </div>
                             <div class="modal-footer" style="justify-content: space-around;">
-                              <button type="button" class="btn btn-primary" data-bs-target="#exampleModalTogglechitiet"
-                                data-bs-toggle="modal" data-bs-dismiss="modal">Chi tiết</button>
                             </div>
                           </div>
                         </div>
@@ -595,13 +589,3 @@
     {{>footer}}
   </div>
 </main>
-
-<script>
-  // Đọc thông báo lỗi từ JSON trả về
-  var errorMessage = {{ errorMessage }};
-
-  // Nếu có thông báo lỗi, hiển thị cảnh báo
-  if (errorMessage) {
-    alert(errorMessage);
-  }
-</script>

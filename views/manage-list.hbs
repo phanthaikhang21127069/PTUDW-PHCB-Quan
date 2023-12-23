@@ -384,7 +384,7 @@
                   <tr data-diaChi="{{diaChi}}" data-khuVuc="{{khuVuc}}" data-loaiVT="{{loaiVT}}"
                     data-hinhThuc="{{hinhThuc}}">
                     <td
-                      onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}')"
+                      onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}', '{{hinhAnh}}'))"
                       style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">
                       <div class="d-flex px-2">
                         <div>
@@ -461,19 +461,13 @@
                                 </div>
 
                                 <div class="card bg-dark text-white">
-                                  <img src="{{#if hinhAnh}}{{hinhAnh}}{{else}}/assets/img/places/place.png{{/if}}"
+                                  <img id = "hinhAnhPlace"
                                     class="card-img" alt="..."
                                     style="height: 200px ;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover;">
-                                  <div class="card-img-overlay img-card">
-                                    <h5 class="card-title text-white">
-                                    </h5>
-                                  </div>
                                 </div>
                               </div>
                             </div>
                             <div class="modal-footer" style="justify-content: space-around;">
-                              <button type="button" class="btn btn-primary" data-bs-target="#exampleModalTogglechitiet"
-                                data-bs-toggle="modal" data-bs-dismiss="modal">Chi tiết</button>
                             </div>
                           </div>
                         </div>
@@ -570,7 +564,7 @@
             </div>
           </div>
           <div class="card-body px-0 pb-2">
-            <div class="table-responsive p-0">
+            <div class="table-responsive p-0" id="filteredContent">
               <!-- Detail Ads Modal -->
               <div class="modal detail-ads fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -914,7 +908,7 @@
                           <div class="col">
                             <div class="input">
                               <label class="form-label">Ngày bắt đầu hợp đồng:</label>
-                              <input type="text" class="form-control " name="ngayBatDau" id="ngayBatDauEditRequest"
+                              <input type="text" class="form-control " name="ngayBatDau" id="ngayBatDauEditRequest" oninput="checkValidDate(this, event)"
                                 required />
 
                             </div>
@@ -922,7 +916,7 @@
                           <div class="col">
                             <div class="input">
                               <label class="form-label">Ngày kết thúc hợp đồng:</label>
-                              <input type="text" class="form-control " name="ngayKetThuc" id="ngayKetThucEditRequest"
+                              <input type="text" class="form-control " name="ngayKetThuc" id="ngayKetThucEditRequest" oninput="checkValidDate(this, event)"
                                 required />
 
                             </div>
@@ -1105,7 +1099,7 @@
 
 
                               <input type="text" class=" form-control " value="" id="ngayBatDau" name="ngayBatDau"
-                                required />
+                                placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
                             </div>
                           </div>
                           <div class="col">
@@ -1113,7 +1107,7 @@
                               <label class="form-label">Ngày kết thúc hợp
                                 đồng:</label>
                               <input type="text" class="form-control " value="" id="ngayKetThuc" name="ngayKetThuc"
-                                required />
+                                placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
 
                             </div>
                           </div>
@@ -1315,7 +1309,7 @@
                   <tr data-phuong="{{Place.khuVuc}}" data-diaChi="{{Place.diaChi}}" data-congTy="{{congTy}}"
                     data-loaiQC="{{loaiQC}}" data-tinhTrang="{{tinhTrang}}">
                     <td style="cursor: pointer;"
-                      onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{loaiQC}}','{{kichThuoc}}','{{soLuong}}','{{ngayBatDau}}','{{ngayKetThuc}}','{{tinhTrang}}')">
+                      onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{loaiQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}')">
                       <div class="d-flex px-2">
                         <div>
                           <img src="../assets/img/city.jpeg" class="avatar avatar-sm me-3 border-radius-lg"
@@ -1346,8 +1340,8 @@
                         data-khu-vuc="{{Place.khuVuc}}" data-loai-v-t="{{Place.loaiVT}}"
                         data-longitude="{{Place.longitude}}" data-latitude="{{Place.latitude}}"
                         data-ten-bang-quang-cao="{{tenBangQuangCao}}" data-loai-q-c="{{loaiQC}}"
-                        data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}" data-ngay-bat-dau="{{ngayBatDau}}"
-                        data-ngay-ket-thuc="{{ngayKetThuc}}"></i>
+                        data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}" data-ngay-bat-dau="{{formattedNgayBatDau}}"
+                        data-ngay-ket-thuc="{{formattedNgayKetThuc}}"></i>
                       <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn" data-id={{id}}></i>
                     </td>
                   </tr>
