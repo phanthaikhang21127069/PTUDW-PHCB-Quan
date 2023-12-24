@@ -552,3 +552,72 @@ var loadFile = function (event) {
   var image = document.getElementById("output");
   image.src = URL.createObjectURL(event.target.files[0]);
 };
+
+
+
+document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
+  console.log("click ok");
+  btnConfirm.addEventListener("click", (e) => {
+    let email=e.target.dataset.email;
+    let tinhTrang = e.target.dataset.tinhTrang;
+    let diaChi = e.target.dataset.diaChi;
+    let khuVuc = e.target.dataset.khuVuc;
+    let tenBangQuangCao = e.target.dataset.tenBangQuangCao;
+    let loaiQC = e.target.dataset.loaiQC;
+    let kichThuoc=e.target.dataset.kichThuoc;
+    let soLuong = e.target.dataset.soLuong;
+    let ngayBatDau = e.target.dataset.ngayBatDau;
+    let ngayKetThuc = e.target.dataset.ngayKetThuc;
+    console.log(email);
+
+    const options = {
+      title: `Gửi email`,
+      type: "info",
+      btnOkText: "Gửi",
+      btnCancelText: "Thoát",
+      onConfirm: () => {
+        console.log("Confirm");
+        sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,loaiQC,soLuong,kichThuoc,ngayBatDau,ngayKetThuc);
+      },
+      onCancel: () => {
+        console.log("Cancel");
+      },
+    };
+    const {
+      el,
+      content,
+      options: confirmedOptions,
+    } = bs5dialog.confirm(`Bạn có muốn gửi kết quả đến email: ${email} `, options);
+  });
+});
+
+function sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,loaiQC,soLuong,kichThuoc,ngayBatDau,ngayKetThuc){
+  (function(){
+    emailjs.init("Hqyh0rZzbl332P-vy"); // Account Public Key
+  })();
+
+  var params = {
+    tinhTrang: tinhTrang,
+    sendername: 'Trung tâm quản lý bảng quảng cáo',
+    to: email,
+    subject: 'KẾT QUẢ CẤP PHÉP QUẢNG CÁO CHO CÔNG TY',
+    replyto: 'ptudw.group.4@gmail.com',
+    diaChi: diaChi,
+    khuVuc: khuVuc,
+    tenBangQuangCao: tenBangQuangCao,
+    loaiQC: loaiQC,
+    kichThuoc: kichThuoc,
+    soLuong: soLuong,
+    ngayBatDau: ngayBatDau,
+    ngayKetThuc: ngayKetThuc,
+  };
+
+  var serviceID = "service_zx9km1o"; // Email Service ID
+  var templateID = "template_uevq8pa"; // Email Template ID
+
+  emailjs.send(serviceID, templateID, params)
+  .then( res => {
+      alert("Email sent successfully!!")
+  })
+  .catch();
+}
