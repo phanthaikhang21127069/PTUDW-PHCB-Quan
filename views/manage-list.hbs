@@ -1294,7 +1294,7 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                       Tình trạng
                     </th>
-                    <th></th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tùy chọn</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1335,7 +1335,21 @@
                         data-ten-bang-quang-cao="{{tenBangQuangCao}}" data-loai-q-c="{{loaiQC}}"
                         data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}" data-ngay-bat-dau="{{formattedNgayBatDau}}"
                         data-ngay-ket-thuc="{{formattedNgayKetThuc}}"></i>
-                      <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn" data-id={{id}}></i>
+                      <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn me-3" data-id={{id}}></i>
+
+                      <i role="button" class="fa-solid fa-envelope text-info email-request-btn" 
+                        data-id="{{id}}" data-cong-ty="{{congTy}}" data-dia-chi-cong-ty="{{diaChiCongTy}}" data-dien-thoai="{{dienThoai}}" data-email="{{email}}"
+                        data-dia-chi="{{Place.diaChi}}" data-khu-vuc="{{Place.khuVuc}}"
+                        data-loai-v-t="{{Place.loaiVT}}"
+                        data-longitude="{{Place.longitude}}"
+                        data-latitude="{{Place.latitude}}"
+                        data-ten-bang-quang-cao="{{tenBangQuangCao}}"
+                        data-loai-q-c="{{loaiQC}}"
+                        data-kich-thuoc="{{kichThuoc}}"
+                        data-so-luong="{{soLuong}}"
+                        data-ngay-bat-dau="{{formattedNgayBatDau}}"
+                        data-ngay-ket-thuc="{{formattedNgayKetThuc}}"
+                        data-tinh-trang="{{tinhTrang}}"></i>
                     </td>
                   </tr>
                   {{/each}}
@@ -1429,7 +1443,7 @@
                       Hình thức báo cáo</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
                       Tình trạng</th>
-                    <th></th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tùy chọn</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1463,14 +1477,19 @@
                         Đang xử lý
                         {{/if}}</span>
                     </td>
-                    <td class="align-middle" style="white-space : normal; ">
+                    <td class="align-middle text-center" style="white-space : normal; ">
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal" 
                         data-bs-target="#handleMethod" onclick="showHandleMethod(this)" data-id="{{id}}"
                         data-reportername="{{reportername}}" data-typeofreport="{{typeofreport}}"
                         data-reporterphonenumber="{{reporterphonenumber}}" data-reporteremail="{{reporteremail}}"
-                        data-reportcontent="{{{reportername}}}" data-handlemethod="{{handlemethod}}" data-reportlocation="{{reportlocation}}" data-imagepath1="{{imagepath1}} "
+                        data-reportcontent="{{reportcontent}}" data-handlemethod="{{handlemethod}}" data-reportlocation="{{reportlocation}}" data-imagepath1="{{imagepath1}} "
                         data-imagepath2="{{imagepath2}}"></i>
-                      <!-- modal -->
+
+                      <i role="button" class="fa-solid fa-envelope text-info email-report-btn" data-id="{{id}}"
+                        data-reportername="{{reportername}}" data-typeofreport="{{typeofreport}}"
+                        data-reporterphonenumber="{{reporterphonenumber}}" data-reporteremail="{{reporteremail}}"
+                        data-reportcontent="{{{reportcontent}}}" data-handlemethod="{{handlemethod}}"
+                        data-reportlocation="{{reportlocation}}"></i>
                       
             </div>
             </td>
@@ -1511,9 +1530,9 @@
           <div class="container-fluid">
             <h6 class="text-primary reportlocation"></h6>
             <div class="row g-2">
-              <div class="col mb-3">
+              <div class="col mb-3 me-2">
                 <h6>Phần 1: Thông Tin Báo Cáo</h6>
-                <div class="card">
+                <div class="card h-100">
                   <div class="card-body">
                     <h6 class="text-sm font-weight-normal mb-1">
                       <span class="font-weight-bold">Người báo cáo: </span>
@@ -1533,17 +1552,17 @@
                     </h6>
                     <h6 class="text-sm font-weight-normal mb-1">
                       <span class="font-weight-bold">Nội dung báo cáo: </span>
-                      <span class="span-content" id="reportcontent"></span>
+                      <span class="span-content" id="reportcontent" style="font-size:14px; font-wieght:bold; color:#344767;font-family: Roboto, Helvetica, Arial, sans-serif;"></span>
                     </h6>
                   </div>
                 </div>
               </div>
-              <div class="col mb-2 ms-2">
+              <div class="col mb-3">
                 <h6>Phần 2: Xử lý báo cáo</h6>
-                <div class="card" style ="height:173px">
+                <div class="card h-100">
                   <div class="card-body">
                     <div class="col mb-3">
-                      <h6 class="text-sm font-weight-normal mb-1">
+                      <h6 class="text-sm font-weight-normal">
                         <span class="font-weight-bold">Thời điểm xử lý: </span>
                         <span>
                           <script>
@@ -1555,10 +1574,10 @@
                           </script>
                         </span>
                       </h6>
-                      <h6 class="text-sm font-weight-normal mb-1">
+                      <h6 class="text-sm font-weight-normal">
                         <span class="font-weight-bold">Cách thức xử lý: </span>
-                        <input type="text" id="handlemethod" name="handlemethodedit" class=" mt-1 form-control"
-                          style="height: 72px" placeholder="" disabled />
+                        <input style = "height: 75px" type="text" id="handlemethod" name="handlemethodedit" class="mt-2 form-control"
+                         placeholder="" disabled />
                       </h6>
                     </div>
                   </div>

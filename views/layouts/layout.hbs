@@ -24,12 +24,13 @@
 
   <link rel="stylesheet" href="/assets/vendor/libs/bs5dialog/bs5dialog.css" />
 
-  {{!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
+  {{!--
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
   <!-- Helpers -->
   <script src="/assets/vendor/js/helpers.js"></script>
   <script src="/assets/vendor/libs/bs5dialog/bs5dialog.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 </head>
 
@@ -43,7 +44,7 @@
   <script src="/assets/js/perfect-scrollbar.min.js"></script>
   <script src="/assets/js/smooth-scrollbar.min.js"></script>
   <script src="/assets/js/script.js"></script>
-  
+
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -55,23 +56,25 @@
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.getElementById("searchInput");
+      const searchInput = document.getElementById("searchInput");
 
-    searchInput.addEventListener("input", function () {
-      const searchText = searchInput.value.toLowerCase();
-      const tableRows = document.querySelectorAll("#filteredContent tbody tr");
+      searchInput.addEventListener("input", function () {
+        const searchText = searchInput.value.toLowerCase();
+        const tableRows = document.querySelectorAll("#filteredContent tbody tr");
 
-      tableRows.forEach((row) => {
-        const rowText = row.textContent.toLowerCase();
-        if (rowText.includes(searchText)) {
-          row.style.display = ""; 
-        } else {
-          row.style.display = "none";
-        }
+        tableRows.forEach((row) => {
+          const rowText = row.textContent.toLowerCase();
+          if (rowText.includes(searchText)) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        });
       });
     });
-  });
   </script>
+
+
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
@@ -80,8 +83,10 @@
 
 
   <!-- Add this before the closing body tag -->
-  {{!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
-  {{!-- <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script> --}}
+  {{!--
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
+  {{!--
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script> --}}
 
 </body>
 

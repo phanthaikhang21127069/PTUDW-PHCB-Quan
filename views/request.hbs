@@ -609,7 +609,7 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                       Tình trạng
                     </th>
-                    <th></th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tùy chọn</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -655,21 +655,19 @@
                         
                       <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn me-3" data-id={{id}}></i>
                       
-                      <i role="button" class="fa-solid fa-envelope text-info email-request-btn" data-id="{{id}}"
-                                                data-cong-ty="{{congTy}}" data-dia-chi-cong-ty="{{diaChiCongTy}}" data-dien-thoai="{{dienThoai}}" data-email="{{email}}"
-data-dia-chi="{{Place.diaChi}}" data-khu-vuc="{{Place.khuVuc}}"
-    data-loai-v-t="{{Place.loaiVT}}"
-    data-longitude="{{Place.longitude}}"
-    data-latitude="{{Place.latitude}}"
-    data-ten-bang-quang-cao="{{tenBangQuangCao}}"
-    data-loai-q-c="{{loaiQC}}"
-    data-kich-thuoc="{{kichThuoc}}"
-    data-so-luong="{{soLuong}}"
-    data-ngay-bat-dau="{{formattedNgayBatDau}}"
-    data-ngay-ket-thuc="{{formattedNgayKetThuc}}"
-    data-tinh-trang="{{tinhTrang}}"></i>
-
-    
+                      <i role="button" class="fa-solid fa-envelope text-info email-request-btn" 
+                        data-id="{{id}}" data-cong-ty="{{congTy}}" data-dia-chi-cong-ty="{{diaChiCongTy}}" data-dien-thoai="{{dienThoai}}" data-email="{{email}}"
+                        data-dia-chi="{{Place.diaChi}}" data-khu-vuc="{{Place.khuVuc}}"
+                        data-loai-v-t="{{Place.loaiVT}}"
+                        data-longitude="{{Place.longitude}}"
+                        data-latitude="{{Place.latitude}}"
+                        data-ten-bang-quang-cao="{{tenBangQuangCao}}"
+                        data-loai-q-c="{{loaiQC}}"
+                        data-kich-thuoc="{{kichThuoc}}"
+                        data-so-luong="{{soLuong}}"
+                        data-ngay-bat-dau="{{formattedNgayBatDau}}"
+                        data-ngay-ket-thuc="{{formattedNgayKetThuc}}"
+                        data-tinh-trang="{{tinhTrang}}"></i>
                     </td>
                   </tr>
                   {{/each}}
