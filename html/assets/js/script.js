@@ -45,10 +45,10 @@ function checkFormChanges(currentValues) {
 
   // So sánh giá trị hiện tại với giá trị ban đầu
   if (currentValues.diaChi !== document.querySelector("#diaChiEdit").value ||
-      currentValues.khuVuc !== document.querySelector("#khuVucEdit").value ||
-      currentValues.loaiVT !== document.querySelector("#loaiVTEdit").value ||
-      currentValues.hinhThuc !== document.querySelector("#hinhThucEdit").value ||
-      currentValues.quyHoach !== document.querySelector("#quyHoachEdit").checked) {
+    currentValues.khuVuc !== document.querySelector("#khuVucEdit").value ||
+    currentValues.loaiVT !== document.querySelector("#loaiVTEdit").value ||
+    currentValues.hinhThuc !== document.querySelector("#hinhThucEdit").value ||
+    currentValues.quyHoach !== document.querySelector("#quyHoachEdit").checked) {
     isFormChanged = true;
   }
 
@@ -114,10 +114,10 @@ function checkFormChanges_ads(currentValues) {
   let isFormChanged = false;
 
   if (currentValues.diaChi !== document.querySelector("#adNameEdit").value ||
-      currentValues.khuVuc !== document.querySelector("#adSizeEdit").value ||
-      currentValues.loaiVT !== document.querySelector("#diaChiAdsEdit").value ||
-      currentValues.hinhThuc !== document.querySelector("#adQuantityEdit").value ||
-      currentValues.quyHoach !== document.querySelector("#expireDayEdit").value) {
+    currentValues.khuVuc !== document.querySelector("#adSizeEdit").value ||
+    currentValues.loaiVT !== document.querySelector("#diaChiAdsEdit").value ||
+    currentValues.hinhThuc !== document.querySelector("#adQuantityEdit").value ||
+    currentValues.quyHoach !== document.querySelector("#expireDayEdit").value) {
     isFormChanged = true;
   }
 
@@ -134,9 +134,25 @@ function showEditPlaceModal(btn) {
   document.querySelector("#quyHoachEdit").checked = btn.dataset.quyHoach == "ĐÃ QUY HOẠCH" ? true : false;
   document.querySelector("#liDoChinhSua").value = '';
   initializeEditForm();
-
 }
 
+function openViewPlaceDetail(btn) {
+  // let div = document.createElement('div');
+  // div.classList.add('modal-backdrop', 'fade', 'show');
+  // document.body.appendChild(div);
+
+  // let ancElm = elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal');
+  // ancElm.classList.add('show');
+  // elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal.detail-place').style.display = "block";
+
+  // if (hinhAnh) ancElm.querySelector('img').src = hinhAnh;
+  document.querySelector("#idPlaceDT").textContent = btn.dataset.id;
+  document.querySelector("#diaChiVaKhuVucDT").textContent = btn.dataset.diaChi + ", " + btn.dataset.khuVuc;
+  document.querySelector("#loaiVTDT").textContent = btn.dataset.loaiVt;
+  document.querySelector("#hinhThucDT").textContent = btn.dataset.hinhThuc;
+  document.querySelector("#tinhTrangDT").textContent = btn.dataset.quyHoach;
+  document.querySelector("#hinhAnhPlace").src = btn.dataset.hinhAnh;
+}
 
 function showContinueEditPlaceModal(btn) {
   document.querySelector("#idPlaceRequest").value = btn.dataset.id;
@@ -176,14 +192,13 @@ function showEditRequestModal(btn) {
   document.querySelector("#dienThoaiEditRequest").value = btn.dataset.dienThoai;
   document.querySelector("#emailEditRequest").value = btn.dataset.email;
   document.querySelector("#diaChiEditRequest").value = btn.dataset.diaChi;
-  
+
   document.querySelector("#tenBangQuangCaoEditRequest").value = btn.dataset.tenBangQuangCao;
   document.querySelector("#loaiQCEditRequest").value = btn.dataset.loaiQC;
   document.querySelector("#kichThuocEditRequest").value = btn.dataset.kichThuoc;
   document.querySelector("#soLuongEditRequest").value = btn.dataset.soLuong;
   document.querySelector("#ngayBatDauEditRequest").value = btn.dataset.ngayBatDau;
   document.querySelector("#ngayKetThucEditRequest").value = btn.dataset.ngayKetThuc;
-  console.log(btn.dataset.loaiQC);
 }
 
 function showHandleMethod(btn) {
@@ -206,27 +221,27 @@ function showHandleMethod(btn) {
     reportcontentInput.setAttribute('disabled', 'disabled');
   }
 
-  if (btn.dataset.handlemethod){
-    document.querySelector('.status :nth-child(1) .span-content').textContent =  "Đã xử lý";
+  if (btn.dataset.handlemethod) {
+    document.querySelector('.status :nth-child(1) .span-content').textContent = "Đã xử lý";
     document.querySelector('.status :nth-child(1) .span-content').style.color = "green";
     xulybutton.setAttribute('disabled', 'disabled');
   }
   else {
-    document.querySelector('.status :nth-child(1) .span-content').textContent =  "Đang xử lý";
+    document.querySelector('.status :nth-child(1) .span-content').textContent = "Đang xử lý";
     document.querySelector('.status :nth-child(1) .span-content').style.color = "red";
     xulybutton.removeAttribute('disabled');
   }
-  document.querySelector('.reportlocation').textContent =  btn.dataset.reportlocation;
+  document.querySelector('.reportlocation').textContent = btn.dataset.reportlocation;
 }
 
 // -------------------------onsubmit() edit
 async function editRequest(e) {
-  
+
   e.preventDefault();
 
   const formData = new FormData(document.getElementById("editRequestForm"));
   const data = Object.fromEntries(formData.entries());
-  
+
 
   let res = await fetch(`/yeu-cau/editrequest`, {
     method: "PUT",
@@ -234,7 +249,7 @@ async function editRequest(e) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-    
+
   });
 
   location.reload();
@@ -296,9 +311,9 @@ async function editAds(e) {
 // ---------------------open view modal, and close modal
 function openCustomDown(elm) {
   if (elm.parentElement.querySelector('.customDown').style.display === "none")
-      elm.parentElement.querySelector('.customDown').style.display = "block";
+    elm.parentElement.querySelector('.customDown').style.display = "block";
   else
-      elm.parentElement.querySelector('.customDown').style.display = "none";
+    elm.parentElement.querySelector('.customDown').style.display = "none";
 }
 
 function openViewDetail(elm, wardName, districtName, zipCode, population) {
@@ -319,22 +334,7 @@ function openViewDetail(elm, wardName, districtName, zipCode, population) {
 
 
 
-function openViewPlaceDetail(elm, diaChi, khuVuc, loaiVT, hinhThuc, quyHoach, hinhAnh) {
-  // let div = document.createElement('div');
-  // div.classList.add('modal-backdrop', 'fade', 'show');
-  // document.body.appendChild(div);
 
-  // let ancElm = elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal');
-  // ancElm.classList.add('show');
-  // elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal.detail-place').style.display = "block";
-  let modal = document.querySelector("#viewPlaceDetailModal");
-  modal.querySelector('.detail-card :nth-child(1)').textContent = diaChi + ", " + khuVuc;
-  modal.querySelector('.detail-card :nth-child(3) .span-content').textContent = loaiVT;
-  modal.querySelector('.detail-card :nth-child(4) .span-content').textContent = hinhThuc;
-  modal.querySelector('.detail-card :nth-child(5) .span-content').textContent = quyHoach;
-  modal.querySelector('#hinhAnhPlace').src = hinhAnh;
-  // if (hinhAnh) ancElm.querySelector('img').src = hinhAnh;
-}
 
 function openViewAdsDetail(elm, adName, diaChi, khuVuc, adSize, adQuantity, expireDay, imagePath) {
   // let div = document.createElement('div');
@@ -381,13 +381,13 @@ function openViewRequestDetail(elm, congTy,
   let modal = document.querySelector("#viewRequestAdsDetailModal");
 
   modal.querySelector('#tinhTrang').textContent = tinhTrang;
-  if (tinhTrang="Chờ phê duyệt") {
+  if (tinhTrang = "Chờ phê duyệt") {
     modal.querySelector('#tinhTrang').classList.add('text-warning');
   }
-  else if (tinhTrang="Đã phê duyệt") {
+  else if (tinhTrang = "Đã phê duyệt") {
     modal.querySelector('#tinhTrang').classList.add('text-success');
   }
-  else if (tinhTrang="Không phê duyệt") {
+  else if (tinhTrang = "Không phê duyệt") {
     modal.querySelector('#tinhTrang').classList.add('text-danger');
   }
   modal.querySelector('.detail-card-part-1 :nth-child(1) .span-content').textContent = congTy;
@@ -435,26 +435,64 @@ function openViewRequestDetail(elm, congTy,
 // }
 
 // ---------------------filter
+// document.getElementById('phuongDropdown').addEventListener('change', function () {
+//   var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+//   // Check if "All Phường" is selected
+//   if (selectedOptions.includes('all')) {
+//       // Show all rows
+//       document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
+//           row.style.display = '';
+//       });
+//   } else {
+//       // Hide all rows
+//       document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
+//           row.style.display = 'none';
+//       });
+//       // Show rows for selected Phường values
+//       selectedOptions.forEach(function (phuong) {
+//           var rowsToShow = document.querySelectorAll('#filteredContent tbody tr[data-phuong="' + phuong + '"]');
+//           rowsToShow.forEach(function (row) {
+//               row.style.display = '';
+//           });
+//       });
+//   }
+// });
+
+
+// Function to show all rows in the table
+function showAllRows() {
+  document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
+    row.style.display = '';
+  });
+}
+
+// Function to hide all rows in the table
+function hideAllRows() {
+  document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
+    row.style.display = 'none';
+  });
+}
+
+// Function to show rows based on selected Phường values
+function showRowsForSelectedPhuong(selectedOptions) {
+  selectedOptions.forEach(function (phuong) {
+    var rowsToShow = document.querySelectorAll('#filteredContent tbody tr[data-phuong="' + phuong + '"]');
+    rowsToShow.forEach(function (row) {
+      row.style.display = '';
+    });
+  });
+}
+
+// Event listener setup
 document.getElementById('phuongDropdown').addEventListener('change', function () {
   var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+
   // Check if "All Phường" is selected
   if (selectedOptions.includes('all')) {
-      // Show all rows
-      document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
-          row.style.display = '';
-      });
+    showAllRows();
   } else {
-      // Hide all rows
-      document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
-          row.style.display = 'none';
-      });
-      // Show rows for selected Phường values
-      selectedOptions.forEach(function (phuong) {
-          var rowsToShow = document.querySelectorAll('#filteredContent tbody tr[data-phuong="' + phuong + '"]');
-          rowsToShow.forEach(function (row) {
-              row.style.display = '';
-          });
-      });
+    hideAllRows();
+    showRowsForSelectedPhuong(selectedOptions);
   }
 });
 
@@ -483,24 +521,24 @@ function sortTable(column, tableId) {
   const rows = Array.from(table.getElementsByTagName('tr'));
 
   rows.sort((a, b) => {
-      const aValue = a.getAttribute(`data-${column}`);
-      const bValue = b.getAttribute(`data-${column}`);
+    const aValue = a.getAttribute(`data-${column}`);
+    const bValue = b.getAttribute(`data-${column}`);
 
-      if (aValue === null || bValue === null) {
-          return 0;
-      }
+    if (aValue === null || bValue === null) {
+      return 0;
+    }
 
-      const dateA = new Date(aValue);
-      const dateB = new Date(bValue);
+    const dateA = new Date(aValue);
+    const dateB = new Date(bValue);
 
-      if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
-          return aValue.localeCompare(bValue);
-      }
-      return dateA - dateB;
+    if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+      return aValue.localeCompare(bValue);
+    }
+    return dateA - dateB;
   });
 
   rows.forEach(row => {
-      table.appendChild(row);
+    table.appendChild(row);
   });
 }
 
@@ -522,3 +560,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+
+
+document.querySelector('.toast-btn').addEventListener('click', function (event) {
+  if (document.querySelector('#lockIcon').style.display === 'inline') {
+    event.preventDefault(); // Ngăn chặn sự kiện click khi biểu tượng khóa hiển thị
+  }
+});
+
+var loadFile = function (event) {
+  var image = document.getElementById("output");
+  image.src = URL.createObjectURL(event.target.files[0]);
+};

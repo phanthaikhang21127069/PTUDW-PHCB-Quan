@@ -18,32 +18,30 @@
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
-  <link rel="stylesheet" href="/assets/vendor/libs/bs5dialog/bs5dialog.css" />
   <link rel="stylesheet" href="/assets/css/style.css" rel="stylesheet" />
   <link id="pagestyle" href="/assets/css/material-dashboard.css" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/form_edit.css" />
-  {{!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
 
+  <link rel="stylesheet" href="/assets/vendor/libs/bs5dialog/bs5dialog.css" />
+
+  {{!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
+  <!-- Helpers -->
+  <script src="/assets/vendor/js/helpers.js"></script>
+  <script src="/assets/vendor/libs/bs5dialog/bs5dialog.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
 
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
   {{{body}}}
   <!--   Core JS Files   -->
-  <script src="/assets/vendor/libs/bs5dialog/bs5dialog.js"></script>
   <script src="/assets/js/popper.min.js"></script>
   <script src="/assets/js/bootstrap.min.js"></script>
   <script src="/assets/js/perfect-scrollbar.min.js"></script>
   <script src="/assets/js/smooth-scrollbar.min.js"></script>
   <script src="/assets/js/script.js"></script>
-
-  <script>
-    document.querySelector('.toast-btn').addEventListener('click', function (event) {
-      if (document.querySelector('#lockIcon').style.display === 'inline') {
-        event.preventDefault(); // Ngăn chặn sự kiện click khi biểu tượng khóa hiển thị
-      }
-    });
-  </script>
+  
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -54,31 +52,24 @@
     }
   </script>
   <script>
-    var loadFile = function (event) {
-      var image = document.getElementById("output");
-      image.src = URL.createObjectURL(event.target.files[0]);
-    };
-  </script>
-  <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const searchInput = document.getElementById("searchInput");
+    const searchInput = document.getElementById("searchInput");
 
-      searchInput.addEventListener("input", function () {
-        const searchText = searchInput.value.toLowerCase();
-        const tableRows = document.querySelectorAll("#filteredContent tbody tr");
+    searchInput.addEventListener("input", function () {
+      const searchText = searchInput.value.toLowerCase();
+      const tableRows = document.querySelectorAll("#filteredContent tbody tr");
 
-        tableRows.forEach((row) => {
-          const rowText = row.textContent.toLowerCase();
-          if (rowText.includes(searchText)) {
-            row.style.display = ""; 
-          } else {
-            row.style.display = "none";
-          }
-        });
+      tableRows.forEach((row) => {
+        const rowText = row.textContent.toLowerCase();
+        if (rowText.includes(searchText)) {
+          row.style.display = ""; 
+        } else {
+          row.style.display = "none";
+        }
       });
     });
+  });
   </script>
-
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
@@ -87,7 +78,7 @@
 
   <!-- Add this before the closing body tag -->
   {{!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  {{!-- <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script> --}}
 
 </body>
 

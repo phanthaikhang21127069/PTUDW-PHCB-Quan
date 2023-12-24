@@ -1,4 +1,57 @@
-{{!-- modal request_edit_place --}}
+{{!-- modal view place detail --}}
+<div class="modal fade" id="viewPlaceDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Chỉnh Sửa Điểm Đặt Bảng Quảng Cáo
+        </h5>
+        <button class="btn-close toast-btn" type="button" onclick="closeViewDetail(this)" data-bs-dismiss="modal"
+          aria-label="Close" data-target="infoToast" style="margin-bottom: 0;"><i
+            class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="card mb-3">
+            <div class="card-body" style="text-align: left;">
+              <div class="d-flex flex-column justify-content-center detail-card">
+                <h6 id="diaChiVaKhuVucDT" class="text-info mb-3"
+                  style="text-align: left;word-wrap: break-word; white-space: normal;"></h6>
+                <h6 class="text-sm font-weight-normal mb-1">
+                  <span class="font-weight-bold">Khu vực: </span> TP Hồ Chí Minh, Việt Nam
+                </h6>
+                <h6 class="text-sm font-weight-normal mb-1">
+                  <span class="font-weight-bold">Loại vị trí: </span>
+                  <span class="span-content" id="loaiVTDT"></span>
+                </h6>
+                <h6 class="text-sm font-weight-normal mb-1">
+                  <span class="font-weight-bold">Hình thức: </span>
+                  <span class="span-content" id="hinhThucDT"></span>
+                </h6>
+                <h6 class="text-sm font-weight-normal mb-1">
+                  <span class="font-weight-bold">Tình trạng: </span>
+                  <span class="span-content" id="tinhTrangDT"></span>
+                </h6>
+              </div>
+            </div>
+          </div>
+          <div class="card bg-dark text-white">
+            <img id="hinhAnhPlace" class="card-img" alt="..."
+              style="height: 200px ;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover;">
+          </div>
+        </div>
+        <div class="text-center badge bg-label-danger" id="errorMessage"></div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="id" id="idPlaceDT" value="" />
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeBtnEdit">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="addPlaceModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <form action="/diem-dat-bang-quang-cao/editplace" id="addPlaceForm" method="POST">
@@ -129,11 +182,6 @@
               <h6 class="text-white text-capitalize ps-3">Danh sách điểm đặt bẳng quảng cáo</h6>
               <div class="row">
                 <div class="col-6">
-                  <button class="btn toast-btn btn-outline-white" type="button" data-target="infoToast"
-                    style="background-color: transparent; color:transparent; border:none ; outline: none; box-shadow: none;"
-                    disabled><i class="fa-solid fa-plus pe-1"></i>Add</button>
-                </div>
-                <div class="col-6">
                   <li class="nav-item dropdown pe-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0 text-center" id="dropdownMenuButton"
                       data-bs-toggle="dropdown" aria-expanded="false">
@@ -208,9 +256,12 @@
                   {{#each places}}
                   <tr data-phuong="{{khuVuc}}" data-diaChi="{{diaChi}}" data-khuVuc="{{khuVuc}}"
                     data-loaiVT="{{loaiVT}}" data-hinhThuc="{{hinhThuc}}">
-                    <td data-bs-toggle="modal" data-bs-target="#viewPlaceDetailModal"
-                      onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}', '{{hinhAnh}}')"
-                      style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">
+
+
+                    <td style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#viewPlaceDetailModal"
+                      onclick="openViewPlaceDetail(this)" data-id="{{id}}" data-dia-chi="{{diaChi}}"
+                      data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}" data-hinh-thuc="{{hinhThuc}}"
+                      data-quy-hoach="{{quyHoach}}" data-hinh-anh="{{hinhAnh}}">
                       <div class="d-flex px-2">
                         <div>
                           <img src="{{#if hinhAnh}}{{hinhAnh}}{{else}}/assets/img/places/place.png{{/if}}"
@@ -241,61 +292,6 @@
                         data-bs-target="#addPlaceModal" onclick="showEditPlaceModal(this)" data-id="{{id}}"
                         data-dia-chi="{{diaChi}}" data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}"
                         data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinhAnh="{{hinhAnh}}"></i>
-                      {{!-- view place detail modal --}}
-                      <div class="modal detail-place fade" id="viewPlaceDetailModal" data-bs-backdrop="static"
-                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <div>
-                                <h5 class="modal-title fw-bold" id="staticBackdropLabel">
-                                  Điểm Đặt Bảng Quảng Cáo</h5>
-                              </div>
-                              <div class="col-1 px-4">
-                                <button class="btn-close toast-btn" type="button"
-                                  data-bs-dismiss="modal" aria-label="Close" data-target="infoToast"
-                                  style="margin-bottom: 0;">
-                                  <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>
-                                </button>
-                              </div>
-                            </div>
-                            <div class="modal-body">
-                              <div class="container-fluid">
-                                <div class="card mb-3">
-                                  <div class="card-body" style="text-align: left;">
-                                    <div class="d-flex flex-column justify-content-center detail-card">
-                                      <h6 class="text-info mb-3"
-                                        style="text-align: left;word-wrap: break-word; white-space: normal;"></h6>
-                                      <h6 class="text-sm font-weight-normal mb-1">
-                                        <span class="font-weight-bold">Khu vực: </span> TP Hồ Chí Minh, Việt Nam
-                                      </h6>
-                                      <h6 class="text-sm font-weight-normal mb-1">
-                                        <span class="font-weight-bold">Loại vị trí: </span>
-                                        <span class="span-content"></span>
-                                      </h6>
-                                      <h6 class="text-sm font-weight-normal mb-1">
-                                        <span class="font-weight-bold">Hình thức: </span>
-                                        <span class="span-content"></span>
-                                      </h6>
-                                      <h6 class="text-sm font-weight-normal mb-1">
-                                        <span class="font-weight-bold">Tình trạng: </span>
-                                        <span class="span-content"></span>
-                                      </h6>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="card bg-dark text-white">
-                                  <img id = "hinhAnhPlace"
-                                    class="card-img" alt="..."
-                                    style="height: 200px ;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover;">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer" style="justify-content: space-around;">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </td>
                   </tr>
                   {{/each}}
@@ -482,9 +478,10 @@
                   {{#each requesteditplaces}}
                   <tr data-phuong="{{khuVuc}}" data-diaChi="{{diaChi}}" data-khuVuc="{{khuVuc}}"
                     data-loaiVT="{{loaiVT}}" data-hinhThuc="{{hinhThuc}}">
-                    <td
-                      onclick="openViewPlaceDetail(this, '{{diaChi}}', '{{khuVuc}}', '{{loaiVT}}', '{{hinhThuc}}', '{{quyHoach}}')"
-                      style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">
+                    <td style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#viewPlaceDetailModal"
+                      onclick="openViewPlaceDetail(this)" data-id="{{id}}" data-dia-chi="{{diaChi}}"
+                      data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}" data-hinh-thuc="{{hinhThuc}}"
+                      data-quy-hoach="{{quyHoach}}" data-hinh-anh="{{hinhAnh}}">
                       <div class="d-flex px-2">
                         <div>
                           <img src="{{#if hinhAnh}}{{hinhAnh}}{{else}}/assets/img/places/place.png{{/if}}"
