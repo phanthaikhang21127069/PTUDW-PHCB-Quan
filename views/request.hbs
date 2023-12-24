@@ -309,8 +309,8 @@
                     </div>
                     <div class="col-1 px-4">
                       <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal" aria-label="Close"
-                        data-target="infoToast" style="margin-bottom: 0;"><i
-                          class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i></button>
+                        data-target="infoToast" style="margin-bottom: 0;"><i class="fa fa-times-circle text-dark  fs-4"
+                          aria-hidden="true"></i></button>
                     </div>
                   </div>
                   <div class="modal-body">
@@ -366,34 +366,6 @@
                               </select>
                             </div>
                           </div>
-                          {{!-- <div class="col">
-                            <div class="input">
-                              <input type="text" class="input-field form-control" value="" id="diaChi" name="diaChi"
-                                required />
-                              <label class="input-label">Địa chỉ điểm đặt</label>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="input">
-                              <input type="text" class="input-field" value="" id="khuVuc" name="khuVuc" required />
-                              <label class="input-label">Vị trí: </label>
-                            </div>
-                          </div> --}}
-                          {{!-- <div class="row mb-3"> --}}
-                            {{!-- <div class="col">
-                              <div class="input">
-                                <input type="text" class="input-field" value="" id="loaiVT" name="loaiVT" required />
-                                <label class="input-label">Loại vị trí:</label>
-                              </div>
-                            </div>
-                            <div class="col">
-                              <div class="input">
-                                <input type="text" class="input-field" value="" id="longitude" name="longitude"
-                                  required />
-                                <label class="input-label">Tọa độ</label>
-                              </div>
-                            </div>
-                          </div>--}}
                         </div>
                       </div>
                     </div>
@@ -443,8 +415,8 @@
                               <label class="form-label">Ngày bắt đầu hợp đồng:</label>
 
 
-                              <input type="text" class=" form-control " value="" id="ngayBatDau" name="ngayBatDau" placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)"
-                                required />
+                              <input type="text" class=" form-control " value="" id="ngayBatDau" name="ngayBatDau"
+                                placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
                             </div>
                           </div>
                           <div class="col">
@@ -452,7 +424,7 @@
                               <label class="form-label">Ngày kết thúc hợp
                                 đồng:</label>
                               <input type="text" class="form-control " value="" id="ngayKetThuc" name="ngayKetThuc"
-                               placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
+                                placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
 
                             </div>
                           </div>
@@ -503,10 +475,9 @@
 
                       </div>
                       <div class="col-1 px-4">
-                        <button class="btn-close toast-btn" type="button"
-                          data-bs-dismiss="modal" aria-label="Close" data-target="infoToast"
-                          style="margin-bottom: 0;"><i class="fa fa-times-circle text-dark  fs-4"
-                            aria-hidden="true"></i></button>
+                        <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal" aria-label="Close"
+                          data-target="infoToast" style="margin-bottom: 0;"><i
+                            class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i></button>
                       </div>
                     </div>
                     <div class="modal-body">
@@ -572,7 +543,7 @@
                         <div class="row mt-3">
                           <div class="col-6">
                             <h6>Phần 3: Thông Tin Bảng Quảng Cáo</h6>
-                            <div class="card">
+                            <div class="card ">
                               <div class="card-body">
                                 <div class="d-flex flex-column justify-content-center detail-card-part-3">
                                   <h6 class="text-sm font-weight-normal mb-1">
@@ -607,28 +578,20 @@
                               </div>
                             </div>
                           </div>
-                          <div class="col-6 mt-5">
-                            <div class="card bg-dark text-white">
-                              <img src="../assets/img/stt19.png" class="card-img" alt="..."
-                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
-                              <div class="card-img-overlay">
-                                <h5 class="card-title text-white" id="img-title">
-                                </h5>
-
-
-                              </div>
+                          <div class="col-6">
+                            <h6>Phần 4: Hình ảnh</h6>
+                                <div class="card bg-dark text-white">
+                                  <img id="hinhAnhRequest" class="card-img" alt="Không có ảnh"
+                                    style="height: 198px; box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;  object-fit: cover;">
+                                </div>
                             </div>
-                          </div>
                         </div>
                       </div>
                     </div>
                     <div class="modal-footer" style="justify-content: space-around;">
-
                       <button type="button" class="btn btn-info" data-bs-dismiss="modal"
                         onclick="closeViewRequestDetail(this)">Gửi email thông báo
                       </button>
-
-
                     </div>
                   </div>
                 </div>
@@ -653,9 +616,8 @@
                   {{#each requestads}}
                   <tr data-phuong="{{Place.khuVuc}}" data-diaChi="{{Place.diaChi}}" data-congTy="{{congTy}}"
                     data-loaiQC="{{loaiQC}}" data-tinhTrang="{{tinhTrang}}">
-                    <td data-bs-toggle="modal" data-bs-target="#viewRequestAdsDetailModal"
-style="cursor: pointer;"
-                      onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{loaiQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}')">
+                    <td data-bs-toggle="modal" data-bs-target="#viewRequestAdsDetailModal" style="cursor: pointer;"
+                      onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{loaiQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}','{{hinhAnh}}')">
                       <div class="d-flex px-2">
                         <div>
                           <img src="../assets/img/city.jpeg" class="avatar avatar-sm me-3 border-radius-lg"
@@ -674,7 +636,9 @@ style="cursor: pointer;"
                     </td>
                     <td class="align-middle text-center">
                       <div class="d-flex align-items-center">
-                        <span class="me-2 {{#if_eq tinhTrang "Chờ phê duyệt"}}text-warning{{/if_eq}} {{#if_eq tinhTrang "Đã phê duyệt"}}text-success{{/if_eq}} {{#if_eq tinhTrang "Không phê duyệt"}}text-danger{{/if_eq}} font-weight-bold text-xs">{{tinhTrang}}</span>
+                        <span class="me-2 {{#if_eq tinhTrang " Chờ phê duyệt"}}text-warning{{/if_eq}} {{#if_eq
+                          tinhTrang "Đã phê duyệt" }}text-success{{/if_eq}} {{#if_eq tinhTrang "Không phê duyệt"
+                          }}text-danger{{/if_eq}} font-weight-bold text-xs">{{tinhTrang}}</span>
                       </div>
                     </td>
                     <td class="align-middle" style="white-space : normal; ">
@@ -686,8 +650,8 @@ style="cursor: pointer;"
                         data-khu-vuc="{{Place.khuVuc}}" data-loai-v-t="{{Place.loaiVT}}"
                         data-longitude="{{Place.longitude}}" data-latitude="{{Place.latitude}}"
                         data-ten-bang-quang-cao="{{tenBangQuangCao}}" data-loai-q-c="{{loaiQC}}"
-                        data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}" data-ngay-bat-dau="{{formattedNgayBatDau}}"
-                        data-ngay-ket-thuc="{{formattedNgayKetThuc}}"></i>
+                        data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}"
+                        data-ngay-bat-dau="{{formattedNgayBatDau}}" data-ngay-ket-thuc="{{formattedNgayKetThuc}}"></i>
                       <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn" data-id={{id}}></i>
                     </td>
                   </tr>

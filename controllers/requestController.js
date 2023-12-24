@@ -129,7 +129,8 @@ controller.show = async (req, res) => {
       "soLuong",
       "ngayBatDau",
       "ngayKetThuc",
-      "tinhTrang"
+      "tinhTrang",
+      "hinhAnh"
     ],
     order: [["congTy", "ASC"]],
     where: {

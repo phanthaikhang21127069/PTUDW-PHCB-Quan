@@ -154,6 +154,44 @@ function openViewPlaceDetail(btn) {
   document.querySelector("#hinhAnhPlace").src = btn.dataset.hinhAnh;
 }
 
+function showHandleMethod(btn) {
+  document.querySelector("#idReport").textContent = btn.dataset.id;
+  document.querySelector("#reportername").textContent = btn.dataset.reportername;
+  document.querySelector("#reporterphonenumber").textContent = btn.dataset.reporterphonenumber;
+  document.querySelector("#reporteremail").textContent = btn.dataset.reporteremail;
+  document.querySelector("#typeofreport").textContent = btn.dataset.typeofreport;
+  document.querySelector("#reportcontent").textContent = btn.dataset.reportcontent;
+  document.querySelector("#handlemethod").value = btn.dataset.handlemethod;
+  document.querySelector('#imagepath1').src = btn.dataset.imagepath1;
+  document.querySelector('#imagepath2').src = btn.dataset.imagepath2;
+  document.querySelector('.reportlocation').textContent = btn.dataset.reportlocation;
+  var reportcontentInput = document.querySelector("#handlemethod");
+  var xulybutton = document.querySelector("#xuly");
+
+  if (btn.dataset.handlemethod.trim() === '') {
+    reportcontentInput.removeAttribute('disabled');
+  } else {
+    reportcontentInput.setAttribute('disabled', 'disabled');
+  }
+
+  if (btn.dataset.handlemethod) {
+    document.querySelector('.status :nth-child(1) .span-content').textContent = "Đã xử lý";
+    document.querySelector('.status :nth-child(1) .span-content').style.color = "green";
+    xulybutton.setAttribute('disabled', 'disabled');
+  }
+  else {
+    document.querySelector('.status :nth-child(1) .span-content').textContent = "Đang xử lý";
+    document.querySelector('.status :nth-child(1) .span-content').style.color = "red";
+    xulybutton.removeAttribute('disabled');
+  }
+  // if (!(btn.dataset.imagepath1 || btn.dataset.imagepath2)) {
+  //   document.querySelector('#hinhAnhSlide').style.display = "none";
+  // }
+  // console.log(btn.dataset.imagepath1);
+  // console.log(btn.dataset.imagepath2);
+
+}
+
 function showContinueEditPlaceModal(btn) {
   document.querySelector("#idPlaceRequest").value = btn.dataset.id;
   document.querySelector("#diaChiEditContinue").value = btn.dataset.diaChi;
@@ -200,40 +238,6 @@ function showEditRequestModal(btn) {
   document.querySelector("#ngayBatDauEditRequest").value = btn.dataset.ngayBatDau;
   document.querySelector("#ngayKetThucEditRequest").value = btn.dataset.ngayKetThuc;
 }
-
-function showHandleMethod(btn) {
-  document.querySelector("#idReport").value = btn.dataset.id;
-  document.querySelector("#reportername").value = btn.dataset.reportername;
-  document.querySelector("#reporterphonenumber").value = btn.dataset.reporterphonenumber;
-  document.querySelector("#reporteremail").value = btn.dataset.reporteremail;
-  document.querySelector("#typeofreport").value = btn.dataset.typeofreport;
-  document.querySelector("#reportcontent").value = btn.dataset.reportcontent;
-  document.querySelector("#handlemethod").value = btn.dataset.handlemethod;
-  document.querySelector('#imagepath1').src = btn.dataset.imagepath1;
-  document.querySelector('#imagepath2').src = btn.dataset.imagepath2;
-
-  var reportcontentInput = document.querySelector("#handlemethod");
-  var xulybutton = document.querySelector("#xuly");
-
-  if (btn.dataset.handlemethod.trim() === '') {
-    reportcontentInput.removeAttribute('disabled');
-  } else {
-    reportcontentInput.setAttribute('disabled', 'disabled');
-  }
-
-  if (btn.dataset.handlemethod) {
-    document.querySelector('.status :nth-child(1) .span-content').textContent = "Đã xử lý";
-    document.querySelector('.status :nth-child(1) .span-content').style.color = "green";
-    xulybutton.setAttribute('disabled', 'disabled');
-  }
-  else {
-    document.querySelector('.status :nth-child(1) .span-content').textContent = "Đang xử lý";
-    document.querySelector('.status :nth-child(1) .span-content').style.color = "red";
-    xulybutton.removeAttribute('disabled');
-  }
-  document.querySelector('.reportlocation').textContent = btn.dataset.reportlocation;
-}
-
 // -------------------------onsubmit() edit
 async function editRequest(e) {
 
@@ -334,8 +338,6 @@ function openViewDetail(elm, wardName, districtName, zipCode, population) {
 
 
 
-
-
 function openViewAdsDetail(elm, adName, diaChi, khuVuc, adSize, adQuantity, expireDay, imagePath) {
   // let div = document.createElement('div');
   // div.classList.add('modal-backdrop', 'fade', 'show');
@@ -370,7 +372,8 @@ function openViewRequestDetail(elm, congTy,
   soLuong,
   ngayBatDau,
   ngayKetThuc,
-  tinhTrang) {
+  tinhTrang,
+  hinhAnh) {
   // let div = document.createElement('div');
   // div.classList.add('modal-backdrop', 'fade', 'show');
   // document.body.appendChild(div);
@@ -406,57 +409,33 @@ function openViewRequestDetail(elm, congTy,
   modal.querySelector('.detail-card-part-3 :nth-child(4) .span-content').textContent = soLuong;
   modal.querySelector('.detail-card-part-3 :nth-child(5) .span-content').textContent = ngayBatDau;
   modal.querySelector('.detail-card-part-3 :nth-child(6) .span-content').textContent = ngayKetThuc;
-
-  modal.querySelector('#img-title').textContent = diaChi;
+  modal.querySelector('#hinhAnhRequest').src = hinhAnh;
 }
 
-// function closeViewDetail(elm) {
-//   elm.closest('.modal.detail-ward').classList.remove('show');
-//   elm.closest('.modal.detail-ward').style.display = "none";
-//   document.querySelector('.modal-backdrop.fade.show').remove();
-// }
-
-// function closeViewDetailPlace(elm) {
-//   elm.closest('.modal.detail-place').classList.remove('show');
-//   elm.closest('.modal.detail-place').style.display = "none";
-//   document.querySelector('.modal-backdrop.fade.show').remove();
-// }
-
-// function closeViewRequestDetail(elm) {
-//   elm.closest('.modal.detail-request').classList.remove('show');
-//   elm.closest('.modal.detail-request').style.display = "none";
-//   document.querySelector('.modal-backdrop.fade.show').remove();
-// }
-
-// function closeViewAdsDetail(elm) {
-//   elm.closest('.modal.detail-ads').classList.remove('show');
-//   elm.closest('.modal.detail-ads').style.display = "none";
-//   document.querySelector('.modal-backdrop.fade.show').remove();
-// }
 
 // ---------------------filter
-// document.getElementById('phuongDropdown').addEventListener('change', function () {
-//   var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
-//   // Check if "All Phường" is selected
-//   if (selectedOptions.includes('all')) {
-//       // Show all rows
-//       document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
-//           row.style.display = '';
-//       });
-//   } else {
-//       // Hide all rows
-//       document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
-//           row.style.display = 'none';
-//       });
-//       // Show rows for selected Phường values
-//       selectedOptions.forEach(function (phuong) {
-//           var rowsToShow = document.querySelectorAll('#filteredContent tbody tr[data-phuong="' + phuong + '"]');
-//           rowsToShow.forEach(function (row) {
-//               row.style.display = '';
-//           });
-//       });
-//   }
-// });
+document.getElementById('phuongDropdown').addEventListener('change', function () {
+  var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
+  // Check if "All Phường" is selected
+  if (selectedOptions.includes('all')) {
+      // Show all rows
+      document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
+          row.style.display = '';
+      });
+  } else {
+      // Hide all rows
+      document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
+          row.style.display = 'none';
+      });
+      // Show rows for selected Phường values
+      selectedOptions.forEach(function (phuong) {
+          var rowsToShow = document.querySelectorAll('#filteredContent tbody tr[data-phuong="' + phuong + '"]');
+          rowsToShow.forEach(function (row) {
+              row.style.display = '';
+          });
+      });
+  }
+});
 
 
 // Function to show all rows in the table
@@ -542,7 +521,7 @@ function sortTable(column, tableId) {
   });
 }
 
-
+// --------------------------search
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("searchInput");
 
