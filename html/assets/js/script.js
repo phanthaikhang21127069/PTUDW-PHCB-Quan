@@ -191,26 +191,41 @@ function checkFormChanges(currentValues) {
 
 document.querySelectorAll(".delete-request-btn").forEach((btnConfirm) => {
   btnConfirm.addEventListener("click", (e) => {
-    let id = e.target.dataset.id;
-    const options = {
-      title: "Bạn có chắc chắn xoá yêu cầu này?",
-      type: "danger",
-      btnOkText: "Xoá",
-      btnCancelText: "Thoát",
-      onConfirm: () => {
-        console.log("Confirm");
-        console.log(id);
-        deleteRequest(id);
-      },
-      onCancel: () => {
-        console.log("Cancel");
-      },
-    };
-    const {
-      el,
-      content,
-      options: confirmedOptions,
-    } = bs5dialog.confirm("Bạn có chắc chắn xoá yêu cầu này?", options);
+    if(e.target.dataset.tinhTrang == "Chờ phê duyệt" || e.target.dataset.tinhTrang == "Không phê duyệt"){
+      let id = e.target.dataset.id;
+      const options = {
+        title: "Bạn có chắc chắn xoá yêu cầu này?",
+        type: "danger",
+        btnOkText: "Xoá",
+        btnCancelText: "Thoát",
+        onConfirm: () => {
+          console.log("Confirm");
+          console.log(id);
+          deleteRequest(id);
+        },
+        onCancel: () => {
+          console.log("Cancel");
+        },
+      };
+      const {
+        el,
+        content,
+        options: confirmedOptions,
+      } = bs5dialog.confirm("Bạn có chắc chắn xoá yêu cầu này?", options);
+    } else{
+      // let id = e.target.dataset.id;
+      const options = {
+        title: "Bạn không thể xóa yêu cầu quảng cáo đã được phê duyệt",
+        type: "warning",
+        btnCancelText: "Thoát",
+        btnOkText: "Ok",
+        // onCancel: () => {
+        //   console.log("Cancel");
+        // },
+      };
+      const {
+      } = bs5dialog.confirm("", options);
+    }
   });
 });
 
@@ -325,39 +340,6 @@ function showHandleMethod(btn) {
 
 }
 
-// function showHandleMethod(btn) {
-//   document.querySelector("#idReport").value = btn.dataset.id;
-//   document.querySelector("#reportername").textContent = btn.dataset.reportername;
-//   document.querySelector("#reporterphonenumber").textContent = btn.dataset.reporterphonenumber;
-//   document.querySelector("#reporteremail").value = btn.dataset.reporteremail;
-//   document.querySelector("#typeofreport").value = btn.dataset.typeofreport;
-//   document.querySelector("#reportcontent").value = btn.dataset.reportcontent;
-//   document.querySelector("#handlemethod").value = btn.dataset.handlemethod;
-//   document.querySelector('#imagepath1').src = btn.dataset.imagepath1;
-//   document.querySelector('#imagepath2').src = btn.dataset.imagepath2;
-
-//   var reportcontentInput = document.querySelector("#handlemethod");
-//   var xulybutton = document.querySelector("#xuly");
-
-//   if (btn.dataset.handlemethod.trim() === '') {
-//     reportcontentInput.removeAttribute('disabled');
-//   } else {
-//     reportcontentInput.setAttribute('disabled', 'disabled');
-//   }
-
-//   if (btn.dataset.handlemethod){
-//     document.querySelector('.status :nth-child(1) .span-content').textContent =  "Đã xử lý";
-//     document.querySelector('.status :nth-child(1) .span-content').style.color = "green";
-//     xulybutton.setAttribute('disabled', 'disabled');
-//   }
-//   else {
-//     document.querySelector('.status :nth-child(1) .span-content').textContent =  "Đang xử lý";
-//     document.querySelector('.status :nth-child(1) .span-content').style.color = "red";
-//     xulybutton.removeAttribute('disabled');
-//   }
-//   document.querySelector('.reportlocation').textContent =  btn.dataset.reportlocation;
-// }
-
 function showContinueEditPlaceModal(btn) {
   document.querySelector("#idPlaceRequest").value = btn.dataset.id;
   document.querySelector("#diaChiEditContinue").value = btn.dataset.diaChi;
@@ -403,6 +385,14 @@ function showEditRequestModal(btn) {
   document.querySelector("#soLuongEditRequest").value = btn.dataset.soLuong;
   document.querySelector("#ngayBatDauEditRequest").value = btn.dataset.ngayBatDau;
   document.querySelector("#ngayKetThucEditRequest").value = btn.dataset.ngayKetThuc;
+
+  var chinhsuaBT = document.querySelector("#chinhsuabutton");
+
+  if (btn.dataset.tinhTrang === "Đã phê duyệt" || btn.dataset.tinhTrang === "Không phê duyệt") {
+    chinhsuaBT.disabled = true;
+  } else {
+    chinhsuaBT.disabled = false;
+  }
 }
 // -------------------------onsubmit() edit
 async function editRequest(e) {

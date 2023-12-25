@@ -58,13 +58,13 @@
                   <div class="row  mb-3">
                     <div class="col">
                       <div class="input">
-                        <label class="form-label" for="congTYEdit">Tên công ty:</label>
+                        <label for="congTYEditRequest" class="form-label" for="congTYEdit">Tên công ty:</label>
                         <input type="text" class="form-control" id="congTYEditRequest" name="congTy" required />
                       </div>
                     </div>
                     <div class="col">
                       <div class="input">
-                        <label class="form-label" for="diaChiCongTyEdit">Địa chỉ: </label>
+                        <label for="diaChiCongTyEditRequest" class="form-label" for="diaChiCongTyEdit">Địa chỉ: </label>
                         <input type="text" class="form-control " id="diaChiCongTyEditRequest" name="diaChiCongTy"
                           required />
                       </div>
@@ -73,13 +73,13 @@
                   <div class="row mb-3">
                     <div class="col">
                       <div class="input">
-                        <label class="form-label" for="dienThoaiEdit">Số điện thoại: </label>
+                        <label for="dienThoaiEditRequest" class="form-label" for="dienThoaiEdit">Số điện thoại: </label>
                         <input type="text" class="form-control " id="dienThoaiEditRequest" name="dienThoai" required />
                       </div>
                     </div>
                     <div class="col">
                       <div class="input">
-                        <label class="form-label">Email: </label>
+                        <label for="emailEditRequest" class="form-label">Email: </label>
                         <input type="text" class="form-control " id="emailEditRequest" name="email" required />
                       </div>
                     </div>
@@ -92,7 +92,7 @@
                   <div class="row  mb-3">
                     <div class="col">
                       <div class="input">
-                        <label class="form-label">Địa chỉ điểm đặt</label>
+                        <label for="diaChiEditRequest" class="form-label">Địa chỉ điểm đặt</label>
                         <select id="diaChiEditRequest" name="diaChiRequest" class="form-control select-form-control">
                           {{#getUniqueValues places 'diaChi'}}
                           <option value="{{this}}" selected="selected">{{this}}</option>
@@ -156,7 +156,7 @@
                     </div>
                     <div class="col">
                       <div class="input">
-                        <label class="form-label">Tên bảng quảng cáo:</label>
+                        <label for="tenBangQuangCaoEditRequest" class="form-label">Tên bảng quảng cáo:</label>
                         <input type="text" class="form-control " name="tenBangQuangCao" id="tenBangQuangCaoEditRequest"
                           required />
                       </div>
@@ -165,14 +165,14 @@
                   <div class="row mb-3">
                     <div class="col">
                       <div class="input">
-                        <label class="form-label">Kích thước: </label>
+                        <label for="kichThuocEditRequest" class="form-label">Kích thước: </label>
                         <input type="text" class="form-control " name="kichThuoc" id="kichThuocEditRequest" required />
 
                       </div>
                     </div>
                     <div class="col">
                       <div class="input">
-                        <label class="form-label">Số lượng:</label>
+                        <label for="soLuongEditRequest" class="form-label">Số lượng:</label>
                         <input type="text" class="form-control " name="soLuong" id="soLuongEditRequest" required />
 
                       </div>
@@ -181,7 +181,7 @@
                   <div class="row mb-3">
                     <div class="col">
                       <div class="input">
-                        <label class="form-label">Ngày bắt đầu hợp đồng:</label>
+                        <label for="ngayBatDauEditRequest" class="form-label">Ngày bắt đầu hợp đồng:</label>
                         <input type="text" class="form-control " name="ngayBatDau" id="ngayBatDauEditRequest"
                           oninput="checkValidDate(this, event)" required />
 
@@ -189,7 +189,7 @@
                     </div>
                     <div class="col">
                       <div class="input">
-                        <label class="form-label">Ngày kết thúc hợp đồng:</label>
+                        <label for="ngayKetThucEditRequest" class="form-label">Ngày kết thúc hợp đồng:</label>
                         <input type="text" class="form-control " name="ngayKetThuc" id="ngayKetThucEditRequest"
                           oninput="checkValidDate(this, event)" required />
 
@@ -217,8 +217,7 @@
             </div>
             <div class="modal-footer" style="justify-content: space-around;">
               <input type="hidden" name="id" id="idRequest" value="" />
-              <button type="submit" class="btn btn-primary">CHỈNH SỬA</button>
-
+              <button id ="chinhsuabutton" type="submit" class="btn btn-primary">CHỈNH SỬA</button>
             </div>
 
           </div>
@@ -320,13 +319,13 @@
                         <div class="row  mb-3">
                           <div class="col">
                             <div class="input">
-                              <label class="form-label">Tên công ty:</label>
+                              <label for="congTy" class="form-label">Tên công ty:</label>
                               <input type="text" class=" form-control" value="" id="congTy" name="congTy" required />
                             </div>
                           </div>
                           <div class="col">
                             <div class="input">
-                              <label class="form-label">Địa chỉ: </label>
+                              <label for="diaChiCongTy" class="form-label">Địa chỉ: </label>
 
                               <input type="text" class=" form-control" value="" id="diaChiCongTy" name="diaChiCongTy"
                                 required />
@@ -336,14 +335,14 @@
                         <div class="row mb-3">
                           <div class="col">
                             <div class="input">
-                              <label class="form-label">Số điện thoại: </label>
+                              <label for="dienThoai" class="form-label">Số điện thoại: </label>
                               <input type="text" class=" form-control" value="" id="dienThoai" name="dienThoai"
                                 required />
                             </div>
                           </div>
                           <div class="col">
                             <div class="input">
-                              <label class="form-label">Email: </label>
+                              <label for="email" class="form-label">Email: </label>
 
                               <input type="text" class=" form-control" value="" id="email" name="email" required />
                             </div>
@@ -357,7 +356,7 @@
                         <div class="row  mb-3">
                           <div class="col">
                             <div class="input">
-                              <label class="input-lable">Địa chỉ điểm đặt</label>
+                              <label for="diaChiEditRequest" class="input-lable">Địa chỉ điểm đặt</label>
                               <select id="diaChiEditRequest" name="diaChiRequest"
                                 class="form-control select-form-control">
                                 {{#getUniqueValues places 'diaChi'}}
@@ -386,7 +385,7 @@
                           </div>
                           <div class="col">
                             <div class="input">
-                              <label class="form-label">Loại bảng quảng cáo: </label>
+                              <label for="tenBangQuangCao" class="form-label">Loại bảng quảng cáo: </label>
                               <input type="text" class=" form-control " value="" id="tenBangQuangCao"
                                 name="tenBangQuangCao" required />
                             </div>
@@ -395,7 +394,7 @@
                         <div class="row mb-3">
                           <div class="col">
                             <div class="input">
-                              <label class="form-label">Kích thước: </label>
+                              <label for="kichThuoc" class="form-label">Kích thước: </label>
                               <input type="text" class="form-control" value="" id="kichThuoc" name="kichThuoc"
                                 required />
 
@@ -403,7 +402,7 @@
                           </div>
                           <div class="col">
                             <div class="input">
-                              <label class="form-label">Số lượng:</label>
+                              <label for="soLuong" class="form-label">Số lượng:</label>
 
                               <input type="text" class=" form-control " value="" id="soLuong" name="soLuong" required />
                             </div>
@@ -412,7 +411,7 @@
                         <div class="row mb-3">
                           <div class="col">
                             <div class="input">
-                              <label class="form-label">Ngày bắt đầu hợp đồng:</label>
+                              <label for="ngayBatDau" class="form-label">Ngày bắt đầu hợp đồng:</label>
 
 
                               <input type="text" class=" form-control " value="" id="ngayBatDau" name="ngayBatDau"
@@ -421,7 +420,7 @@
                           </div>
                           <div class="col">
                             <div class="input">
-                              <label class="form-label">Ngày kết thúc hợp
+                              <label for="ngayKetThuc" class="form-label">Ngày kết thúc hợp
                                 đồng:</label>
                               <input type="text" class="form-control " value="" id="ngayKetThuc" name="ngayKetThuc"
                                 placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
@@ -636,7 +635,7 @@
                     </td>
                     <td class="align-middle text-center">
                       <div class="d-flex align-items-center">
-                        <span class="me-2 {{#if_eq tinhTrang " Chờ phê duyệt"}}text-warning{{/if_eq}} {{#if_eq
+                        <span class="me-2 {{#if_eq tinhTrang "Chờ phê duyệt"}}text-warning{{/if_eq}} {{#if_eq
                           tinhTrang "Đã phê duyệt" }}text-success{{/if_eq}} {{#if_eq tinhTrang "Không phê duyệt"
                           }}text-danger{{/if_eq}} font-weight-bold text-xs">{{tinhTrang}}</span>
                       </div>
@@ -651,9 +650,9 @@
                         data-longitude="{{Place.longitude}}" data-latitude="{{Place.latitude}}"
                         data-ten-bang-quang-cao="{{tenBangQuangCao}}" data-loai-q-c="{{loaiQC}}"
                         data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}"
-                        data-ngay-bat-dau="{{formattedNgayBatDau}}" data-ngay-ket-thuc="{{formattedNgayKetThuc}}"></i>
+                        data-ngay-bat-dau="{{formattedNgayBatDau}}" data-ngay-ket-thuc="{{formattedNgayKetThuc}}" data-tinh-trang="{{tinhTrang}}"></i>
                         
-                      <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn me-3" data-id={{id}}></i>
+                      <i role="button" id="deleteRequestbutton" class="fa fa-trash text-danger delete-btn delete-request-btn me-3" data-id={{id}} data-tinh-trang="{{tinhTrang}}"></i>
                       
                       <i role="button" class="fa-solid fa-envelope text-info email-request-btn" 
                         data-id="{{id}}" data-cong-ty="{{congTy}}" data-dia-chi-cong-ty="{{diaChiCongTy}}" data-dien-thoai="{{dienThoai}}" data-email="{{email}}"
