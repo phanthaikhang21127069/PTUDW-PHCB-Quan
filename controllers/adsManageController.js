@@ -121,7 +121,7 @@ controller.show = async (req, res) => {
       "dienThoai",
       "email",
       "tenBangQuangCao",
-      "loaiQC",
+      "noiDungQC",
       "kichThuoc",
       "soLuong",
       "ngayBatDau",

@@ -17,6 +17,7 @@ if (editAdsEle) {
 }
 
 
+
 // ----------------send email for requesting ads status
 document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
   btnConfirm.addEventListener("click", (e) => {
@@ -25,12 +26,13 @@ document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
     let diaChi = e.target.dataset.diaChi;
     let khuVuc = e.target.dataset.khuVuc;
     let tenBangQuangCao = e.target.dataset.tenBangQuangCao;
-    let loaiQC = e.target.dataset.loaiQC;
+    let noiDungQC = e.target.dataset.noiDungQC;
     let kichThuoc=e.target.dataset.kichThuoc;
     let soLuong = e.target.dataset.soLuong;
     let ngayBatDau = e.target.dataset.ngayBatDau;
     let ngayKetThuc = e.target.dataset.ngayKetThuc;
-    console.log(email);
+    
+    console.log(noiDungQC);
 
     const options = {
       title: `Gửi email`,
@@ -39,7 +41,7 @@ document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
       btnCancelText: "Thoát",
       onConfirm: () => {
         console.log("Confirm");
-        sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,loaiQC,soLuong,kichThuoc,ngayBatDau,ngayKetThuc);
+        sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,noiDungQC,soLuong,kichThuoc,ngayBatDau,ngayKetThuc);
       },
       onCancel: () => {
         console.log("Cancel");
@@ -53,7 +55,7 @@ document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
   });
 });
 
-function sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,loaiQC,soLuong,kichThuoc,ngayBatDau,ngayKetThuc){
+function sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,noiDungQC,soLuong,kichThuoc,ngayBatDau,ngayKetThuc){
   (function(){
     emailjs.init("Hqyh0rZzbl332P-vy"); // Account Public Key
   })();
@@ -67,7 +69,7 @@ function sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,loaiQC,soLuong,
     diaChi: diaChi,
     khuVuc: khuVuc,
     tenBangQuangCao: tenBangQuangCao,
-    loaiQC: loaiQC,
+    noiDungQC: noiDungQC,
     kichThuoc: kichThuoc,
     soLuong: soLuong,
     ngayBatDau: ngayBatDau,
@@ -272,6 +274,49 @@ function checkFormChanges_ads(currentValues) {
   saveBtn.disabled = !isFormChanged;
 }
 
+
+function showEditRequestModal(elm, id, congTy,
+  diaChiCongTy,
+  dienThoai,
+  email,
+  diaChi,
+  khuVuc,
+  loaiVT,
+  longitude,
+  latitude,
+  tenBangQuangCao,
+  noiDungQC,
+  kichThuoc,
+  soLuong,
+  ngayBatDau,
+  ngayKetThuc,
+  tinhTrang, hinhAnh) {
+
+  let modal = document.querySelector("#editRequestModal");
+
+  modal.querySelector("#idRequest").value = id;
+  modal.querySelector("#congTYEditRequest").value = congTy;
+  modal.querySelector("#diaChiCongTyEditRequest").value = diaChiCongTy;
+  modal.querySelector("#dienThoaiEditRequest").value = dienThoai;
+  modal.querySelector("#emailEditRequest").value = email;
+  modal.querySelector("#diaChiEditRequest").value = diaChi;
+  modal.querySelector("#noiDungQCEditRequest").value = noiDungQC;
+  modal.querySelector("#tenBangQuangCaoEditRequest").value = tenBangQuangCao;
+  modal.querySelector("#kichThuocEditRequest").value = kichThuoc;
+  modal.querySelector("#soLuongEditRequest").value = soLuong;
+  modal.querySelector("#ngayBatDauEditRequest").value = ngayBatDau;
+  modal.querySelector("#ngayKetThucEditRequest").value = ngayKetThuc;
+  modal.querySelector("#ngayKetThucEditRequest").value = ngayKetThuc;
+
+  var chinhsuaBT = modal.querySelector("#chinhsuabutton");
+
+  if (tinhTrang === "Đã phê duyệt" || tinhTrang === "Không phê duyệt") {
+    chinhsuaBT.disabled = true;
+  } else {
+    chinhsuaBT.disabled = false;
+  }
+
+}
 // -------------------show value of edit modal
 function showEditPlaceModal(btn) {
   document.querySelector("#idPlace").value = btn.dataset.id;
@@ -371,29 +416,6 @@ function showContinueEditAdsModal(btn) {
   document.querySelector("#liDoChinhSuaContinue").value = '';
 }
 
-function showEditRequestModal(btn) {
-  document.querySelector("#idRequest").value = btn.dataset.id;
-  document.querySelector("#congTYEditRequest").value = btn.dataset.congTy;
-  document.querySelector("#diaChiCongTyEditRequest").value = btn.dataset.diaChiCongTy;
-  document.querySelector("#dienThoaiEditRequest").value = btn.dataset.dienThoai;
-  document.querySelector("#emailEditRequest").value = btn.dataset.email;
-  document.querySelector("#diaChiEditRequest").value = btn.dataset.diaChi;
-
-  document.querySelector("#tenBangQuangCaoEditRequest").value = btn.dataset.tenBangQuangCao;
-  document.querySelector("#loaiQCEditRequest").value = btn.dataset.loaiQC;
-  document.querySelector("#kichThuocEditRequest").value = btn.dataset.kichThuoc;
-  document.querySelector("#soLuongEditRequest").value = btn.dataset.soLuong;
-  document.querySelector("#ngayBatDauEditRequest").value = btn.dataset.ngayBatDau;
-  document.querySelector("#ngayKetThucEditRequest").value = btn.dataset.ngayKetThuc;
-
-  var chinhsuaBT = document.querySelector("#chinhsuabutton");
-
-  if (btn.dataset.tinhTrang === "Đã phê duyệt" || btn.dataset.tinhTrang === "Không phê duyệt") {
-    chinhsuaBT.disabled = true;
-  } else {
-    chinhsuaBT.disabled = false;
-  }
-}
 // -------------------------onsubmit() edit
 async function editRequest(e) {
 
@@ -523,7 +545,7 @@ function openViewRequestDetail(elm, congTy,
   longitude,
   latitude,
   tenBangQuangCao,
-  loaiQC,
+  noiDungQC,
   kichThuoc,
   soLuong,
   ngayBatDau,
@@ -559,7 +581,7 @@ function openViewRequestDetail(elm, congTy,
   modal.querySelector('.detail-card-part-2 :nth-child(3) .span-content').textContent = loaiVT;
   modal.querySelector('.detail-card-part-2 :nth-child(4) .span-content').textContent = "(" + longitude + " , " + latitude + ")";
 
-  modal.querySelector('.detail-card-part-3 :nth-child(1) .span-content').textContent = loaiQC;
+  modal.querySelector('.detail-card-part-3 :nth-child(1) .span-content').textContent = noiDungQC;
   modal.querySelector('.detail-card-part-3 :nth-child(2) .span-content').textContent = tenBangQuangCao;
   modal.querySelector('.detail-card-part-3 :nth-child(3) .span-content').textContent = kichThuoc;
   modal.querySelector('.detail-card-part-3 :nth-child(4) .span-content').textContent = soLuong;

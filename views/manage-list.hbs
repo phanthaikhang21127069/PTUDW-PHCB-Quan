@@ -734,7 +734,7 @@
                       </li>
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;"
-                          onclick="sortTable('loaiQC', 'tableYeuCau')">
+                          onclick="sortTable('noiDungQC', 'tableYeuCau')">
                           <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
                             data-target="infoToast"
                             style="font-size: 11px; height: 30px;margin-bottom:0px; color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)"><i
@@ -872,12 +872,9 @@
                                 <option value="{{name}}" selected="selected">{{name}}</option>
                                 {{/each}}
                               </select> --}}
-                              <label for="loaiQCEditRequest" class="form-label">Hình Thức</label>
-                              <select name="loaiQC" id="loaiQCEditRequest" class="form-control select-form-control">
-                                {{#each adstypes}}
-                                <option value="{{name}}" selected="selected">{{name}}</option>
-                                {{/each}}
-                              </select>
+                              <label for="noiDungQCEditRequest" class="form-label">Nội dung quảng cáo: </label>
+                              <input type="text" class="form-control " id="noiDungQCEditRequest" name="noiDungQC"
+                                required />
                             </div>
                           </div>
                           <div class="col">
@@ -1061,12 +1058,9 @@
                         <div class="row  mb-3">
                           <div class="col">
                             <div class="input">
-                              <label for="loaiQCEditRequest" class="form-label">Hình thức</label>
-                              <select name="loaiQC" id="loaiQCEditRequest" class="form-control select-form-control">
-                                {{#each adstypes}}
-                                <option value="{{name}}" selected="selected">{{name}}</option>
-                                {{/each}}
-                              </select>
+                              <label for="noiDungQC" class="form-label">Nội dung quảng cáo: </label>
+                              <input type="text" class="form-control " id="noiDungQC" name="noiDungQC"
+                                required />
                             </div>
                           </div>
                           <div class="col">
@@ -1300,9 +1294,9 @@
                 <tbody>
                   {{#each requestads}}
                   <tr data-phuong="{{Place.khuVuc}}" data-diaChi="{{Place.diaChi}}" data-congTy="{{congTy}}"
-                    data-loaiQC="{{loaiQC}}" data-tinhTrang="{{tinhTrang}}">
+                    data-noiDungQC="{{noiDungQC}}" data-tinhTrang="{{tinhTrang}}">
                     <td data-bs-toggle="modal" data-bs-target="#viewRequestAdsDetailModal" style="cursor: pointer;"
-                      onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{loaiQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}', '{{hinhAnh}}')">
+                      onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{noiDungQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}', '{{hinhAnh}}')">
                       <div class="d-flex px-2">
                         <div>
                           <img src="../assets/img/city.jpeg" class="avatar avatar-sm me-3 border-radius-lg"
@@ -1317,7 +1311,7 @@
                       <span class="text-xs">{{congTy}}</span>
                     </td>
                     <td>
-                      <span class="text-xs">{{loaiQC}}</span>
+                      <span class="text-xs">{{noiDungQC}}</span>
                     </td>
                     <td class="align-middle text-center">
                       <div class="d-flex align-items-center">
@@ -1327,14 +1321,8 @@
                     <td class="align-middle" style="white-space : normal; ">
 
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
-                        data-bs-target="#editRequestModal" onclick="showEditRequestModal(this)" data-id="{{id}}"
-                        data-cong-ty="{{congTy}}" data-dia-chi-cong-ty="{{diaChiCongTy}}"
-                        data-dien-thoai="{{dienThoai}}" data-email="{{email}}" data-dia-chi="{{Place.diaChi}}"
-                        data-khu-vuc="{{Place.khuVuc}}" data-loai-v-t="{{Place.loaiVT}}"
-                        data-longitude="{{Place.longitude}}" data-latitude="{{Place.latitude}}"
-                        data-ten-bang-quang-cao="{{tenBangQuangCao}}" data-loai-q-c="{{loaiQC}}"
-                        data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}" data-ngay-bat-dau="{{formattedNgayBatDau}}"
-                        data-ngay-ket-thuc="{{formattedNgayKetThuc}}" data-tinh-trang="{{tinhTrang}}"></i>
+                        data-bs-target="#editRequestModal" onclick="showEditRequestModal(this, '{{id}}', '{{congTy}}', '{{diaChiCongTy}}', '{{dienThoai}}',  '{{email}}', '{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{noiDungQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}')"></i>
+
                       <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn me-3" data-id={{id}} data-tinh-trang="{{tinhTrang}}"></i>
 
                       <i role="button" class="fa-solid fa-envelope text-info email-request-btn" 
@@ -1344,7 +1332,7 @@
                         data-longitude="{{Place.longitude}}"
                         data-latitude="{{Place.latitude}}"
                         data-ten-bang-quang-cao="{{tenBangQuangCao}}"
-                        data-loai-q-c="{{loaiQC}}"
+                        data-noi-dung-q-c="{{noiDungQC}}"
                         data-kich-thuoc="{{kichThuoc}}"
                         data-so-luong="{{soLuong}}"
                         data-ngay-bat-dau="{{formattedNgayBatDau}}"

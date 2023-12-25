@@ -33,11 +33,12 @@ controller.addRequest = async (req, res) => {
     email,
     diaChiRequest,
     tenBangQuangCao,
-    loaiQC,
+    noiDungQC,
     kichThuoc,
     soLuong,
     ngayBatDau,
-    ngayKetThuc
+    ngayKetThuc, 
+    hinhAnh
   } = req.body;
   console.log(req.body);
 
@@ -71,12 +72,13 @@ controller.addRequest = async (req, res) => {
       email,
       placeId: placeId,
       tenBangQuangCao,
-      loaiQC,
+      noiDungQC,
       kichThuoc,
       soLuong,
       ngayBatDau,
       ngayKetThuc,
-      tinhTrang: 'Chờ phê duyệt'
+      tinhTrang: 'Chờ phê duyệt',
+      hinhAnh
     });
     res.redirect('/yeu-cau');
   } catch (error) {
@@ -124,7 +126,7 @@ controller.show = async (req, res) => {
       "dienThoai",
       "email",
       "tenBangQuangCao",
-      "loaiQC",
+      "noiDungQC",
       "kichThuoc",
       "soLuong",
       "ngayBatDau",
@@ -159,13 +161,6 @@ controller.show = async (req, res) => {
     }
   });
 
-  res.locals.adstypes = await models.Adstype.findAll({
-    attributes: [
-      "id",
-      "name",
-    ],
-    order: [["createdAt", "DESC"]],
-  });
   res.render("request",{
     requestads: res.locals.requestads.map(detail => ({
       ...detail.toJSON(),
@@ -183,12 +178,13 @@ controller.editRequest = async (req, res) => {
     email,
     diaChiRequest,
     tenBangQuangCao,
-    loaiQC,
+    noiDungQC,
     kichThuoc,
     soLuong,
     ngayBatDau,
     ngayKetThuc,
-    tinhTrang} = req.body;
+    tinhTrang,
+    hinhAnh} = req.body;
 
     const ngayBatDauDate = moment(ngayBatDau, 'MM/DD/YYYY', true);
     const ngayKetThucDate = moment(ngayKetThuc, 'MM/DD/YYYY', true);
@@ -222,12 +218,13 @@ controller.editRequest = async (req, res) => {
         email,
         placeId:placeId,
         tenBangQuangCao,
-        loaiQC,
+        noiDungQC,
         kichThuoc,
         soLuong,
         ngayBatDau,
         ngayKetThuc,
-        tinhTrang
+        tinhTrang,
+        hinhAnh
       },
       {where: {id}}
     );
