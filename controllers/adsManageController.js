@@ -2,6 +2,9 @@ const controller = {};
 const models = require("../models");
 const { Op } = require('sequelize');
 const moment = require('moment');
+const cloudinary=require('../middlewares/cloudinary');
+const upload=require('../middlewares/multer');
+
 
 
 controller.show = async (req, res) => {
@@ -26,6 +29,7 @@ controller.show = async (req, res) => {
       "khuVuc",
       "loaiVT",
       "hinhThuc",
+      "hinhAnhId",
       "quyHoach",
       "hinhAnh",
     ],
@@ -52,6 +56,8 @@ controller.show = async (req, res) => {
       "adQuantity",
       "expireDay",
       "imagePath",
+      "publicImageId",
+
     ],
     where: {
       '$Place.khuVuc$': {
@@ -103,38 +109,38 @@ controller.show = async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
 
-  res.locals.requestadsquans = await models.Requestads.findAll({
-    include: [{
-      model: models.Place,
-      attributes: [
-        "diaChi",
-        "khuVuc",
-        "loaiVT",
-        "longitude",
-        "latitude"
-      ],
-    }],
-    attributes: [
-      "id",
-      "congTy",
-      "diaChiCongTy",
-      "dienThoai",
-      "email",
-      "tenBangQuangCao",
-      "noiDungQC",
-      "kichThuoc",
-      "soLuong",
-      "ngayBatDau",
-      "ngayKetThuc",
-      "tinhTrang"
-    ],
-    order: [["congTy", "ASC"]],
-    where: {
-      '$Place.khuVuc$': {
-        [Op.like]: '%Quận 1%',
-      },
-    },
-  });
+  // res.locals.requestadsquans = await models.Requestads.findAll({
+  //   include: [{
+  //     model: models.Place,
+  //     attributes: [
+  //       "diaChi",
+  //       "khuVuc",
+  //       "loaiVT",
+  //       "longitude",
+  //       "latitude"
+  //     ],
+  //   }],
+  //   attributes: [
+  //     "id",
+  //     "congTy",
+  //     "diaChiCongTy",
+  //     "dienThoai",
+  //     "email",
+  //     "tenBangQuangCao",
+  //     "noiDungQC",
+  //     "kichThuoc",
+  //     "soLuong",
+  //     "ngayBatDau",
+  //     "ngayKetThuc",
+  //     "tinhTrang"
+  //   ],
+  //   order: [["congTy", "ASC"]],
+  //   where: {
+  //     '$Place.khuVuc$': {
+  //       [Op.like]: '%Quận 1%',
+  //     },
+  //   },
+  // });
 
   res.render("manage-ads", {
     placedetails: res.locals.placedetails.map(detail => ({
@@ -149,7 +155,7 @@ controller.show = async (req, res) => {
 };
 
 controller.requestEditAds = async (req, res) => {
-  let {id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua} = req.body;
+  let { id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua } = req.body;
 
   const existingPlace = await models.Requesteditads.findOne({
     where: {
@@ -164,27 +170,36 @@ controller.requestEditAds = async (req, res) => {
     return res.json({ error: true, message: 'Ngày không hợp lệ!' });
   }
 
-  const adsPlace = await models.Place.findOne({ 
+  const adsPlace = await models.Place.findOne({
     attributes: ["id"],
-    where: {diaChi: diaChiAds} 
+    where: { diaChi: diaChiAds }
   });
 
   let placeId = adsPlace.getDataValue("id");
 
   try {
+    
     if (existingPlace) {
       // Nếu id đã tồn tại, có thể xử lý thông báo hoặc chuyển hướng
       res.send("Vui lòng chỉnh sửa thêm ở danh sách yêu cầu chỉnh sửa bảng quảng cáo");
     }
+    
     else {
+
+      const result = await cloudinary.uploader.upload(req.file.path,{
+        folder:'ads'
+      });
+
       await models.Requesteditads.create({
         placeId: placeId,
         originId: id,
-        adName, 
-        adSize, 
-        adQuantity, 
-        expireDay, 
-        liDoChinhSua
+        adName,
+        adSize,
+        adQuantity,
+        expireDay,
+        liDoChinhSua,
+        imagePath:result.secure_url,
+        publicImageId:result.public_id,
       });
       res.redirect("/bang-quang-cao");
     }
@@ -212,6 +227,9 @@ controller.continueRequestEditAds = async (req, res) => {
   let placeId = adsPlace.getDataValue("id");
 
   try {
+    // const result = await cloudinary.uploader.upload(req.file.path,{
+    //   folder:'ads'
+    // });
     await models.Requesteditads.update(
       { 
         placeId: placeId,
@@ -220,6 +238,8 @@ controller.continueRequestEditAds = async (req, res) => {
         adSize, 
         adQuantity, 
         expireDay,
+        // imagePath:result.secure_url,
+        // publicImageId:result.public_id,
       },
       {where: {id}}
     );

@@ -4,11 +4,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">
-          Chỉnh Sửa Điểm Đặt Bảng Quảng Cáo
+          Chi Tiết Điểm Đặt Bảng Quảng Cáo
         </h5>
-        <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal"
-          aria-label="Close" data-target="infoToast" style="margin-bottom: 0;"><i
-            class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i></button>
+        <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal" aria-label="Close"
+          data-target="infoToast" style="margin-bottom: 0;"><i class="fa fa-times-circle text-dark  fs-4"
+            aria-hidden="true"></i></button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -54,7 +54,7 @@
 
 <div class="modal fade" id="addPlaceModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form action="/diem-dat-bang-quang-cao/editplace" id="addPlaceForm" method="POST">
+    <form action="/diem-dat-bang-quang-cao/editplace" id="addPlaceForm" method="POST" enctype="multipart/form-data">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
@@ -64,9 +64,9 @@
             data-bs-dismiss="modal" aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
             <i class="fa fa-times text-dark  fs-4" aria-hidden="true"></i>
           </button> --}}
-          <button class="btn-close toast-btn" type="button" onclick="closeViewDetail(this)" data-bs-dismiss="modal"
-            aria-label="Close" data-target="infoToast" style="margin-bottom: 0;"><i
-              class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i></button>
+          <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal" aria-label="Close"
+            data-target="infoToast" style="margin-bottom: 0;"><i class="fa fa-times-circle text-dark  fs-4"
+              aria-hidden="true"></i></button>
         </div>
         <div class="modal-body">
           <div class="row g-2">
@@ -95,10 +95,22 @@
               </select>
             </div>
           </div>
-          <div class="row g-2 mb-3">
-            <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
-            <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
-              placeholder="Sai thông tin / Chỉnh sửa hình ảnh" />
+          <div class="container pt-3 pb-3">
+            <div class="card bg-dark">
+              <div class="profile-pic">
+                <div class="image-container">
+                  <img id="imageEditPlace" class="imageDisplay" width="100%" height="250px"
+                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:px;" />
+                  <label class="btn btn-primary" for="placefile"
+                    style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); object-fit:cover">
+                    <span class="glyphicon glyphicon-camera"></span>
+                    <span>Đổi hình ảnh</span>
+                  </label>
+                  <input id="placefile" name="ImageUrl" type="file" style="display: none;"
+                    onchange="loadImg(event, '#imageEditPlace')" />
+                </div>
+              </div>
+            </div>
           </div>
           <div class="row">
             <div class="col mb-0">
@@ -109,6 +121,13 @@
               </div>
             </div>
           </div>
+          <div class="row g-2 mb-3">
+            <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
+            <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
+              placeholder="Sai thông tin / Chỉnh sửa hình ảnh" />
+          </div>
+
+
           <div class="row g-2">
             <div class="row mb-3 mt-3">
               <h6><span>Thời điểm chỉnh sửa: </span>
@@ -346,10 +365,22 @@
                   </select>
                 </div>
               </div>
-              <div class="row g-2 mb-3">
-                <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
-                <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
-                  placeholder="Sai thông tin / Chỉnh sửa hình ảnh" />
+              <div class="container pt-3 pb-3">
+                <div class="card bg-dark">
+                  <div class="profile-pic">
+                    <div class="image-container">
+                      <img id="imageEditPlaceContinue" class="imageDisplay" width="100%" height="250px"
+                        style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:px;" />
+                      <label class="btn btn-primary" for="placefilecontinue"
+                        style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); object-fit:cover">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        <span>Đổi hình ảnh</span>
+                      </label>
+                      <input id="placefilecontinue" name="ImageUrl" type="file" style="display: none;"
+                        onchange="loadImg(event, '#imageEditPlaceContinue')" />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="row">
                 <div class="col mb-0">
@@ -360,6 +391,11 @@
                       Hoạch</label>
                   </div>
                 </div>
+              </div>
+              <div class="row g-2 mb-3">
+                <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
+                <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
+                  placeholder="Sai thông tin / Chỉnh sửa hình ảnh" />
               </div>
               <div class="row g-2">
                 <div class="row mb-3 mt-3">
@@ -511,7 +547,7 @@
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
                         data-bs-target="#editPlaceModal" onclick="showContinueEditPlaceModal(this)" data-id="{{id}}"
                         data-dia-chi="{{diaChi}}" data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}"
-                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}"></i>
+                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinh-anh="{{hinhAnh}}"></i>
                       {{!-- view place detail modal --}}
                       <div class="modal detail-place fade" id="staticBackdropInfo" data-bs-backdrop="static"
                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelInfo"

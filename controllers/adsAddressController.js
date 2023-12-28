@@ -2,6 +2,8 @@ const controller = {};
 const models = require("../models");
 const { Op } = require('sequelize');
 const moment = require('moment');
+const cloudinary=require('../middlewares/cloudinary');
+const upload=require('../middlewares/multer');
 
 controller.show = async (req, res) => {
   res.locals.wards = await models.Ward.findAll({
@@ -36,6 +38,7 @@ controller.show = async (req, res) => {
       "hinhThuc",
       "quyHoach",
       "hinhAnh",
+      "hinhAnhId",
     ],
     where: {
       khuVuc: {
@@ -54,6 +57,7 @@ controller.show = async (req, res) => {
       "hinhThuc",
       "quyHoach",
       "hinhAnh",
+      "hinhAnhId",
     ],
     where: {
       khuVuc: {
@@ -86,6 +90,9 @@ controller.requestEditPlace = async (req, res) => {
       res.send("Vui lòng chỉnh sửa thêm ở danh sách yêu cầu chỉnh sửa điểm đặt bảng quảng cáo");
     }
     else {
+      const result = await cloudinary.uploader.upload(req.file.path,{
+        folder:'places'
+      });
       await models.Requesteditplace.create({
         placeId: id,
         diaChi, 
@@ -93,12 +100,15 @@ controller.requestEditPlace = async (req, res) => {
         loaiVT, 
         hinhThuc, 
         quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
-        liDoChinhSua
+        liDoChinhSua,
+        hinhAnh:result.secure_url,
+        hinhAnhId:result.public_id,
       });
       res.redirect("/diem-dat-bang-quang-cao");
     }
   } catch (error) {
     res.send("Không thể thêm điểm đặt");
+    cloudinary.uploader.destroy(result.secure_url);
     console.error(error);
   }
 }

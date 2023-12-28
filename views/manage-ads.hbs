@@ -1,6 +1,6 @@
 <div class="modal fade" id="editAdsModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form action="/bang-quang-cao/editads" id="editAdsForm" method="POST">
+    <form action="/bang-quang-cao/editads" id="editAdsForm" method="POST" enctype="multipart/form-data">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
@@ -43,6 +43,22 @@
               <label for="expireDayEdit" class="form-label">Ngày hết hạn</label>
               <input type="text" id="expireDayEdit" name="expireDay" class="form-control"
                 placeholder="Quảng cáo thương mại" oninput="checkValidDate(this, event)" />
+            </div>
+          </div>
+          <div class="container pt-3 pb-3">
+            <div class="card bg-dark">
+              <div class="profile-pic">
+                <div class="image-container">
+                  <img id ="imageEditAds" class="imageDisplay" width="100%" height="250px"
+                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;" />
+                  <label class="btn btn-primary" for="adsfile"
+                    style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
+                    <span class="glyphicon glyphicon-camera"></span>
+                    <span>Đổi hình ảnh</span>
+                  </label>
+                  <input id="adsfile" name="ImageUrl" type="file" style="display: none;" onchange="loadImg(event, '#imageEditAds')" />
+                </div>
+              </div>
             </div>
           </div>
           <div class="row g-2 mb-3">
@@ -368,6 +384,24 @@
                     placeholder="Quảng cáo thương mại" oninput="checkValidDate(this, event)" />
                 </div>
               </div>
+
+              <div class="container pt-3 pb-3">
+                <div class="card bg-dark">
+                  <div class="profile-pic">
+                    <div class="image-container">
+                      <img id = "imageEditcontinue"class="imageDisplay" width="100%" height="250px"
+                        style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;" />
+                      <label class="btn btn-primary" for="editAdsContinue"
+                        style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        <span>Đổi hình ảnh</span>
+                      </label>
+                      <input id="editAdsContinue" name="ImageUrl" type="file" style="display: none;" onchange="loadImg(event, '#imageEditcontinue')" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div class="row g-2 mb-3">
                 <label for="liDoChinhSuaContinue" class="form-label">Lí Do Chỉnh Sửa</label>
                 <input type="text" id="liDoChinhSuaContinue" name="liDoChinhSua" class="form-control"
@@ -466,8 +500,6 @@
                         </a>
                       </li>
 
-
-
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;"
                           onclick="sortTable('formattedExpireDay', 'tableAdsEdit')">
@@ -539,7 +571,8 @@
                             <div class="card text-white">
                               <img src="{{#if imagePath}}{{imagePath}}{{else}}/assets/img/ads/ads.jpeg{{/if}}"
                                 class="card-img" alt="..."
-                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
+                                width="100%" height="250px"
+                                style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;">
                             </div>
                           </div>
                         </div>
@@ -569,9 +602,9 @@
                   <tr data-phuong="{{Place.khuVuc}}" data-adName="{{adName}}" data-adQuantity="{{adQuantity}}"
                     data-formattedExpireDay="{{formattedExpireDay}}" data-adSize="{{adSize}}"
                     data-diaChi="{{Place.diaChi}}">
-                    <td data-bs-toggle="modal" data-bs-target="#viewAdsDetailModal"
+                    <td data-bs-toggle="modal" data-bs-target="#viewAdsDetailModalEdit"
                       style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;"
-                      onclick="openViewAdsDetail(this, '{{adName}}', '{{Place.diaChi}}', '{{Place.khuVuc}}', '{{adSize}}', '{{adQuantity}}', '{{formattedExpireDay}}')">
+                      onclick="openViewAdsDetailEdit(this, '{{adName}}', '{{Place.diaChi}}', '{{Place.khuVuc}}', '{{adSize}}', '{{adQuantity}}', '{{formattedExpireDay}}', '{{imagePath}}')">
                       <div class="d-flex px-2">
                         <div>
                           <img src="{{#if imagePath}}{{imagePath}}{{else}}/assets/img/ads/ads.jpeg{{/if}}"
@@ -598,7 +631,7 @@
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
                         data-bs-target="#editAdsModalRequest" onclick="showContinueEditAdsModal(this)" data-id="{{id}}"
                         data-ad-name="{{adName}}" data-dia-chi="{{Place.diaChi}}" data-ad-size="{{adSize}}"
-                        data-ad-quantity="{{adQuantity}}" data-expire-day="{{formattedExpireDay}}"></i>
+                        data-ad-quantity="{{adQuantity}}" data-expire-day="{{formattedExpireDay}}" data-image-path="{{imagePath}}"></i>
                     </td>
                   </tr>
                   {{/each}}
@@ -612,3 +645,78 @@
     {{>footer}}
   </div>
 </main>
+
+<div class="modal detail-ads fade" id="viewAdsDetailModalEdit" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title" id="staticBackdropLabel">Chi Tiết Bảng Quảng Cáo</h5>
+        </div>
+        <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal" aria-label="Close"
+          data-target="infoToast" style="margin-bottom: 0;">
+          <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-column justify-content-center detail-card">
+                      <h6 class="text-sm font-weight-normal mb-1">
+                        <span class="font-weight-bold"></span>
+                      </h6>
+                      <h6 class="text-sm font-weight-normal mb-1">
+                        <span class="font-weight-bold">Địa chỉ: </span>
+                        <span class="span-content"></span>
+                      </h6>
+                      <h6 class="text-sm font-weight-normal mb-1">
+                        <span class="font-weight-bold">Kích thước: </span>
+                        <span class="span-content"></span>
+                      </h6>
+                      <h6 class="text-sm font-weight-normal mb-1">
+                        <span class="font-weight-bold">Số lượng: </span>
+                        <span class="span-content"></span>
+                      </h6>
+                      <h6 class="text-sm font-weight-normal mb-1">
+                        <span class="font-weight-bold">Ngày hết hạn: </span>
+                        <span class="span-content"></span>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <div class="card text-white">
+                <img class="card-img"
+                  alt="..."
+                  width="100%" height="250px"
+                  style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const handleImage = (e) => {
+    const file = event.target.files[0];
+  
+    setFileToBase(file);
+  }
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    console.log(reader);
+  }
+</script>

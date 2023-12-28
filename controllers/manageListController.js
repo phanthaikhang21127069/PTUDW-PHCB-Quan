@@ -3,6 +3,8 @@ const models = require("../models");
 const { Op } = require('sequelize');
 const moment = require('moment');
 const pool = require("../database/database");
+const cloudinary=require('../middlewares/cloudinary');
+const upload=require('../middlewares/multer');
 
 
 controller.show = async (req, res) => {
@@ -29,6 +31,7 @@ controller.show = async (req, res) => {
       "hinhThuc",
       "quyHoach",
       "hinhAnh",
+      "hinhAnhId",
     ],
     where: {
       khuVuc: {
@@ -53,6 +56,7 @@ controller.show = async (req, res) => {
       "adQuantity",
       "expireDay",
       "imagePath",
+      "publicImageId",
     ],
     where: {
       '$Place.khuVuc$': {
@@ -195,6 +199,9 @@ controller.requestEditPlace = async (req, res) => {
       res.send("Vui lòng chỉnh sửa thêm ở danh sách yêu cầu chỉnh sửa điểm đặt bảng quảng cáo");
     }
     else {
+      const result = await cloudinary.uploader.upload(req.file.path,{
+        folder:'places'
+      });
       await models.Requesteditplace.create({
         placeId: id,
         diaChi,
@@ -202,16 +209,18 @@ controller.requestEditPlace = async (req, res) => {
         loaiVT,
         hinhThuc,
         quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
-        liDoChinhSua
+        liDoChinhSua,
+        hinhAnh:result.secure_url,
+        hinhAnhId:result.public_id,
       });
       res.redirect("/diem-dat-bang-quang-cao");
     }
   } catch (error) {
     res.send("Không thể thêm điểm đặt");
+    cloudinary.uploader.destroy(result.secure_url);
     console.error(error);
   }
 }
-
 
 
 controller.requestEditAds = async (req, res) => {
@@ -238,11 +247,18 @@ controller.requestEditAds = async (req, res) => {
   let placeId = adsPlace.getDataValue("id");
 
   try {
+    
     if (existingPlace) {
       // Nếu id đã tồn tại, có thể xử lý thông báo hoặc chuyển hướng
       res.send("Vui lòng chỉnh sửa thêm ở danh sách yêu cầu chỉnh sửa bảng quảng cáo");
     }
+    
     else {
+
+      const result = await cloudinary.uploader.upload(req.file.path,{
+        folder:'ads'
+      });
+
       await models.Requesteditads.create({
         placeId: placeId,
         originId: id,
@@ -250,7 +266,9 @@ controller.requestEditAds = async (req, res) => {
         adSize,
         adQuantity,
         expireDay,
-        liDoChinhSua
+        liDoChinhSua,
+        imagePath:result.secure_url,
+        publicImageId:result.public_id,
       });
       res.redirect("/danh-sach");
     }
@@ -263,10 +281,14 @@ controller.requestEditAds = async (req, res) => {
 controller.deleteRequest = async (req, res) => {
   console.log("ok");
   let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
+  let hinhAnhId = req.params.hinhAnhId;
+
   try {
     await models.Requestads.destroy(
       { where: { id } }
     );
+    await cloudinary.uploader.destroy(hinhAnhId);
+
     res.send("Đã xoá yêu cầu!");
   } catch (error) {
     res.send("Không thể xoá yêu cầu!");
@@ -292,7 +314,7 @@ controller.addRequest = async (req, res) => {
     kichThuoc,
     soLuong,
     ngayBatDau,
-    ngayKetThuc
+    ngayKetThuc, 
   } = req.body;
   console.log(req.body);
 
@@ -305,7 +327,6 @@ controller.addRequest = async (req, res) => {
   if (!isValidDateBD) {
     return res.json({ error: true, message: 'Ngày Bắt Đầu không hợp lệ!' });
   }
-
   if (!isValidDateKT) {
     return res.json({ error: true, message: 'Ngày Kết Thúc không hợp lệ!' });
   }
@@ -320,6 +341,10 @@ controller.addRequest = async (req, res) => {
 
 
   try {
+    const result = await cloudinary.uploader.upload(req.file.path,{
+      folder:'requests'
+    });
+
     await models.Requestads.create({
       congTy,
       diaChiCongTy,
@@ -332,7 +357,9 @@ controller.addRequest = async (req, res) => {
       soLuong,
       ngayBatDau,
       ngayKetThuc,
-      tinhTrang: 'Chờ phê duyệt'
+      tinhTrang: 'Chờ phê duyệt',
+      hinhAnh:result.secure_url,
+      hinhAnhId:result.public_id,
     });
     res.redirect('/danh-sach');
   } catch (error) {

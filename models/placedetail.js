@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
             adSize: DataTypes.STRING,
             adQuantity: DataTypes.INTEGER,
             expireDay: DataTypes.DATE,
-            imagePath: DataTypes.STRING
+            imagePath: DataTypes.STRING,
+            publicImageId: DataTypes.STRING,
         },
         {
             sequelize,

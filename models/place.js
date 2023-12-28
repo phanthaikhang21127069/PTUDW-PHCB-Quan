@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
             loaiVT: DataTypes.STRING,
             hinhThuc: DataTypes.STRING,
             hinhAnh: DataTypes.STRING,
+            hinhAnhId:DataTypes.STRING,
             quyHoach: DataTypes.STRING,
             longitude: DataTypes.REAL,
             latitude: DataTypes.REAL

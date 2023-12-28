@@ -15,6 +15,13 @@ if (editAdsEle) {
     document.querySelector("#adNameEdit").focus();
   });
 }
+
+const loadImg = function (event,Elmid) {
+  var Placeimg = document.querySelector(Elmid);
+  Placeimg.src = URL.createObjectURL(event.target.files[0]);
+  console.log(event.target.files[0]);
+};
+
 // ----------------send email for requesting ads status
 document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
   btnConfirm.addEventListener("click", (e) => {
@@ -237,39 +244,39 @@ async function deleteRequest(id) {
 }
 
 // ---------------------disable gửi yêu cầu button
-function initializeEditForm_ads() {
-  let saveBtn = document.querySelector("#editAdsForm button[type='submit']");
-  saveBtn.disabled = true;
+// function initializeEditForm_ads() {
+//   let saveBtn = document.querySelector("#editAdsForm button[type='submit']");
+//   saveBtn.disabled = true;
 
-  let currentValues = {
-    diaChi: document.querySelector("#adNameEdit").value,
-    khuVuc: document.querySelector("#adSizeEdit").value,
-    loaiVT: document.querySelector("#diaChiAdsEdit").value,
-    hinhThuc: document.querySelector("#adQuantityEdit").value,
-    quyHoach: document.querySelector("#expireDayEdit").value,
-  };
+//   let currentValues = {
+//     diaChi: document.querySelector("#adNameEdit").value,
+//     khuVuc: document.querySelector("#adSizeEdit").value,
+//     loaiVT: document.querySelector("#diaChiAdsEdit").value,
+//     hinhThuc: document.querySelector("#adQuantityEdit").value,
+//     quyHoach: document.querySelector("#expireDayEdit").value,
+//   };
 
-  document.querySelectorAll("#editAdsForm input").forEach((input) => {
-    input.addEventListener("input", () => {
-      checkFormChanges_ads(currentValues);
-    });
-  });
-}
+//   document.querySelectorAll("#editAdsForm input").forEach((input) => {
+//     input.addEventListener("input", () => {
+//       checkFormChanges_ads(currentValues);
+//     });
+//   });
+// }
 
-function checkFormChanges_ads(currentValues) {
-  let saveBtn = document.querySelector("#editAdsForm button[type='submit']");
-  let isFormChanged = false;
+// function checkFormChanges_ads(currentValues) {
+//   let saveBtn = document.querySelector("#editAdsForm button[type='submit']");
+//   let isFormChanged = false;
 
-  if (currentValues.diaChi !== document.querySelector("#adNameEdit").value ||
-    currentValues.khuVuc !== document.querySelector("#adSizeEdit").value ||
-    currentValues.loaiVT !== document.querySelector("#diaChiAdsEdit").value ||
-    currentValues.hinhThuc !== document.querySelector("#adQuantityEdit").value ||
-    currentValues.quyHoach !== document.querySelector("#expireDayEdit").value) {
-    isFormChanged = true;
-  }
+//   if (currentValues.diaChi !== document.querySelector("#adNameEdit").value ||
+//     currentValues.khuVuc !== document.querySelector("#adSizeEdit").value ||
+//     currentValues.loaiVT !== document.querySelector("#diaChiAdsEdit").value ||
+//     currentValues.hinhThuc !== document.querySelector("#adQuantityEdit").value ||
+//     currentValues.quyHoach !== document.querySelector("#expireDayEdit").value) {
+//     isFormChanged = true;
+//   }
 
-  saveBtn.disabled = !isFormChanged;
-}
+//   saveBtn.disabled = !isFormChanged;
+// }
 
 
 function showEditRequestModal(elm, id, congTy,
@@ -304,6 +311,8 @@ function showEditRequestModal(elm, id, congTy,
   modal.querySelector("#ngayBatDauEditRequest").value = ngayBatDau;
   modal.querySelector("#ngayKetThucEditRequest").value = ngayKetThuc;
   modal.querySelector("#ngayKetThucEditRequest").value = ngayKetThuc;
+  modal.querySelector("#editRequestAds").src = hinhAnh;
+
 
   var chinhsuaBT = modal.querySelector("#chinhsuabutton");
 
@@ -322,8 +331,10 @@ function showEditPlaceModal(btn) {
   document.querySelector("#loaiVTEdit").value = btn.dataset.loaiVt;
   document.querySelector("#hinhThucEdit").value = btn.dataset.hinhThuc;
   document.querySelector("#quyHoachEdit").checked = btn.dataset.quyHoach == "ĐÃ QUY HOẠCH" ? true : false;
+  document.querySelector("#imageEditPlace").src = btn.dataset.hinhAnh;
   document.querySelector("#liDoChinhSua").value = '';
-  initializeEditForm();
+
+  // initializeEditForm();
 }
 
 function openViewPlaceDetail(btn) {
@@ -389,6 +400,7 @@ function showContinueEditPlaceModal(btn) {
   document.querySelector("#loaiVTEditContinue").value = btn.dataset.loaiVt;
   document.querySelector("#hinhThucEditContinue").value = btn.dataset.hinhThuc;
   document.querySelector("#quyHoachEditContinue").checked = btn.dataset.quyHoach == "ĐÃ QUY HOẠCH" ? true : false;
+  document.querySelector("#imageEditPlaceContinue").src = btn.dataset.hinhAnh;
   document.querySelector("#liDoChinhSuaContinue").value = '';
   // initializeEditForm();
 }
@@ -400,6 +412,7 @@ function showEditAdsModal(btn) {
   document.querySelector("#adSizeEdit").value = btn.dataset.adSize;
   document.querySelector("#adQuantityEdit").value = btn.dataset.adQuantity;
   document.querySelector("#expireDayEdit").value = btn.dataset.expireDay;
+  document.querySelector("#imageEditAds").src = btn.dataset.imagePath;
   document.querySelector("#liDoChinhSua").value = '';
 }
 
@@ -410,7 +423,9 @@ function showContinueEditAdsModal(btn) {
   document.querySelector("#adSizeEditContinue").value = btn.dataset.adSize;
   document.querySelector("#adQuantityEditContinue").value = btn.dataset.adQuantity;
   document.querySelector("#expireDayEditContinue").value = btn.dataset.expireDay;
+  document.querySelector("#imageEditcontinue").src = btn.dataset.imagePath;
   document.querySelector("#liDoChinhSuaContinue").value = '';
+
 }
 
 // -------------------------onsubmit() edit
@@ -530,6 +545,25 @@ function openViewAdsDetail(elm, adName, diaChi, khuVuc, adSize, adQuantity, expi
   modal.querySelector('.detail-card :nth-child(5) .span-content').textContent = expireDay;
 
   if (imagePath) modal.querySelector('img').src = imagePath;
+}
+
+function openViewAdsDetailEdit(elm, adName, diaChi, khuVuc, adSize, adQuantity, expireDay, imagePath) {
+  // let div = document.createElement('div');
+  // div.classList.add('modal-backdrop', 'fade', 'show');
+  // document.body.appendChild(div);
+
+  // let ancElm = elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal');
+  // ancElm.classList.add('show');
+  // elm.parentElement.parentElement.parentElement.parentElement.querySelector('.modal.detail-ads').style.display = "block";
+  let modal = document.querySelector("#viewAdsDetailModalEdit");
+
+  modal.querySelector('.detail-card :nth-child(1) span').textContent = adName;
+  modal.querySelector('.detail-card :nth-child(2) .span-content').textContent = diaChi + ", " + khuVuc;
+  modal.querySelector('.detail-card :nth-child(3) .span-content').textContent = adSize;
+  modal.querySelector('.detail-card :nth-child(4) .span-content').textContent = adQuantity;
+  modal.querySelector('.detail-card :nth-child(5) .span-content').textContent = expireDay;
+  modal.querySelector('.card-img').src = imagePath;
+
 }
 
 function openViewRequestDetail(elm, congTy,
@@ -723,9 +757,5 @@ document.querySelector('.toast-btn').addEventListener('click', function (event) 
   }
 });
 
-var loadFile = function (event) {
-  var image = document.getElementById("output");
-  image.src = URL.createObjectURL(event.target.files[0]);
-};
 
 

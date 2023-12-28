@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">
-          Chỉnh Sửa Điểm Đặt Bảng Quảng Cáo
+          Chi Tiết Điểm Đặt Bảng Quảng Cáo
         </h5>
         <button class="btn-close toast-btn" type="button" onclick="closeViewDetail(this)" data-bs-dismiss="modal"
           aria-label="Close" data-target="infoToast" style="margin-bottom: 0;"><i
@@ -55,13 +55,13 @@
 {{!-- modal request_edit_place --}}
 <div class="modal fade" id="addPlaceModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form action="/danh-sach/editplace" id="addPlaceForm" method="POST">
+    <form action="/danh-sach/editplace" id="addPlaceForm" method="POST" enctype="multipart/form-data">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
             Chỉnh Sửa Điểm Đặt Bảng Quảng Cáo
           </h5>
-          <button class="btn-close toast-btn" type="button" onclick="closeViewPlaceDetail(this)" data-bs-dismiss="modal"
+          <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal"
             aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
             <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>
           </button>
@@ -102,6 +102,22 @@
               </div>
             </div>
           </div>
+          <div class="container pt-3 pb-3">
+            <div class="card bg-dark">
+              <div class="profile-pic">
+                <div class="image-container">
+                  <img id ="imageEditPlace" class="imageDisplay" width="100%" height="250px"
+                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;" />
+                  <label class="btn btn-primary" for="placefile"
+                    style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
+                    <span class="glyphicon glyphicon-camera"></span>
+                    <span>Đổi hình ảnh</span>
+                  </label>
+                  <input id="placefile" name="ImageUrl" type="file" style="display: none;" onchange="loadImg(event, '#imageEditPlace')" />
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row g-2 mb-3">
             <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
             <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
@@ -137,17 +153,17 @@
   </div>
 </div>
 
-
+{{!-- ads request edit --}}
 <div class="modal fade" id="editAdsModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form action="/danh-sach/editads" id="editAdsForm" method="POST">
+    <form action="/danh-sach/editads" id="editAdsForm" method="POST" enctype="multipart/form-data">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
             Chỉnh Sửa Thông Tin Bảng Quảng Cáo
           </h5>
-          <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal"
-            aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
+          <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal" aria-label="Close"
+            data-target="infoToast" style="margin-bottom: 0;">
             <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>
           </button>
         </div>
@@ -185,6 +201,23 @@
                 placeholder="Quảng cáo thương mại" oninput="checkValidDate(this, event)" />
             </div>
           </div>
+          <div class="container pt-3 pb-3">
+            <div class="card bg-dark">
+              <div class="profile-pic">
+                <div class="image-container">
+                  <img id ="imageEditAds" class="imageDisplay" width="100%" height="250px"
+                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;" />
+                  <label class="btn btn-primary" for="adsfile"
+                    style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
+                    <span class="glyphicon glyphicon-camera"></span>
+                    <span>Đổi hình ảnh</span>
+                  </label>
+                  <input id="adsfile" name="ImageUrl" type="file" style="display: none;" onchange="loadImg(event, '#imageEditAds')" />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="row g-2 mb-3">
             <label for="liDoChinhSua" class="form-label">Lí Do Chỉnh Sửa</label>
             <input type="text" id="liDoChinhSua" name="liDoChinhSua" class="form-control"
@@ -237,16 +270,16 @@
           <div class="card-body px-0 pb-2">
             <div class="table-responsive p-0">
               {{!-- view ward detail --}}
-              <div class="modal fade detail-ward" id="viewWardDetailModal" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal fade detail-ward" id="viewWardDetailModal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
                     <div class="modal-header">
                       <div>
                         <h5 class="modal-title" id="staticBackdropLabelward">Xem chi tiết</h5>
                       </div>
-                      <button class="btn-close toast-btn" type="button"
-                        data-bs-dismiss="modal" aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
+                      <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal" aria-label="Close"
+                        data-target="infoToast" style="margin-bottom: 0;">
                         <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>
                       </button>
                     </div>
@@ -312,7 +345,6 @@
                   {{#each wards}}
                   <tr>
                     <td data-bs-toggle="modal" data-bs-target="#viewWardDetailModal"
-
                       onclick="openViewDetail(this, '{{wardName}}', '{{districtName}}', '{{zipCode}}', '{{population}}')"
                       style="cursor: pointer;">
                       <div class="d-flex px-2 py-1">
@@ -472,7 +504,7 @@
                         data-bs-target="#addPlaceModal" onclick="showEditPlaceModal(this)" data-id="{{id}}"
                         data-dia-chi="{{diaChi}}" data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}"
                         data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinhAnh="{{hinhAnh}}"></i>
-                     
+
                     </td>
                   </tr>
                   {{/each}}
@@ -541,12 +573,13 @@
                           onclick="sortTable('adQuantity', 'tableAds')">
                           <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
                             data-target="infoToast"
-                            style="font-size: 11px; height: 30px;margin-bottom:0px;color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)"><i class="fa-solid fa-arrow-up-1-9"></i>Số lượng
+                            style="font-size: 11px; height: 30px;margin-bottom:0px;color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)"><i
+                              class="fa-solid fa-arrow-up-1-9"></i>Số lượng
                           </button>
                         </a>
                       </li>
-                      
-                      
+
+
 
                       <li>
                         <a class="dropdown-item text-center" href="javascript:;"
@@ -567,16 +600,16 @@
           <div class="card-body px-0 pb-2">
             <div class="table-responsive p-0" id="filteredContent">
               <!-- Detail Ads Modal -->
-              <div class="modal detail-ads fade" id="viewAdsDetailModal" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal detail-ads fade" id="viewAdsDetailModal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
                     <div class="modal-header">
                       <div>
                         <h5 class="modal-title" id="staticBackdropLabel">Chi Tiết Bảng Quảng Cáo</h5>
                       </div>
-                      <button class="btn-close toast-btn" type="button"
-                        data-bs-dismiss="modal" aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
+                      <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal" aria-label="Close"
+                        data-target="infoToast" style="margin-bottom: 0;">
                         <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>
                       </button>
                     </div>
@@ -646,9 +679,11 @@
                 </thead>
                 <tbody>
                   {{#each placedetails}}
-                  <tr data-adName="{{adName}}" data-adQuantity="{{adQuantity}}" data-formattedExpireDay="{{formattedExpireDay}}" data-adSize="{{adSize}}" data-diaChi="{{Place.diaChi}}">
+                  <tr data-adName="{{adName}}" data-adQuantity="{{adQuantity}}"
+                    data-formattedExpireDay="{{formattedExpireDay}}" data-adSize="{{adSize}}"
+                    data-diaChi="{{Place.diaChi}}">
                     <td data-bs-toggle="modal" data-bs-target="#viewAdsDetailModal"
- style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;"
+                      style="cursor: pointer; max-width: 250px; overflow: hidden; text-overflow: ellipsis;"
                       onclick="openViewAdsDetail(this, '{{adName}}', '{{Place.diaChi}}', '{{Place.khuVuc}}', '{{adSize}}', '{{adQuantity}}', '{{formattedExpireDay}}')">
                       <div class="d-flex px-2">
                         <div>
@@ -676,7 +711,8 @@
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
                         data-bs-target="#editAdsModal" onclick="showEditAdsModal(this)" data-id="{{id}}"
                         data-ad-name="{{adName}}" data-dia-chi="{{Place.diaChi}}" data-ad-size="{{adSize}}"
-                        data-ad-quantity="{{adQuantity}}" data-expire-day="{{formattedExpireDay}}" data-origin="{{originId}}"></i>
+                        data-ad-quantity="{{adQuantity}}" data-expire-day="{{formattedExpireDay}}"
+                        data-origin="{{originId}}"></i>
                     </td>
                   </tr>
                   {{/each}}
@@ -697,12 +733,12 @@
               class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-1 d-flex justify-content-between align-items-center">
               <h6 class="text-white text-capitalize ps-3">Danh sách yêu cầu</h6>
               <div class="row justify-content-between">
-                <div class="col-6 ">
+                {{!-- <div class="col-6 ">
                   <button class="btn toast-btn" type="button" data-target="infoToast" data-bs-toggle="modal"
                     data-bs-target="#addRequest"
                     style=" color: rgb(8, 8, 65); background-color:rgb(202, 224, 248); width:auto; text-align: center; white-space: nowrap;"><i
                       class="fa-solid fa-plus pe-1"></i>Thêm Yêu Cầu</button>
-                </div>
+                </div> --}}
                 <div class="col-6 ps-4">
                   <li class="nav-item dropdown pe-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0 text-center" id="dropdownMenuButton"
@@ -803,7 +839,7 @@
                           </div>
                           <div class="col">
                             <div class="input">
-                              <label for ="emailEditRequest" class="form-label">Email: </label>
+                              <label for="emailEditRequest" class="form-label">Email: </label>
                               <input type="text" class="form-control " id="emailEditRequest" name="email" required />
                             </div>
                           </div>
@@ -816,7 +852,7 @@
                         <div class="row  mb-3">
                           <div class="col">
                             <div class="input">
-                              <label for ="diaChiEditRequest" class="form-label">Địa chỉ điểm đặt</label>
+                              <label for="diaChiEditRequest" class="form-label">Địa chỉ điểm đặt</label>
                               <select id="diaChiEditRequest" name="diaChiRequest"
                                 class="form-control select-form-control">
                                 {{#getUniqueValues places 'diaChi'}}
@@ -825,37 +861,6 @@
                               </select>
                             </div>
                           </div>
-                          {{!-- <div class="col">
-                            <div class="input">
-                              <label class="form-label">Địa chỉ điểm đặt</label>
-                              <input type="text" class="form-control " id="diaChiEditRequest" name="diaChi" required />
-
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="input">
-                              <label class="form-label">Vị trí: </label>
-                              <input type="text" class="form-control " name="khuVuc" id="khuVucEditRequest" required />
-
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <div class="col">
-                            <div class="input">
-                              <label class="form-label">Loại vị trí:</label>
-                              <input type="text" class="form-control " id="loaiVTEditRequest" name="loaiVT" required />
-
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="input">
-                              <label class="form-label">Tọa độ</label>
-                              <input type="text" class="form-control " id="longitudeEditRequest" name="longitude"
-                                required />
-
-                            </div>
-                          </div> --}}
                         </div>
                       </div>
                     </div>
@@ -906,17 +911,17 @@
                         <div class="row mb-3">
                           <div class="col">
                             <div class="input">
-                              <label for ="ngayBatDauEditRequest" class="form-label">Ngày bắt đầu hợp đồng:</label>
-                              <input type="text" class="form-control " name="ngayBatDau" id="ngayBatDauEditRequest" oninput="checkValidDate(this, event)"
-                                required />
+                              <label for="ngayBatDauEditRequest" class="form-label">Ngày bắt đầu hợp đồng:</label>
+                              <input type="text" class="form-control " name="ngayBatDau" id="ngayBatDauEditRequest"
+                                oninput="checkValidDate(this, event)" required />
 
                             </div>
                           </div>
                           <div class="col">
                             <div class="input">
-                              <label for ="ngayKetThucEditRequest" class="form-label">Ngày kết thúc hợp đồng:</label>
-                              <input type="text" class="form-control " name="ngayKetThuc" id="ngayKetThucEditRequest" oninput="checkValidDate(this, event)"
-                                required />
+                              <label for="ngayKetThucEditRequest" class="form-label">Ngày kết thúc hợp đồng:</label>
+                              <input type="text" class="form-control " name="ngayKetThuc" id="ngayKetThucEditRequest"
+                                oninput="checkValidDate(this, event)" required />
 
                             </div>
                           </div>
@@ -927,14 +932,14 @@
                       <div class="card bg-dark">
                         <div class="profile-pic">
                           <div class="image-container">
-                            <img src="../assets/img/stt19.png" id="output" width="100%" height="250px"
+                            <img src="" id="editRequestAds" width="100%" height="250px"
                               style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;" />
-                            <label class="btn btn-primary" for="file"
+                            <label class="btn btn-primary" for="editrequest"
                               style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
                               <span class="glyphicon glyphicon-camera"></span>
                               <span>Đổi hình ảnh</span>
                             </label>
-                            <input id="file" type="file" style="display: none;" onchange="loadFile(event)" />
+                            <input id="editrequest" type="file" style="display: none;" onchange="loadImg(event,'#editRequestAds')" />
                           </div>
                         </div>
                       </div>
@@ -954,7 +959,7 @@
           <div class="modal add-modal fade" id="addRequest" data-bs-backdrop="static" data-bs-keyboard="false"
             tabindex="-1" aria-labelledby="staticBackdropLabeladd" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-              <form action="/yeu-cau/addrequest" id="addRequestForm" method="POST">
+              <form action="/yeu-cau/addrequest" id="addRequestForm" method="POST" enctype="multipart/form-data">
                 <div class="modal-content">
                   <div class="modal-header">
                     <div class="col-6 px-2">
@@ -1020,47 +1025,17 @@
                               </select>
                             </div>
                           </div>
-                          {{!-- <div class="col">
-                            <div class="input">
-                              <input type="text" class="input-field form-control" value="" id="diaChi" name="diaChi"
-                                required />
-                              <label class="input-label">Địa chỉ điểm đặt</label>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="input">
-                              <input type="text" class="input-field" value="" id="khuVuc" name="khuVuc" required />
-                              <label class="input-label">Vị trí: </label>
-                            </div>
-                          </div> --}}
-                          {{!-- <div class="row mb-3"> --}}
-                            {{!-- <div class="col">
-                              <div class="input">
-                                <input type="text" class="input-field" value="" id="loaiVT" name="loaiVT" required />
-                                <label class="input-label">Loại vị trí:</label>
-                              </div>
-                            </div>
-                            <div class="col">
-                              <div class="input">
-                                <input type="text" class="input-field" value="" id="longitude" name="longitude"
-                                  required />
-                                <label class="input-label">Tọa độ</label>
-                              </div>
-                            </div>
-                          </div>--}}
                         </div>
                       </div>
                     </div>
                     <div class="container py-3">
-
                       <h6>Phần 3: Thông tin bảng quảng cáo</h6>
                       <div class="card">
                         <div class="row  mb-3">
                           <div class="col">
                             <div class="input">
                               <label for="noiDungQC" class="form-label">Nội dung quảng cáo: </label>
-                              <input type="text" class="form-control " id="noiDungQC" name="noiDungQC"
-                                required />
+                              <input type="text" class="form-control " id="noiDungQC" name="noiDungQC" required />
                             </div>
                           </div>
                           <div class="col">
@@ -1094,8 +1069,8 @@
                               <labelfor="ngayBatDau" class="form-label">Ngày bắt đầu hợp đồng:</label>
 
 
-                              <input type="text" class=" form-control " value="" id="ngayBatDau" name="ngayBatDau"
-                                placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
+                                <input type="text" class=" form-control " value="" id="ngayBatDau" name="ngayBatDau"
+                                  placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
                             </div>
                           </div>
                           <div class="col">
@@ -1114,14 +1089,14 @@
                       <div class="card bg-dark">
                         <div class="profile-pic">
                           <div class="image-container">
-                            <img src="/assets/img/stt27.png" id="output" width="100%" height="250px"
+                            <img id ="imageRequestAds" class="imageDisplay" width="100%" height="250px"
                               style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;" />
-                            <label class="btn btn-primary" for="file"
+                            <label class="btn btn-primary" for="requestfile"
                               style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
                               <span class="glyphicon glyphicon-camera"></span>
                               <span>Đổi hình ảnh</span>
                             </label>
-                            <input id="file" type="file" style="display: none;" onchange="loadFile(event)" />
+                            <input id="requestfile" type="file" style="display: none;" onchange="loadImg(event, '#imageRequestAds')" />
                           </div>
                         </div>
                       </div>
@@ -1259,11 +1234,11 @@
                           </div>
                           <div class="col-6">
                             <h6>Phần 4: Hình ảnh</h6>
-                                <div class="card bg-dark text-white">
-                                  <img id="hinhAnhRequest" class="card-img" alt="Không có ảnh"
-                                    style="height: 198px; box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;  object-fit: cover;">
-                                </div>
+                            <div class="card bg-dark text-white">
+                              <img id="hinhAnhRequest" class="card-img" alt="Không có ảnh"
+                                style="height: 198px; box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;  object-fit: cover;">
                             </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1299,7 +1274,7 @@
                       onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{noiDungQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}', '{{hinhAnh}}')">
                       <div class="d-flex px-2">
                         <div>
-                          <img src="../assets/img/city.jpeg" class="avatar avatar-sm me-3 border-radius-lg"
+                          <img src="{{hinhAnh}}" class="avatar avatar-sm me-3 border-radius-lg"
                             alt="spotify">
                         </div>
                         <div class="my-auto">
@@ -1315,28 +1290,28 @@
                     </td>
                     <td class="align-middle text-center">
                       <div class="d-flex align-items-center">
-                        <span class="me-2 {{#if_eq tinhTrang "Chờ phê duyệt"}}text-warning{{/if_eq}} {{#if_eq tinhTrang "Đã phê duyệt"}}text-success{{/if_eq}} {{#if_eq tinhTrang "Không phê duyệt"}}text-danger{{/if_eq}} text-xs font-weight-bold">{{tinhTrang}}</span>
+                        <span class="me-2 {{#if_eq tinhTrang " Chờ phê duyệt"}}text-warning{{/if_eq}} {{#if_eq
+                          tinhTrang "Đã phê duyệt" }}text-success{{/if_eq}} {{#if_eq tinhTrang "Không phê duyệt"
+                          }}text-danger{{/if_eq}} text-xs font-weight-bold">{{tinhTrang}}</span>
                       </div>
                     </td>
                     <td class="align-middle" style="white-space : normal; ">
 
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
-                        data-bs-target="#editRequestModal" onclick="showEditRequestModal(this, '{{id}}', '{{congTy}}', '{{diaChiCongTy}}', '{{dienThoai}}',  '{{email}}', '{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{noiDungQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}')"></i>
+                        data-bs-target="#editRequestModal"
+                        onclick="showEditRequestModal(this, '{{id}}', '{{congTy}}', '{{diaChiCongTy}}', '{{dienThoai}}',  '{{email}}', '{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{noiDungQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}','{{hinhAnh}}')"></i>
 
-                      <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn me-3" data-id={{id}} data-tinh-trang="{{tinhTrang}}"></i>
+                      <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn me-3" data-id={{id}}
+                        data-tinh-trang="{{tinhTrang}}"></i>
 
-                      <i role="button" class="fa-solid fa-envelope text-info email-request-btn" 
-                        data-id="{{id}}" data-cong-ty="{{congTy}}" data-dia-chi-cong-ty="{{diaChiCongTy}}" data-dien-thoai="{{dienThoai}}" data-email="{{email}}"
-                        data-dia-chi="{{Place.diaChi}}" data-khu-vuc="{{Place.khuVuc}}"
-                        data-loai-v-t="{{Place.loaiVT}}"
-                        data-longitude="{{Place.longitude}}"
-                        data-latitude="{{Place.latitude}}"
-                        data-ten-bang-quang-cao="{{tenBangQuangCao}}"
-                        data-noi-dung-q-c="{{noiDungQC}}"
-                        data-kich-thuoc="{{kichThuoc}}"
-                        data-so-luong="{{soLuong}}"
-                        data-ngay-bat-dau="{{formattedNgayBatDau}}"
-                        data-ngay-ket-thuc="{{formattedNgayKetThuc}}"
+                      <i role="button" class="fa-solid fa-envelope text-info email-request-btn" data-id="{{id}}"
+                        data-cong-ty="{{congTy}}" data-dia-chi-cong-ty="{{diaChiCongTy}}"
+                        data-dien-thoai="{{dienThoai}}" data-email="{{email}}" data-dia-chi="{{Place.diaChi}}"
+                        data-khu-vuc="{{Place.khuVuc}}" data-loai-v-t="{{Place.loaiVT}}"
+                        data-longitude="{{Place.longitude}}" data-latitude="{{Place.latitude}}"
+                        data-ten-bang-quang-cao="{{tenBangQuangCao}}" data-noi-dung-q-c="{{noiDungQC}}"
+                        data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}"
+                        data-ngay-bat-dau="{{formattedNgayBatDau}}" data-ngay-ket-thuc="{{formattedNgayKetThuc}}"
                         data-tinh-trang="{{tinhTrang}}"></i>
                     </td>
                   </tr>
@@ -1402,8 +1377,7 @@
                         </a>
                       </li>
                       {{!-- <li>
-                        <a class="dropdown-item text-center" href="javascript:;"
-                          onclick="sortTable('', 'tableReport')">
+                        <a class="dropdown-item text-center" href="javascript:;" onclick="sortTable('', 'tableReport')">
                           <button class="btn btn w-100 d-flex align-items-center justify-content-center" type="button"
                             data-target="infoToast"
                             style="font-size: 11px; height: 30px;margin-bottom:0px; color: rgb(8, 8, 65); background-color:rgb(202, 224, 248)"><i
@@ -1420,9 +1394,9 @@
           </div>
           <div class="card-body px-0 pb-2">
             <div class="table-responsive p-0" id="filteredContent">
-              <table id = "tableReport" class="table align-items-center justify-content-center mb-0">
+              <table id="tableReport" class="table align-items-center justify-content-center mb-0">
                 <thead>
-                  <tr >
+                  <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                       Địa chỉ</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -1431,17 +1405,18 @@
                       Hình thức báo cáo</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
                       Tình trạng</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tùy chọn</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tùy chọn
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {{#each reports}}
-                  <tr data-phuong = "{{reportkhuvuc}}" data-reportlocation="{{reportlocation}}" data-reportername="{{reportername}}" data-typeofreport="{{typeofreport}}">
+                  <tr data-phuong="{{reportkhuvuc}}" data-reportlocation="{{reportlocation}}"
+                    data-reportername="{{reportername}}" data-typeofreport="{{typeofreport}}">
                     <td>
                       <div class="d-flex px-2">
                         <div>
-                          <img src="../{{imagepath1}}" class="avatar avatar-sm me-3 border-radius-lg"
-                            alt="spotify">
+                          <img src="../{{imagepath1}}" class="avatar avatar-sm me-3 border-radius-lg" alt="spotify">
                         </div>
                         <div class="my-auto">
                           <h6 class="mb-0 text-sm">{{reportlocation}}</h6>
@@ -1466,11 +1441,12 @@
                         {{/if}}</span>
                     </td>
                     <td class="align-middle text-center" style="white-space : normal; ">
-                      <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal" 
+                      <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
                         data-bs-target="#handleMethod" onclick="showHandleMethod(this)" data-id="{{id}}"
                         data-reportername="{{reportername}}" data-typeofreport="{{typeofreport}}"
                         data-reporterphonenumber="{{reporterphonenumber}}" data-reporteremail="{{reporteremail}}"
-                        data-reportcontent="{{reportcontent}}" data-handlemethod="{{handlemethod}}" data-reportlocation="{{reportlocation}}" data-imagepath1="{{imagepath1}} "
+                        data-reportcontent="{{reportcontent}}" data-handlemethod="{{handlemethod}}"
+                        data-reportlocation="{{reportlocation}}" data-imagepath1="{{imagepath1}} "
                         data-imagepath2="{{imagepath2}}"></i>
 
                       <i role="button" class="fa-solid fa-envelope text-info email-report-btn" data-id="{{id}}"
@@ -1478,7 +1454,7 @@
                         data-reporterphonenumber="{{reporterphonenumber}}" data-reporteremail="{{reporteremail}}"
                         data-reportcontent="{{{reportcontent}}}" data-handlemethod="{{handlemethod}}"
                         data-reportlocation="{{reportlocation}}"></i>
-                      
+
             </div>
             </td>
             </tr>
@@ -1540,7 +1516,8 @@
                     </h6>
                     <h6 class="text-sm font-weight-normal mb-1">
                       <span class="font-weight-bold">Nội dung báo cáo: </span>
-                      <span class="span-content" id="reportcontent" style="font-size:14px; font-wieght:bold; color:#344767;font-family: Roboto, Helvetica, Arial, sans-serif;"></span>
+                      <span class="span-content" id="reportcontent"
+                        style="font-size:14px; font-wieght:bold; color:#344767;font-family: Roboto, Helvetica, Arial, sans-serif;"></span>
                     </h6>
                   </div>
                 </div>
@@ -1564,8 +1541,8 @@
                       </h6>
                       <h6 class="text-sm font-weight-normal">
                         <span class="font-weight-bold">Cách thức xử lý: </span>
-                        <input style = "height: 75px" type="text" id="handlemethod" name="handlemethodedit" class="mt-2 form-control"
-                         placeholder="" disabled />
+                        <input style="height: 75px" type="text" id="handlemethod" name="handlemethodedit"
+                          class="mt-2 form-control" placeholder="" disabled />
                       </h6>
                     </div>
                   </div>
@@ -1583,10 +1560,12 @@
                 </ol>
                 <div class="carousel-inner" role="listbox">
                   <div class="carousel-item active">
-                    <img id="imagepath1" class="card-img slide-image w-100 d-block i" style = "border-radius:10px" alt="Không có ảnh">
+                    <img id="imagepath1" class="card-img slide-image w-100 d-block i" style="border-radius:10px"
+                      alt="Không có ảnh">
                   </div>
                   <div class="carousel-item">
-                    <img id="imagepath2" class="card-img slide-image w-100 d-block" style = "border-radius:10px" alt="Không có ảnh">
+                    <img id="imagepath2" class="card-img slide-image w-100 d-block" style="border-radius:10px"
+                      alt="Không có ảnh">
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -1610,3 +1589,17 @@
     </form>
   </div>
 </div>
+
+<script>
+  const handleImage = (e) => {
+    const file = event.target.files[0];
+
+    setFileToBase(file);
+  }
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    console.log(reader);
+  }
+</script>
+</main>

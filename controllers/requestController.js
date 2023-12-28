@@ -2,16 +2,20 @@ const controller = {};
 const { Op } = require('sequelize');
 const models = require("../models");
 const moment = require('moment');
-
+const cloudinary=require('../middlewares/cloudinary');
 
 
 controller.deleteRequest=async(req,res)=>{
   console.log("ok");
   let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
+  let hinhAnhId = req.params.hinhAnhId;
+
   try {
     await models.Requestads.destroy(
       {where: {id}}
     );
+    await cloudinary.uploader.destroy(hinhAnhId);
+
     res.send("Đã xoá yêu cầu!");
   } catch (error) {
     res.send("Không thể xoá yêu cầu!");
@@ -38,7 +42,6 @@ controller.addRequest = async (req, res) => {
     soLuong,
     ngayBatDau,
     ngayKetThuc, 
-    hinhAnh
   } = req.body;
   console.log(req.body);
 
@@ -63,8 +66,11 @@ controller.addRequest = async (req, res) => {
   });
   let placeId = requestPlace.getDataValue("id");
 
-
   try {
+    const result = await cloudinary.uploader.upload(req.file.path,{
+      folder:'requests'
+    });
+
     await models.Requestads.create({
       congTy,
       diaChiCongTy,
@@ -78,7 +84,8 @@ controller.addRequest = async (req, res) => {
       ngayBatDau,
       ngayKetThuc,
       tinhTrang: 'Chờ phê duyệt',
-      hinhAnh
+      hinhAnh:result.secure_url,
+      hinhAnhId:result.public_id,
     });
     res.redirect('/yeu-cau');
   } catch (error) {

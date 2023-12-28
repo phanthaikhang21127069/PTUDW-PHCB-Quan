@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
-const port = 2805;
 const expressHbs = require('express-handlebars');
 const Handlebars = require('handlebars');
+require('dotenv').config();
+
 
 Handlebars.registerHelper('getUniqueValues', function (array, property, options) {
     const uniqueValues = [...new Set(array.map(item => item[property]))];
@@ -69,4 +70,4 @@ app.get('/createTables', (req, res) => {
 });
 
 // app.set('view engine', 'hbs');
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(process.env.PORT,()=>console.log(`Example app listening on port ${process.env.PORT}!`));
