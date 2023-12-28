@@ -15,9 +15,6 @@ if (editAdsEle) {
     document.querySelector("#adNameEdit").focus();
   });
 }
-
-
-
 // ----------------send email for requesting ads status
 document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
   btnConfirm.addEventListener("click", (e) => {

@@ -115,46 +115,59 @@ controller.show = async (req, res) => {
 
 
   // report
-  const report = pool.query(`SELECT id, "lat", "lng", "reportername", "typeofreport", "reporteremail", "reporterphonenumber", "reportcontent", "imagepath1", "imagepath2", "locationreport", "adbannerreportid", "handlemethod", "reportlocation"
+  const report = pool.query(`SELECT id, "lat", "lng", "reportername", "typeofreport", "reporteremail", "reporterphonenumber", "reportcontent", "imagepath1", "imagepath2", "locationreport", "adbannerreportid", "handlemethod", "reportlocation", "reportkhuvuc"
         FROM "reports"
         ORDER BY "reportlocation" ASC`
-        );
+  );
   const [reportResult] = await Promise.all([report]);
   res.locals.reports = reportResult.rows;
-  const apiKey = "ylfzo_XrCL0wFOWqMdk89chLwml3by9ZPi5U6J-S3EU";
+  // Replace this line with your actual HERE API key
+  // const apiKey = "ylfzo_XrCL0wFOWqMdk89chLwml3by9ZPi5U6J-S3EU";
+  const apiKey = "C_monOk25e39iLpYuDPsSnx8KVWlnvKdYdaAaNeYzl4";
 
-    for (const report of res.locals.reports) {
-      const lat = report.lat; // replace with the actual latitude value
-      const lng = report.lng; // replace with the actual longitude value
+  for (const report of res.locals.reports) {
+    const lat = report.lat; // replace with the actual latitude value
+    const lng = report.lng; // replace with the actual longitude value
 
-      const url = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat}%2C${lng}&lang=vi-VN&apiKey=${apiKey}`;
+    const url = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat}%2C${lng}&lang=vi-VN&apiKey=${apiKey}`;
 
-      const response = await fetch(url);
+    const response = await fetch(url);
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.items && data.items.length > 0) {
-          const address = data.items[0].address;
-          const title = address.label;
-          const content = title.replace(/, Hồ Chí Minh, Việt Nam$/, '');
+    if (response.ok) {
+      const data = await response.json();
+      if (data.items && data.items.length > 0) {
+        const address = data.items[0].address;
+        const title = address.label;
+        const content = title.replace(/, Hồ Chí Minh, Việt Nam$/, '');
+        // const matches = content.match(/(Phường[^,]+),([^,]+)$/);
+        const zone = address.district + ", " + address.city;
+        // Update the reportlocation field in the database
+        await pool.query(
+          `UPDATE "reports" SET "reportlocation" = $1, "reportkhuvuc" = $2 WHERE id = $3`,
+          [content, zone, report.id]
+        );
+        // if (matches && matches.length === 3) {
+        //   const phuong = matches[1].trim();
+        //   const quan = matches[2].trim();
 
-          // Update the reportlocation field in the database
-          await pool.query(
-            `UPDATE "reports" SET "reportlocation" = $1 WHERE id = $2`,
-            [content, report.id]
-          );
-        }
-      } else if (response.status === 401) {
-        console.error("Unauthorized. Please check your HERE API key and permissions.");
-      } else {
-        console.error(`Error fetching data from HERE API. Status: ${response.status}`);
+        //   // Update the reportkhuvuc field in the database
+        //   await pool.query(
+        //     `UPDATE "reports" SET "reportkhuvuc" = $1 WHERE id = $2`,
+        //     [`${phuong}, ${quan}`, report.id]
+        //   );
+        // }
       }
+    } else if (response.status === 401) {
+      console.error("Unauthorized. Please check your HERE API key and permissions.");
+    } else {
+      console.error(`Error fetching data from HERE API. Status: ${response.status}`);
     }
+  }
 
-    res.locals.reports = res.locals.reports.filter(report =>
-      report.reportlocation.includes("Quận 1") &&
-      !report.reportlocation.includes("Quận 10")
-    );
+  res.locals.reports = res.locals.reports.filter(report =>
+    report.reportlocation.includes("Quận 1") &&
+    !report.reportlocation.includes("Quận 10")
+  );
 
   res.render("manage-list", {
     placedetails: res.locals.placedetails.map(detail => ({
@@ -165,12 +178,12 @@ controller.show = async (req, res) => {
       ...detail.toJSON(),
       formattedNgayBatDau: moment(detail.ngayBatDau).format('MM/DD/YYYY'),
       formattedNgayKetThuc: moment(detail.ngayKetThuc).format('MM/DD/YYYY'),
-    })),   
+    })),
   });
 };
 
 controller.requestEditPlace = async (req, res) => {
-  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua} = req.body;
+  let { id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua } = req.body;
   const existingPlace = await models.Requesteditplace.findOne({
     where: {
       placeId: id,
@@ -184,10 +197,10 @@ controller.requestEditPlace = async (req, res) => {
     else {
       await models.Requesteditplace.create({
         placeId: id,
-        diaChi, 
-        khuVuc, 
-        loaiVT, 
-        hinhThuc, 
+        diaChi,
+        khuVuc,
+        loaiVT,
+        hinhThuc,
         quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
         liDoChinhSua
       });
@@ -202,7 +215,7 @@ controller.requestEditPlace = async (req, res) => {
 
 
 controller.requestEditAds = async (req, res) => {
-  let {id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua} = req.body;
+  let { id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua } = req.body;
 
   const existingPlace = await models.Requesteditads.findOne({
     where: {
@@ -217,9 +230,9 @@ controller.requestEditAds = async (req, res) => {
     return res.json({ error: true, message: 'Ngày không hợp lệ!' });
   }
 
-  const adsPlace = await models.Place.findOne({ 
+  const adsPlace = await models.Place.findOne({
     attributes: ["id"],
-    where: {diaChi: diaChiAds} 
+    where: { diaChi: diaChiAds }
   });
 
   let placeId = adsPlace.getDataValue("id");
@@ -233,10 +246,10 @@ controller.requestEditAds = async (req, res) => {
       await models.Requesteditads.create({
         placeId: placeId,
         originId: id,
-        adName, 
-        adSize, 
-        adQuantity, 
-        expireDay, 
+        adName,
+        adSize,
+        adQuantity,
+        expireDay,
         liDoChinhSua
       });
       res.redirect("/danh-sach");
@@ -247,12 +260,12 @@ controller.requestEditAds = async (req, res) => {
   }
 }
 
-controller.deleteRequest=async(req,res)=>{
+controller.deleteRequest = async (req, res) => {
   console.log("ok");
   let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
   try {
     await models.Requestads.destroy(
-      {where: {id}}
+      { where: { id } }
     );
     res.send("Đã xoá yêu cầu!");
   } catch (error) {
@@ -329,7 +342,7 @@ controller.addRequest = async (req, res) => {
 };
 
 controller.editRequest = async (req, res) => {
-  let {id,
+  let { id,
     congTy,
     diaChiCongTy,
     dienThoai,
@@ -341,39 +354,39 @@ controller.editRequest = async (req, res) => {
     soLuong,
     ngayBatDau,
     ngayKetThuc,
-    tinhTrang} = req.body;
+    tinhTrang } = req.body;
 
-    const ngayBatDauDate = moment(ngayBatDau, 'MM/DD/YYYY', true);
-    const ngayKetThucDate = moment(ngayKetThuc, 'MM/DD/YYYY', true);
-  
-    const isValidDateBD = ngayBatDauDate.isValid();
-    const isValidDateKT = ngayKetThucDate.isValid();
-  
-    if (!isValidDateBD) {
-      return res.json({ error: true, message: 'Ngày Bắt Đầu không hợp lệ!' });
-    }
-  
-    if (!isValidDateKT) {
-      return res.json({ error: true, message: 'Ngày Kết Thúc không hợp lệ!' });
-    }
-    
-    if (ngayBatDauDate.isAfter(ngayKetThucDate)) {
-      return res.json({ error: true, message: 'Ngày Bắt Đầu không thể sau Ngày Kết Thúc!' });
-    }
+  const ngayBatDauDate = moment(ngayBatDau, 'MM/DD/YYYY', true);
+  const ngayKetThucDate = moment(ngayKetThuc, 'MM/DD/YYYY', true);
 
-    const requestPlace = await models.Place.findOne({ 
-      attributes: ["id"],
-      where: {diaChi: diaChiRequest} 
-    });
-    let placeId = requestPlace.getDataValue("id");
+  const isValidDateBD = ngayBatDauDate.isValid();
+  const isValidDateKT = ngayKetThucDate.isValid();
+
+  if (!isValidDateBD) {
+    return res.json({ error: true, message: 'Ngày Bắt Đầu không hợp lệ!' });
+  }
+
+  if (!isValidDateKT) {
+    return res.json({ error: true, message: 'Ngày Kết Thúc không hợp lệ!' });
+  }
+
+  if (ngayBatDauDate.isAfter(ngayKetThucDate)) {
+    return res.json({ error: true, message: 'Ngày Bắt Đầu không thể sau Ngày Kết Thúc!' });
+  }
+
+  const requestPlace = await models.Place.findOne({
+    attributes: ["id"],
+    where: { diaChi: diaChiRequest }
+  });
+  let placeId = requestPlace.getDataValue("id");
   try {
     await models.Requestads.update(
-      { 
+      {
         congTy,
         diaChiCongTy,
         dienThoai,
         email,
-        placeId:placeId,
+        placeId: placeId,
         tenBangQuangCao,
         noiDungQC,
         kichThuoc,
@@ -382,7 +395,7 @@ controller.editRequest = async (req, res) => {
         ngayKetThuc,
         tinhTrang
       },
-      {where: {id}}
+      { where: { id } }
     );
     res.send("Đã cập nhật yêu cầu!");
   } catch (error) {
@@ -392,18 +405,18 @@ controller.editRequest = async (req, res) => {
 };
 
 controller.handleReport = async (req, res) => {
-  let {id, handlemethodedit} = req.body;
+  let { id, handlemethodedit } = req.body;
   try {
-          const updateQuery = `UPDATE "reports"
+    const updateQuery = `UPDATE "reports"
                               SET "handlemethod" = $1
                               WHERE id = $2`;
-          await pool.query(updateQuery, [
-            handlemethodedit,
-            id
-          ]);
-          res.send("Đã cập nhật bảng QC!");
+    await pool.query(updateQuery, [
+      handlemethodedit,
+      id
+    ]);
+    res.send("Đã cập nhật bảng QC!");
   } catch (error) {
-      console.error(error);
+    console.error(error);
   }
 }
 module.exports = controller;
