@@ -16,7 +16,7 @@ router.put("/handle-report", controller.handleReport);
 
 
 // router.post("/addrequest", controller.addRequest);
-// router.put("/editrequest", controller.editRequest);
+router.put("/editrequest",upload.single('ImageUrl'), controller.editRequest);
 // router.delete("/deleterequest/:id", controller.deleteRequest);
 
 module.exports = router;

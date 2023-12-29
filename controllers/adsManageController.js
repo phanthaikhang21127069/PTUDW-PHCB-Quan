@@ -57,7 +57,6 @@ controller.show = async (req, res) => {
       "expireDay",
       "imagePath",
       "publicImageId",
-
     ],
     where: {
       '$Place.khuVuc$': {
@@ -83,6 +82,7 @@ controller.show = async (req, res) => {
       "adQuantity",
       "expireDay",
       "imagePath",
+      "publicImageId",
     ],
     where: {
       '$Place.khuVuc$': {
@@ -108,39 +108,6 @@ controller.show = async (req, res) => {
     ],
     order: [["createdAt", "DESC"]],
   });
-
-  // res.locals.requestadsquans = await models.Requestads.findAll({
-  //   include: [{
-  //     model: models.Place,
-  //     attributes: [
-  //       "diaChi",
-  //       "khuVuc",
-  //       "loaiVT",
-  //       "longitude",
-  //       "latitude"
-  //     ],
-  //   }],
-  //   attributes: [
-  //     "id",
-  //     "congTy",
-  //     "diaChiCongTy",
-  //     "dienThoai",
-  //     "email",
-  //     "tenBangQuangCao",
-  //     "noiDungQC",
-  //     "kichThuoc",
-  //     "soLuong",
-  //     "ngayBatDau",
-  //     "ngayKetThuc",
-  //     "tinhTrang"
-  //   ],
-  //   order: [["congTy", "ASC"]],
-  //   where: {
-  //     '$Place.khuVuc$': {
-  //       [Op.like]: '%Quận 1%',
-  //     },
-  //   },
-  // });
 
   res.render("manage-ads", {
     placedetails: res.locals.placedetails.map(detail => ({
@@ -210,7 +177,7 @@ controller.requestEditAds = async (req, res) => {
 }
 
 controller.continueRequestEditAds = async (req, res) => {
-  let {id, originId, adName, diaChiAds, adSize, adQuantity, expireDay} = req.body;
+  let {id, originId, adName, diaChiAds, adSize, adQuantity, expireDay, publicImageId} = req.body;
 
   const parsedDate = moment(expireDay, 'MM/DD/YYYY', true);
   const isValidDate = parsedDate.isValid();
@@ -227,9 +194,10 @@ controller.continueRequestEditAds = async (req, res) => {
   let placeId = adsPlace.getDataValue("id");
 
   try {
-    // const result = await cloudinary.uploader.upload(req.file.path,{
-    //   folder:'ads'
-    // });
+    const result = await cloudinary.uploader.upload(req.file.path,{
+      folder:'ads'
+    });
+    await cloudinary.uploader.destroy(publicImageId);
     await models.Requesteditads.update(
       { 
         placeId: placeId,
@@ -238,8 +206,8 @@ controller.continueRequestEditAds = async (req, res) => {
         adSize, 
         adQuantity, 
         expireDay,
-        // imagePath:result.secure_url,
-        // publicImageId:result.public_id,
+        imagePath:result.secure_url,
+        publicImageId:result.public_id,
       },
       {where: {id}}
     );

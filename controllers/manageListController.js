@@ -107,7 +107,8 @@ controller.show = async (req, res) => {
       "ngayBatDau",
       "ngayKetThuc",
       "tinhTrang",
-      "hinhAnh"
+      "hinhAnh",
+      "hinhAnhId"
     ],
     order: [["congTy", "ASC"]],
     where: {
@@ -369,7 +370,7 @@ controller.addRequest = async (req, res) => {
 };
 
 controller.editRequest = async (req, res) => {
-  let { id,
+  let {id,
     congTy,
     diaChiCongTy,
     dienThoai,
@@ -381,50 +382,60 @@ controller.editRequest = async (req, res) => {
     soLuong,
     ngayBatDau,
     ngayKetThuc,
-    tinhTrang } = req.body;
+    tinhTrang,
+    hinhAnhId,
+    imageChange} = req.body;
 
-  const ngayBatDauDate = moment(ngayBatDau, 'MM/DD/YYYY', true);
-  const ngayKetThucDate = moment(ngayKetThuc, 'MM/DD/YYYY', true);
 
-  const isValidDateBD = ngayBatDauDate.isValid();
-  const isValidDateKT = ngayKetThucDate.isValid();
+    const ngayBatDauDate = moment(ngayBatDau, 'MM/DD/YYYY', true);
+    const ngayKetThucDate = moment(ngayKetThuc, 'MM/DD/YYYY', true);
+  
+    const isValidDateBD = ngayBatDauDate.isValid();
+    const isValidDateKT = ngayKetThucDate.isValid();
+  
+    if (!isValidDateBD) {
+      return res.json({ error: true, message: 'Ngày Bắt Đầu không hợp lệ!' });
+    }
+  
+    if (!isValidDateKT) {
+      return res.json({ error: true, message: 'Ngày Kết Thúc không hợp lệ!' });
+    }
+    
+    if (ngayBatDauDate.isAfter(ngayKetThucDate)) {
+      return res.json({ error: true, message: 'Ngày Bắt Đầu không thể sau Ngày Kết Thúc!' });
+    }
 
-  if (!isValidDateBD) {
-    return res.json({ error: true, message: 'Ngày Bắt Đầu không hợp lệ!' });
-  }
-
-  if (!isValidDateKT) {
-    return res.json({ error: true, message: 'Ngày Kết Thúc không hợp lệ!' });
-  }
-
-  if (ngayBatDauDate.isAfter(ngayKetThucDate)) {
-    return res.json({ error: true, message: 'Ngày Bắt Đầu không thể sau Ngày Kết Thúc!' });
-  }
-
-  const requestPlace = await models.Place.findOne({
-    attributes: ["id"],
-    where: { diaChi: diaChiRequest }
-  });
-  let placeId = requestPlace.getDataValue("id");
+    const requestPlace = await models.Place.findOne({ 
+      attributes: ["id"],
+      where: {diaChi: diaChiRequest} 
+    });
+    let placeId = requestPlace.getDataValue("id");
   try {
-    await models.Requestads.update(
-      {
-        congTy,
-        diaChiCongTy,
-        dienThoai,
-        email,
-        placeId: placeId,
-        tenBangQuangCao,
-        noiDungQC,
-        kichThuoc,
-        soLuong,
-        ngayBatDau,
-        ngayKetThuc,
-        tinhTrang
-      },
-      { where: { id } }
-    );
-    res.send("Đã cập nhật yêu cầu!");
+      const result = await cloudinary.uploader.upload(req.file.path,{
+        folder:'requestAds'
+      });
+      await cloudinary.uploader.destroy(hinhAnhId);
+  
+      await models.Requestads.update(
+        { 
+          congTy,
+          diaChiCongTy,
+          dienThoai,
+          email,
+          placeId:placeId,
+          tenBangQuangCao,
+          noiDungQC,
+          kichThuoc,
+          soLuong,
+          ngayBatDau,
+          ngayKetThuc,
+          tinhTrang,
+          hinhAnh:result.secure_url,
+          hinhAnhId:result.public_id,
+        },
+        {where: {id}}
+      );
+      res.send("Đã cập nhật yêu cầu!");
   } catch (error) {
     res.send("Không thể cập nhật yêu cầu!");
     console.error(error);

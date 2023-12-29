@@ -16,26 +16,28 @@ if (editAdsEle) {
   });
 }
 
-const loadImg = function (event,Elmid) {
+
+const loadImg = function (event, Elmid) {
   var Placeimg = document.querySelector(Elmid);
   Placeimg.src = URL.createObjectURL(event.target.files[0]);
   console.log(event.target.files[0]);
 };
 
+
 // ----------------send email for requesting ads status
 document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
   btnConfirm.addEventListener("click", (e) => {
-    let email=e.target.dataset.email;
+    let email = e.target.dataset.email;
     let tinhTrang = e.target.dataset.tinhTrang;
     let diaChi = e.target.dataset.diaChi;
     let khuVuc = e.target.dataset.khuVuc;
     let tenBangQuangCao = e.target.dataset.tenBangQuangCao;
     let noiDungQC = e.target.dataset.noiDungQC;
-    let kichThuoc=e.target.dataset.kichThuoc;
+    let kichThuoc = e.target.dataset.kichThuoc;
     let soLuong = e.target.dataset.soLuong;
     let ngayBatDau = e.target.dataset.ngayBatDau;
     let ngayKetThuc = e.target.dataset.ngayKetThuc;
-    
+
     console.log(noiDungQC);
 
     const options = {
@@ -45,7 +47,7 @@ document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
       btnCancelText: "Thoát",
       onConfirm: () => {
         console.log("Confirm");
-        sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,noiDungQC,soLuong,kichThuoc,ngayBatDau,ngayKetThuc);
+        sendEmail(email, tinhTrang, diaChi, khuVuc, tenBangQuangCao, noiDungQC, soLuong, kichThuoc, ngayBatDau, ngayKetThuc);
       },
       onCancel: () => {
         console.log("Cancel");
@@ -59,8 +61,8 @@ document.querySelectorAll(".email-request-btn").forEach((btnConfirm) => {
   });
 });
 
-function sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,noiDungQC,soLuong,kichThuoc,ngayBatDau,ngayKetThuc){
-  (function(){
+function sendEmail(email, tinhTrang, diaChi, khuVuc, tenBangQuangCao, noiDungQC, soLuong, kichThuoc, ngayBatDau, ngayKetThuc) {
+  (function () {
     emailjs.init("Hqyh0rZzbl332P-vy"); // Account Public Key
   })();
 
@@ -84,22 +86,22 @@ function sendEmail(email,tinhTrang,diaChi,khuVuc,tenBangQuangCao,noiDungQC,soLuo
   var templateID = "template_uevq8pa"; // Email Template ID
 
   emailjs.send(serviceID, templateID, params)
-  .then( res => {
+    .then(res => {
       alert("Email sent successfully!!")
-  })
-  .catch();
+    })
+    .catch();
 }
 
 // ----------------send email for reporting status
 document.querySelectorAll(".email-report-btn").forEach((btnConfirm) => {
   btnConfirm.addEventListener("click", (e) => {
-    let tenNguoiBaoCao=e.target.dataset.reportername;
+    let tenNguoiBaoCao = e.target.dataset.reportername;
     let hinhThucBaoCao = e.target.dataset.typeofreport;
     let phone = e.target.dataset.reporterphonenumber;
     let email = e.target.dataset.reporteremail;
     let cachThucXuLy = e.target.dataset.handlemethod;
     let noiDungBaoCao = e.target.dataset.reportcontent;
-    let diaDiem=e.target.dataset.reportlocation;
+    let diaDiem = e.target.dataset.reportlocation;
     console.log(email);
 
     const options = {
@@ -109,7 +111,7 @@ document.querySelectorAll(".email-report-btn").forEach((btnConfirm) => {
       btnCancelText: "Thoát",
       onConfirm: () => {
         console.log("Confirm");
-        sendEmailReport(email,tenNguoiBaoCao,hinhThucBaoCao,phone,cachThucXuLy,noiDungBaoCao,diaDiem);
+        sendEmailReport(email, tenNguoiBaoCao, hinhThucBaoCao, phone, cachThucXuLy, noiDungBaoCao, diaDiem);
       },
       onCancel: () => {
         console.log("Cancel");
@@ -124,8 +126,8 @@ document.querySelectorAll(".email-report-btn").forEach((btnConfirm) => {
 });
 
 
-function sendEmailReport(email,tenNguoiBaoCao,hinhThucBaoCao,phone,cachThucXuLy,noiDungBaoCao,diaDiem){
-  (function(){
+function sendEmailReport(email, tenNguoiBaoCao, hinhThucBaoCao, phone, cachThucXuLy, noiDungBaoCao, diaDiem) {
+  (function () {
     emailjs.init("Hqyh0rZzbl332P-vy"); // Account Public Key
   })();
 
@@ -134,23 +136,23 @@ function sendEmailReport(email,tenNguoiBaoCao,hinhThucBaoCao,phone,cachThucXuLy,
     to: email,
     subject: 'KẾT QUẢ BÁO CÁO',
     replyto: 'ptudw.group.4@gmail.com',
-    tenNguoiBaoCao:tenNguoiBaoCao,
-    hinhThucBaoCao:hinhThucBaoCao,
-    phone:phone,
-    cachThucXuLy:cachThucXuLy,
-    noiDungBaoCao:noiDungBaoCao,
-    diaDiem:diaDiem,
-    email:email
+    tenNguoiBaoCao: tenNguoiBaoCao,
+    hinhThucBaoCao: hinhThucBaoCao,
+    phone: phone,
+    cachThucXuLy: cachThucXuLy,
+    noiDungBaoCao: noiDungBaoCao,
+    diaDiem: diaDiem,
+    email: email
   };
 
   var serviceID = "service_zx9km1o"; // Email Service ID
   var templateID = "template_yyokl68"; // Email Template ID
 
   emailjs.send(serviceID, templateID, params)
-  .then( res => {
+    .then(res => {
       alert("Email sent successfully!!")
-  })
-  .catch();
+    })
+    .catch();
 }
 
 
@@ -197,8 +199,10 @@ function checkFormChanges(currentValues) {
 
 document.querySelectorAll(".delete-request-btn").forEach((btnConfirm) => {
   btnConfirm.addEventListener("click", (e) => {
-    if(e.target.dataset.tinhTrang == "Chờ phê duyệt" || e.target.dataset.tinhTrang == "Không phê duyệt"){
+    if (e.target.dataset.tinhTrang == "Chờ phê duyệt" || e.target.dataset.tinhTrang == "Không phê duyệt") {
       let id = e.target.dataset.id;
+      let hinhAnhId = e.target.dataset.hinhAnhId;
+      // console.log(hinhAnhId);
       const options = {
         title: "Bạn có chắc chắn xoá yêu cầu này?",
         type: "danger",
@@ -207,7 +211,7 @@ document.querySelectorAll(".delete-request-btn").forEach((btnConfirm) => {
         onConfirm: () => {
           console.log("Confirm");
           console.log(id);
-          deleteRequest(id);
+          deleteRequest(id,hinhAnhId);
         },
         onCancel: () => {
           console.log("Cancel");
@@ -218,7 +222,7 @@ document.querySelectorAll(".delete-request-btn").forEach((btnConfirm) => {
         content,
         options: confirmedOptions,
       } = bs5dialog.confirm("Bạn có chắc chắn xoá yêu cầu này?", options);
-    } else{
+    } else {
       // let id = e.target.dataset.id;
       const options = {
         title: "Bạn không thể xóa yêu cầu quảng cáo đã được phê duyệt",
@@ -236,9 +240,13 @@ document.querySelectorAll(".delete-request-btn").forEach((btnConfirm) => {
 });
 
 
-async function deleteRequest(id) {
+async function deleteRequest(id, hinhAnhId) {
   let res = await fetch(`/yeu-cau/deleterequest/${id}`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ hinhAnhId: hinhAnhId }),
   });
   location.reload();
 }
@@ -279,40 +287,27 @@ async function deleteRequest(id) {
 // }
 
 
-function showEditRequestModal(elm, id, congTy,
-  diaChiCongTy,
-  dienThoai,
-  email,
-  diaChi,
-  khuVuc,
-  loaiVT,
-  longitude,
-  latitude,
-  tenBangQuangCao,
-  noiDungQC,
-  kichThuoc,
-  soLuong,
-  ngayBatDau,
-  ngayKetThuc,
-  tinhTrang, hinhAnh) {
+function showEditRequestModal(btn) {
 
   let modal = document.querySelector("#editRequestModal");
 
-  modal.querySelector("#idRequest").value = id;
-  modal.querySelector("#congTYEditRequest").value = congTy;
-  modal.querySelector("#diaChiCongTyEditRequest").value = diaChiCongTy;
-  modal.querySelector("#dienThoaiEditRequest").value = dienThoai;
-  modal.querySelector("#emailEditRequest").value = email;
-  modal.querySelector("#diaChiEditRequest").value = diaChi;
-  modal.querySelector("#noiDungQCEditRequest").value = noiDungQC;
-  modal.querySelector("#tenBangQuangCaoEditRequest").value = tenBangQuangCao;
-  modal.querySelector("#kichThuocEditRequest").value = kichThuoc;
-  modal.querySelector("#soLuongEditRequest").value = soLuong;
-  modal.querySelector("#ngayBatDauEditRequest").value = ngayBatDau;
-  modal.querySelector("#ngayKetThucEditRequest").value = ngayKetThuc;
-  modal.querySelector("#ngayKetThucEditRequest").value = ngayKetThuc;
-  modal.querySelector("#editRequestAds").src = hinhAnh;
-
+  modal.querySelector("#idRequest").value = btn.dataset.id;
+  modal.querySelector("#congTYEditRequest").value = btn.dataset.congTy;
+  modal.querySelector("#diaChiCongTyEditRequest").value = btn.dataset.diaChiCongTy;
+  modal.querySelector("#dienThoaiEditRequest").value = btn.dataset.dienThoai;
+  modal.querySelector("#emailEditRequest").value = btn.dataset.email;
+  modal.querySelector("#diaChiEditRequest").value = btn.dataset.diaChi;
+  modal.querySelector("#noiDungQCEditRequest").value = btn.dataset.noiDungQC;
+  modal.querySelector("#tenBangQuangCaoEditRequest").value = btn.dataset.tenBangQuangCao;
+  modal.querySelector("#kichThuocEditRequest").value = btn.dataset.kichThuoc;
+  modal.querySelector("#soLuongEditRequest").value = btn.dataset.soLuong;
+  modal.querySelector("#ngayBatDauEditRequest").value = btn.dataset.ngayBatDau;
+  modal.querySelector("#ngayKetThucEditRequest").value = btn.dataset.ngayKetThuc;
+  modal.querySelector("#editRequestImg").src = btn.dataset.hinhAnh;
+  modal.querySelector('#hinhAnhIdRequest').value = btn.dataset.hinhAnhId;
+  // modal.querySelector('#changeOrNot').value = isImageChanged();
+  // console.log(isImageChanged());
+  // if(isImageChanged)
 
   var chinhsuaBT = modal.querySelector("#chinhsuabutton");
 
@@ -361,7 +356,7 @@ function showHandleMethod(btn) {
   document.querySelector("#reporterphonenumber").textContent = btn.dataset.reporterphonenumber;
   document.querySelector("#reporteremail").textContent = btn.dataset.reporteremail;
   document.querySelector("#typeofreport").textContent = btn.dataset.typeofreport;
-  document.querySelector("#reportcontent").innerHTML  = '<span style="font-size:14px; font-wieght:bold; color:#344767;font-family: Roboto, Helvetica, Arial, sans-serif;">' + btn.dataset.reportcontent + '</>';
+  document.querySelector("#reportcontent").innerHTML = '<span style="font-size:14px; font-wieght:bold; color:#344767;font-family: Roboto, Helvetica, Arial, sans-serif;">' + btn.dataset.reportcontent + '</>';
   document.querySelector("#handlemethod").value = btn.dataset.handlemethod;
   document.querySelector('#imagepath1').src = btn.dataset.imagepath1;
   document.querySelector('#imagepath2').src = btn.dataset.imagepath2;
@@ -401,6 +396,7 @@ function showContinueEditPlaceModal(btn) {
   document.querySelector("#hinhThucEditContinue").value = btn.dataset.hinhThuc;
   document.querySelector("#quyHoachEditContinue").checked = btn.dataset.quyHoach == "ĐÃ QUY HOẠCH" ? true : false;
   document.querySelector("#imageEditPlaceContinue").src = btn.dataset.hinhAnh;
+  document.querySelector('#hinhAnhIdPlaceEdit').value = btn.dataset.hinhAnhId;
   document.querySelector("#liDoChinhSuaContinue").value = '';
   // initializeEditForm();
 }
@@ -424,27 +420,25 @@ function showContinueEditAdsModal(btn) {
   document.querySelector("#adQuantityEditContinue").value = btn.dataset.adQuantity;
   document.querySelector("#expireDayEditContinue").value = btn.dataset.expireDay;
   document.querySelector("#imageEditcontinue").src = btn.dataset.imagePath;
+  document.querySelector('#publicImageIdEditAds').value = btn.dataset.publicImageId;
   document.querySelector("#liDoChinhSuaContinue").value = '';
 
 }
 
 // -------------------------onsubmit() edit
-async function editRequest(e) {
 
+async function editRequest(e) {
+  
   e.preventDefault();
 
   const formData = new FormData(document.getElementById("editRequestForm"));
   const data = Object.fromEntries(formData.entries());
 
-
   let res = await fetch(`/yeu-cau/editrequest`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-
+    body:formData,
   });
+  
 
   location.reload();
 }
@@ -457,10 +451,8 @@ async function editPlace(e) {
 
   let res = await fetch('/diem-dat-bang-quang-cao/editplacerequest', {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+    // 
+    body:formData,
   });
 
   location.reload();
@@ -492,10 +484,11 @@ async function editAds(e) {
 
   let res = await fetch('/bang-quang-cao/editadsrequest', {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+    // headers: {
+    //   "Content-Type": "application/json",
+    // },
+    // body: JSON.stringify(data),
+    body:formData,
   });
 
   location.reload();
@@ -627,22 +620,22 @@ document.getElementById('phuongDropdown').addEventListener('change', function ()
   var selectedOptions = Array.from(this.selectedOptions).map(option => option.value);
   // Check if "All Phường" is selected
   if (selectedOptions.includes('all')) {
-      // Show all rows
-      document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
-          row.style.display = '';
-      });
+    // Show all rows
+    document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
+      row.style.display = '';
+    });
   } else {
-      // Hide all rows
-      document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
-          row.style.display = 'none';
+    // Hide all rows
+    document.querySelectorAll('#filteredContent tbody tr').forEach(function (row) {
+      row.style.display = 'none';
+    });
+    // Show rows for selected Phường values
+    selectedOptions.forEach(function (phuong) {
+      var rowsToShow = document.querySelectorAll('#filteredContent tbody tr[data-phuong="' + phuong + '"]');
+      rowsToShow.forEach(function (row) {
+        row.style.display = '';
       });
-      // Show rows for selected Phường values
-      selectedOptions.forEach(function (phuong) {
-          var rowsToShow = document.querySelectorAll('#filteredContent tbody tr[data-phuong="' + phuong + '"]');
-          rowsToShow.forEach(function (row) {
-              row.style.display = '';
-          });
-      });
+    });
   }
 });
 
@@ -741,7 +734,7 @@ document.addEventListener("DOMContentLoaded", function () {
     tableRows.forEach((row) => {
       const rowText = row.textContent.toLowerCase();
       if (rowText.includes(searchText)) {
-        row.style.display = ""; 
+        row.style.display = "";
       } else {
         row.style.display = "none";
       }

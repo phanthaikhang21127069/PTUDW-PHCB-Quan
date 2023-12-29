@@ -5,7 +5,7 @@ const upload = require("../middlewares/multer");
 
 router.get("/",controller.show);
 router.post("/editplace",upload.single('ImageUrl'), controller.requestEditPlace);
-router.put("/editplacerequest", controller.continueEditRequest);
+router.put("/editplacerequest",upload.single('ImageUrl'), controller.continueEditRequest);
 
 
 module.exports=router;

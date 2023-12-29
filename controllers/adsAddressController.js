@@ -114,15 +114,21 @@ controller.requestEditPlace = async (req, res) => {
 }
 
 controller.continueEditRequest = async (req, res) => {
-  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach} = req.body;
+  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, hinhAnhId} = req.body;
   try {
+    const result = await cloudinary.uploader.upload(req.file.path,{
+      folder:'places'
+    });
+    await cloudinary.uploader.destroy(hinhAnhId);
     await models.Requesteditplace.update(
       { 
         diaChi, 
         khuVuc, 
         loaiVT, 
         hinhThuc, 
-        quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH"
+        quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
+        hinhAnh:result.secure_url,
+        hinhAnhId:result.public_id,
       },
       {where: {id}}
     );

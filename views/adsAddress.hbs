@@ -324,7 +324,7 @@
 
     <div class="modal fade" id="editPlaceModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <form action="" id="editPlaceForm" onsubmit="editPlace(event)">
+        <form action="" id="editPlaceForm" onsubmit="editPlace(event)" enctype="multipart/form-data">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">
@@ -414,6 +414,8 @@
             </div>
             <div class="modal-footer">
               <input type="hidden" name="id" id="idPlaceRequest" value="" />
+              <input type="hidden" name="hinhAnhId" id="hinhAnhIdPlaceEdit" value="" />
+
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeBtnEdit">
                 Đóng
               </button>
@@ -547,7 +549,7 @@
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
                         data-bs-target="#editPlaceModal" onclick="showContinueEditPlaceModal(this)" data-id="{{id}}"
                         data-dia-chi="{{diaChi}}" data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}"
-                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinh-anh="{{hinhAnh}}"></i>
+                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinh-anh="{{hinhAnh}}" data-hinh-anh-id="{{hinhAnhId}}"></i>
                       {{!-- view place detail modal --}}
                       <div class="modal detail-place fade" id="staticBackdropInfo" data-bs-backdrop="static"
                         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelInfo"

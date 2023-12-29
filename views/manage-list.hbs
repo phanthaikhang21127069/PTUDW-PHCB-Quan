@@ -798,7 +798,7 @@
           <div class="modal fade" id="editRequestModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabelfixads" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
-              <form action="" id="editRequestForm" onsubmit="editRequest(event)">
+              <form action="" id="editRequestForm" onsubmit="editRequest(event)" enctype="multipart/form-data">
                 <div class="modal-content">
                   <div class="modal-header">
                     <div class="col-6 px-2">
@@ -817,13 +817,14 @@
                         <div class="row  mb-3">
                           <div class="col">
                             <div class="input">
-                              <label class="form-label" for="congTYEditRequest">Tên công ty:</label>
+                              <label for="congTYEditRequest" class="form-label" for="congTYEdit">Tên công ty:</label>
                               <input type="text" class="form-control" id="congTYEditRequest" name="congTy" required />
                             </div>
                           </div>
                           <div class="col">
                             <div class="input">
-                              <label class="form-label" for="diaChiCongTyEditRequest">Địa chỉ: </label>
+                              <label for="diaChiCongTyEditRequest" class="form-label" for="diaChiCongTyEdit">Địa chỉ:
+                              </label>
                               <input type="text" class="form-control " id="diaChiCongTyEditRequest" name="diaChiCongTy"
                                 required />
                             </div>
@@ -832,7 +833,8 @@
                         <div class="row mb-3">
                           <div class="col">
                             <div class="input">
-                              <label class="form-label" for="dienThoaiEditRequest">Số điện thoại: </label>
+                              <label for="dienThoaiEditRequest" class="form-label" for="dienThoaiEdit">Số điện thoại:
+                              </label>
                               <input type="text" class="form-control " id="dienThoaiEditRequest" name="dienThoai"
                                 required />
                             </div>
@@ -870,23 +872,16 @@
                         <div class="row  mb-3">
                           <div class="col">
                             <div class="input">
-                              {{!-- <label class="form-label">Hình thức: </label>
-                              <input type="text" class="form-control " name="loaiQC" id="loaiQCEditRequest" required />
-                              <select name="loaiQC" id="loaiQCEditRequest" class="form-control select-form-control">
-                                {{#each adstypes}}
-                                <option value="{{name}}" selected="selected">{{name}}</option>
-                                {{/each}}
-                              </select> --}}
-                              <label for="noiDungQCEditRequest" class="form-label">Nội dung quảng cáo: </label>
-                              <input type="text" class="form-control " id="noiDungQCEditRequest" name="noiDungQC"
-                                required />
+                              <label for="tenBangQuangCaoEditRequest" class="form-label">Tên bảng quảng cáo: </label>
+                              <input type="text" class="form-control" name="tenBangQuangCao"
+                                id="tenBangQuangCaoEditRequest" required />
                             </div>
                           </div>
                           <div class="col">
                             <div class="input">
-                              <label for="tenBangQuangCaoEditRequest" class="form-label">Tên bảng quảng cáo:</label>
-                              <input type="text" class="form-control " name="tenBangQuangCao"
-                                id="tenBangQuangCaoEditRequest" required />
+                              <label for="noiDungQCEditRequest" class="form-label">Nội dung quảng cáo: </label>
+                              <input type="text" class="form-control" name="noiDungQC" id="noiDungQCEditRequest"
+                                required />
                             </div>
                           </div>
                         </div>
@@ -932,14 +927,16 @@
                       <div class="card bg-dark">
                         <div class="profile-pic">
                           <div class="image-container">
-                            <img src="" id="editRequestAds" width="100%" height="250px"
+                            <img src="" id="editRequestImg" width="100%" height="250px"
                               style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;" />
                             <label class="btn btn-primary" for="editrequest"
                               style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
                               <span class="glyphicon glyphicon-camera"></span>
                               <span>Đổi hình ảnh</span>
                             </label>
-                            <input id="editrequest" type="file" style="display: none;" onchange="loadImg(event,'#editRequestAds')" />
+                            <input id="editrequest" name="ImageUrl" type="file" style="display: none;"
+                              onchange="loadImg(event,'#editRequestImg')" />
+
                           </div>
                         </div>
                       </div>
@@ -947,10 +944,9 @@
                   </div>
                   <div class="modal-footer" style="justify-content: space-around;">
                     <input type="hidden" name="id" id="idRequest" value="" />
+                    <input type="hidden" name="hinhAnhId" id="hinhAnhIdRequest" value="" />
                     <button id="chinhsuabutton" type="submit" class="btn btn-primary">CHỈNH SỬA</button>
-
                   </div>
-
                 </div>
               </form>
             </div>
@@ -1298,8 +1294,15 @@
                     <td class="align-middle" style="white-space : normal; ">
 
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
-                        data-bs-target="#editRequestModal"
-                        onclick="showEditRequestModal(this, '{{id}}', '{{congTy}}', '{{diaChiCongTy}}', '{{dienThoai}}',  '{{email}}', '{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{noiDungQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}','{{hinhAnh}}')"></i>
+                        data-bs-target="#editRequestModal" onclick="showEditRequestModal(this)" data-id="{{id}}"
+                        data-cong-ty="{{congTy}}" data-dia-chi-cong-ty="{{diaChiCongTy}}"
+                        data-dien-thoai="{{dienThoai}}" data-email="{{email}}" data-dia-chi="{{Place.diaChi}}"
+                        data-khu-vuc="{{Place.khuVuc}}" data-loai-v-t="{{Place.loaiVT}}"
+                        data-longitude="{{Place.longitude}}" data-latitude="{{Place.latitude}}"
+                        data-ten-bang-quang-cao="{{tenBangQuangCao}}" data-noi-dung-q-c="{{noiDungQC}}"
+                        data-kich-thuoc="{{kichThuoc}}" data-so-luong="{{soLuong}}"
+                        data-ngay-bat-dau="{{formattedNgayBatDau}}" data-ngay-ket-thuc="{{formattedNgayKetThuc}}"
+                        data-hinh-anh-id="{{hinhAnhId}}" data-hinh-anh="{{hinhAnh}}"></i>
 
                       <i role="button" class="fa fa-trash text-danger delete-btn delete-request-btn me-3" data-id={{id}}
                         data-tinh-trang="{{tinhTrang}}"></i>
