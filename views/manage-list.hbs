@@ -61,8 +61,8 @@
           <h5 class="modal-title">
             Chỉnh Sửa Điểm Đặt Bảng Quảng Cáo
           </h5>
-          <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal"
-            aria-label="Close" data-target="infoToast" style="margin-bottom: 0;">
+          <button class="btn-close toast-btn" type="button" data-bs-dismiss="modal" aria-label="Close"
+            data-target="infoToast" style="margin-bottom: 0;">
             <i class="fa fa-times-circle text-dark  fs-4" aria-hidden="true"></i>
           </button>
         </div>
@@ -106,14 +106,15 @@
             <div class="card bg-dark">
               <div class="profile-pic">
                 <div class="image-container">
-                  <img id ="imageEditPlace" class="imageDisplay" width="100%" height="250px"
+                  <img id="imageEditPlace" class="imageDisplay" width="100%" height="250px"
                     style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;" />
                   <label class="btn btn-primary" for="placefile"
                     style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
                     <span class="glyphicon glyphicon-camera"></span>
                     <span>Đổi hình ảnh</span>
                   </label>
-                  <input id="placefile" name="ImageUrl" type="file" style="display: none;" onchange="loadImg(event, '#imageEditPlace')" />
+                  <input id="placefile" name="ImageUrl" type="file" style="display: none;"
+                    onchange="loadImg(event, '#imageEditPlace')" />
                 </div>
               </div>
             </div>
@@ -141,6 +142,8 @@
         </div>
         <div class="modal-footer">
           <input type="hidden" name="id" id="idPlace" value="" />
+          <input type="hidden" name="hinhAnh" id="hinhAnhA" value="" />
+          <input type="hidden" name="hinhAnhId" id="hinhAnhB" value="" />
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeBtnEdit">
             Đóng
           </button>
@@ -205,14 +208,15 @@
             <div class="card bg-dark">
               <div class="profile-pic">
                 <div class="image-container">
-                  <img id ="imageEditAds" class="imageDisplay" width="100%" height="250px"
+                  <img id="imageEditAds" class="imageDisplay" width="100%" height="250px"
                     style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;" />
                   <label class="btn btn-primary" for="adsfile"
                     style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
                     <span class="glyphicon glyphicon-camera"></span>
                     <span>Đổi hình ảnh</span>
                   </label>
-                  <input id="adsfile" name="ImageUrl" type="file" style="display: none;" onchange="loadImg(event, '#imageEditAds')" />
+                  <input id="adsfile" name="ImageUrl" type="file" style="display: none;"
+                    onchange="loadImg(event, '#imageEditAds')" />
                 </div>
               </div>
             </div>
@@ -241,6 +245,8 @@
         </div>
         <div class="modal-footer">
           <input type="hidden" name="id" id="idAds" value="" />
+          <input type="hidden" name="imagePath" id="imagePathA" value="" />
+          <input type="hidden" name="publicImageId" id="publicImageIdB" value="" />
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeBtnEdit">
             Đóng
           </button>
@@ -503,7 +509,7 @@
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
                         data-bs-target="#addPlaceModal" onclick="showEditPlaceModal(this)" data-id="{{id}}"
                         data-dia-chi="{{diaChi}}" data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}"
-                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinhAnh="{{hinhAnh}}"></i>
+                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinh-anh="{{hinhAnh}}"></i>
 
                     </td>
                   </tr>
@@ -712,7 +718,7 @@
                         data-bs-target="#editAdsModal" onclick="showEditAdsModal(this)" data-id="{{id}}"
                         data-ad-name="{{adName}}" data-dia-chi="{{Place.diaChi}}" data-ad-size="{{adSize}}"
                         data-ad-quantity="{{adQuantity}}" data-expire-day="{{formattedExpireDay}}"
-                        data-origin="{{originId}}"></i>
+                        data-origin="{{originId}}" data-image-path="{{imagePath}}" data-public-image-id="{{publicImageId}}"></i>
                     </td>
                   </tr>
                   {{/each}}
@@ -733,12 +739,12 @@
               class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-1 d-flex justify-content-between align-items-center">
               <h6 class="text-white text-capitalize ps-3">Danh sách yêu cầu</h6>
               <div class="row justify-content-between">
-                {{!-- <div class="col-6 ">
+                <div class="col-6 ">
                   <button class="btn toast-btn" type="button" data-target="infoToast" data-bs-toggle="modal"
                     data-bs-target="#addRequest"
                     style=" color: rgb(8, 8, 65); background-color:rgb(202, 224, 248); width:auto; text-align: center; white-space: nowrap;"><i
                       class="fa-solid fa-plus pe-1"></i>Thêm Yêu Cầu</button>
-                </div> --}}
+                </div>
                 <div class="col-6 ps-4">
                   <li class="nav-item dropdown pe-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0 text-center" id="dropdownMenuButton"
@@ -1025,6 +1031,7 @@
                       </div>
                     </div>
                     <div class="container py-3">
+
                       <h6>Phần 3: Thông tin bảng quảng cáo</h6>
                       <div class="card">
                         <div class="row  mb-3">
@@ -1062,11 +1069,11 @@
                         <div class="row mb-3">
                           <div class="col">
                             <div class="input">
-                              <labelfor="ngayBatDau" class="form-label">Ngày bắt đầu hợp đồng:</label>
+                              <label for="ngayBatDau" class="form-label">Ngày bắt đầu hợp đồng:</label>
 
 
-                                <input type="text" class=" form-control " value="" id="ngayBatDau" name="ngayBatDau"
-                                  placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
+                              <input type="text" class=" form-control " value="" id="ngayBatDau" name="ngayBatDau"
+                                placeholder="MM/DD/YYYY" oninput="checkValidDate(this, event)" required />
                             </div>
                           </div>
                           <div class="col">
@@ -1081,18 +1088,19 @@
                         </div>
                       </div>
                     </div>
-                    <div class="container pt-3 pb-3">
+                    <div class="container pt-3">
                       <div class="card bg-dark">
                         <div class="profile-pic">
                           <div class="image-container">
-                            <img id ="imageRequestAds" class="imageDisplay" width="100%" height="250px"
+                            <img id="addRequestImg" width="100%" height="250px"
                               style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; object-fit: cover; position: relative; border-radius:5px;" />
-                            <label class="btn btn-primary" for="requestfile"
+                            <label class="btn btn-primary" for="addImgRequest"
                               style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
                               <span class="glyphicon glyphicon-camera"></span>
                               <span>Đổi hình ảnh</span>
                             </label>
-                            <input id="requestfile" type="file" style="display: none;" onchange="loadImg(event, '#imageRequestAds')" />
+                            <input id="addImgRequest" type="file" name="ImageUrl" style="display: none;"
+                              onchange="loadImg(event,'#addRequestImg')" />
                           </div>
                         </div>
                       </div>
@@ -1270,8 +1278,7 @@
                       onclick="openViewRequestDetail(this,'{{congTy}}','{{diaChiCongTy}}','{{dienThoai}}','{{email}}','{{Place.diaChi}}','{{Place.khuVuc}}','{{Place.loaiVT}}','{{Place.longitude}}','{{Place.latitude}}','{{tenBangQuangCao}}','{{noiDungQC}}','{{kichThuoc}}','{{soLuong}}','{{formattedNgayBatDau}}','{{formattedNgayKetThuc}}','{{tinhTrang}}', '{{hinhAnh}}')">
                       <div class="d-flex px-2">
                         <div>
-                          <img src="{{hinhAnh}}" class="avatar avatar-sm me-3 border-radius-lg"
-                            alt="spotify">
+                          <img src="{{hinhAnh}}" class="avatar avatar-sm me-3 border-radius-lg" alt="spotify">
                         </div>
                         <div class="my-auto">
                           <h6 class="mb-0 text-sm">{{Place.diaChi}}</h6>

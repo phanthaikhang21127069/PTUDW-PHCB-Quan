@@ -145,6 +145,9 @@
         </div>
         <div class="modal-footer">
           <input type="hidden" name="id" id="idPlace" value="" />
+          <input type="hidden" name="hinhAnh" id="hinhAnhA" value="" />
+          <input type="hidden" name="hinhAnhId" id="hinhAnhB" value="" />
+
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeBtnEdit">
             Đóng
           </button>
@@ -310,7 +313,7 @@
                       <i role="button" class="fa fa-pen-to-square text-info me-3" data-bs-toggle="modal"
                         data-bs-target="#addPlaceModal" onclick="showEditPlaceModal(this)" data-id="{{id}}"
                         data-dia-chi="{{diaChi}}" data-khu-vuc="{{khuVuc}}" data-loai-vt="{{loaiVT}}"
-                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinhAnh="{{hinhAnh}}"></i>
+                        data-hinh-thuc="{{hinhThuc}}" data-quy-hoach="{{quyHoach}}" data-hinh-anh="{{hinhAnh}}" data-hinh-anh-id="{{hinhAnhId}}"></i>
                     </td>
                   </tr>
                   {{/each}}
@@ -414,6 +417,8 @@
             </div>
             <div class="modal-footer">
               <input type="hidden" name="id" id="idPlaceRequest" value="" />
+              <input type="hidden" name="hinhAnhId" id="hinhAnhBC" value="" />
+
               <input type="hidden" name="hinhAnhId" id="hinhAnhIdPlaceEdit" value="" />
 
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeBtnEdit">

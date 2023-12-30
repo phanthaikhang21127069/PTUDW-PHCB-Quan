@@ -84,6 +84,8 @@
         </div>
         <div class="modal-footer">
           <input type="hidden" name="id" id="idAds" value="" />
+          <input type="hidden" name="imagePath" id="imagePathA" value="" />
+          <input type="hidden" name="publicImageId" id="publicImageIdB" value="" />
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeBtnEdit">
             Đóng
           </button>
@@ -324,7 +326,7 @@
                         data-bs-target="#editAdsModal" onclick="showEditAdsModal(this)" data-id="{{id}}"
                         data-ad-name="{{adName}}" data-dia-chi="{{Place.diaChi}}" data-ad-size="{{adSize}}"
                         data-ad-quantity="{{adQuantity}}" data-expire-day="{{formattedExpireDay}}"
-                        data-origin="{{originId}}"></i>
+                        data-origin="{{originId}}" data-image-path="{{imagePath}}" data-public-image-id="{{publicImageId}}"></i>
                     </td>
                   </tr>
                   {{/each}}

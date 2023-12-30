@@ -122,8 +122,8 @@ controller.show = async (req, res) => {
 };
 
 controller.requestEditAds = async (req, res) => {
-  let { id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua } = req.body;
-
+  let { id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua, imagePath, publicImageId} = req.body;
+  result = {}
   const existingPlace = await models.Requesteditads.findOne({
     where: {
       originId: id,
@@ -152,11 +152,11 @@ controller.requestEditAds = async (req, res) => {
     }
     
     else {
-
-      const result = await cloudinary.uploader.upload(req.file.path,{
-        folder:'ads'
-      });
-
+      if (req.file && req.file.path) {
+        result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'ads'
+        });
+      }
       await models.Requesteditads.create({
         placeId: placeId,
         originId: id,
@@ -165,19 +165,23 @@ controller.requestEditAds = async (req, res) => {
         adQuantity,
         expireDay,
         liDoChinhSua,
-        imagePath:result.secure_url,
-        publicImageId:result.public_id,
+        imagePath:result.secure_url ? result.secure_url : imagePath,
+        publicImageId:result.public_id ? result.public_id : publicImageId,
       });
       res.redirect("/bang-quang-cao");
     }
   } catch (error) {
+    if (result.public_id) {
+      await cloudinary.uploader.destroy(result.public_id);
+    }
     res.send("Không thể gửi yêu cầu chỉnh sửa bảng QC");
     console.error(error);
   }
 }
 
 controller.continueRequestEditAds = async (req, res) => {
-  let {id, originId, adName, diaChiAds, adSize, adQuantity, expireDay, publicImageId} = req.body;
+  let {id, originId, adName, diaChiAds, adSize, adQuantity, expireDay, publicImageId, liDoChinhSua} = req.body;
+  let result = {}
 
   const parsedDate = moment(expireDay, 'MM/DD/YYYY', true);
   const isValidDate = parsedDate.isValid();
@@ -194,25 +198,35 @@ controller.continueRequestEditAds = async (req, res) => {
   let placeId = adsPlace.getDataValue("id");
 
   try {
-    const result = await cloudinary.uploader.upload(req.file.path,{
-      folder:'ads'
-    });
-    await cloudinary.uploader.destroy(publicImageId);
-    await models.Requesteditads.update(
-      { 
-        placeId: placeId,
+
+    if (req.file && req.file.path) {
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'ads'
+      });
+    }
+    const updateData = {
+      placeId: placeId,
         originId: originId,
         adName, 
         adSize, 
         adQuantity, 
         expireDay,
-        imagePath:result.secure_url,
-        publicImageId:result.public_id,
-      },
-      {where: {id}}
-    );
+        liDoChinhSua,
+    }
+    if (result.secure_url) {
+      updateData.imagePath = result.secure_url;
+      updateData.publicImageId = result.public_id;
+    }
+    await models.Requesteditads.update(updateData,{where: {id}});
+    if (publicImageId && result.secure_url) {
+      await cloudinary.uploader.destroy(publicImageId);
+    }
+    
     res.send("Đã cập nhật bảng QC!");
   } catch (error) {
+    if (result.public_id) {
+      await cloudinary.uploader.destroy(result.public_id);
+    }
     res.send("Không thể cập nhật bảng QC!");
     console.error(error);
   }

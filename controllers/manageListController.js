@@ -188,7 +188,9 @@ controller.show = async (req, res) => {
 };
 
 controller.requestEditPlace = async (req, res) => {
-  let { id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua } = req.body;
+  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua, hinhAnh, hinhAnhId} = req.body;
+  result = {}
+  console.log(hinhAnhId);
   const existingPlace = await models.Requesteditplace.findOne({
     where: {
       placeId: id,
@@ -200,33 +202,40 @@ controller.requestEditPlace = async (req, res) => {
       res.send("Vui lòng chỉnh sửa thêm ở danh sách yêu cầu chỉnh sửa điểm đặt bảng quảng cáo");
     }
     else {
-      const result = await cloudinary.uploader.upload(req.file.path,{
-        folder:'places'
-      });
+      // const result = await cloudinary.uploader.upload(req.file.path,{
+      //   folder:'places'
+      // });
+      if (req.file && req.file.path) {
+        result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'places'
+        });
+      }
       await models.Requesteditplace.create({
         placeId: id,
-        diaChi,
-        khuVuc,
-        loaiVT,
-        hinhThuc,
+        diaChi, 
+        khuVuc, 
+        loaiVT, 
+        hinhThuc, 
         quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
         liDoChinhSua,
-        hinhAnh:result.secure_url,
-        hinhAnhId:result.public_id,
+        hinhAnh: result.secure_url ? result.secure_url : hinhAnh,
+        hinhAnhId: result.public_id ? result.public_id : hinhAnhId,
       });
       res.redirect("/diem-dat-bang-quang-cao");
     }
   } catch (error) {
+    if (result.public_id) {
+      await cloudinary.uploader.destroy(result.public_id);
+    }
     res.send("Không thể thêm điểm đặt");
-    cloudinary.uploader.destroy(result.secure_url);
     console.error(error);
   }
 }
 
 
 controller.requestEditAds = async (req, res) => {
-  let { id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua } = req.body;
-
+  let { id, adName, diaChiAds, adSize, adQuantity, expireDay, liDoChinhSua, imagePath, publicImageId} = req.body;
+  result = {}
   const existingPlace = await models.Requesteditads.findOne({
     where: {
       originId: id,
@@ -255,11 +264,11 @@ controller.requestEditAds = async (req, res) => {
     }
     
     else {
-
-      const result = await cloudinary.uploader.upload(req.file.path,{
-        folder:'ads'
-      });
-
+      if (req.file && req.file.path) {
+        result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'ads'
+        });
+      }
       await models.Requesteditads.create({
         placeId: placeId,
         originId: id,
@@ -268,27 +277,29 @@ controller.requestEditAds = async (req, res) => {
         adQuantity,
         expireDay,
         liDoChinhSua,
-        imagePath:result.secure_url,
-        publicImageId:result.public_id,
+        imagePath:result.secure_url ? result.secure_url : imagePath,
+        publicImageId:result.public_id ? result.public_id : publicImageId,
       });
-      res.redirect("/danh-sach");
+      res.redirect("/bang-quang-cao");
     }
   } catch (error) {
+    if (result.public_id) {
+      await cloudinary.uploader.destroy(result.public_id);
+    }
     res.send("Không thể gửi yêu cầu chỉnh sửa bảng QC");
     console.error(error);
   }
 }
 
 controller.deleteRequest = async (req, res) => {
-  console.log("ok");
   let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
-  let hinhAnhId = req.params.hinhAnhId;
+  let hinhAnhId = req.body.hinhAnhId;
 
   try {
     await models.Requestads.destroy(
       { where: { id } }
     );
-    await cloudinary.uploader.destroy(hinhAnhId);
+    if (hinhAnhId) await cloudinary.uploader.destroy(hinhAnhId);
 
     res.send("Đã xoá yêu cầu!");
   } catch (error) {
@@ -315,9 +326,9 @@ controller.addRequest = async (req, res) => {
     kichThuoc,
     soLuong,
     ngayBatDau,
-    ngayKetThuc, 
+    ngayKetThuc,
   } = req.body;
-  console.log(req.body);
+  result = {}
 
   const ngayBatDauDate = moment(ngayBatDau, 'MM/DD/YYYY', true);
   const ngayKetThucDate = moment(ngayKetThuc, 'MM/DD/YYYY', true);
@@ -340,12 +351,12 @@ controller.addRequest = async (req, res) => {
   });
   let placeId = requestPlace.getDataValue("id");
 
-
   try {
-    const result = await cloudinary.uploader.upload(req.file.path,{
-      folder:'requests'
-    });
-
+    if (req.file && req.file.path) {
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'requestAds'
+      });
+    }
     await models.Requestads.create({
       congTy,
       diaChiCongTy,
@@ -355,22 +366,25 @@ controller.addRequest = async (req, res) => {
       tenBangQuangCao,
       noiDungQC,
       kichThuoc,
-      soLuong,
+      soLuong: soLuong || 0,
       ngayBatDau,
       ngayKetThuc,
       tinhTrang: 'Chờ phê duyệt',
-      hinhAnh:result.secure_url,
-      hinhAnhId:result.public_id,
+      hinhAnh: result.secure_url || '',
+      hinhAnhId: result.public_id | '',
     });
-    res.redirect('/danh-sach');
+    res.redirect('/yeu-cau');
   } catch (error) {
+    if (result.public_id) {
+      await cloudinary.uploader.destroy(result.public_id);
+    }
     res.send('Không thể thêm');
     console.error(error);
   }
 };
 
 controller.editRequest = async (req, res) => {
-  let {id,
+  let { id,
     congTy,
     diaChiCongTy,
     dienThoai,
@@ -383,60 +397,68 @@ controller.editRequest = async (req, res) => {
     ngayBatDau,
     ngayKetThuc,
     tinhTrang,
-    hinhAnhId,
-    imageChange} = req.body;
+    hinhAnhId
+  } = req.body;
 
+  let result = {}
 
-    const ngayBatDauDate = moment(ngayBatDau, 'MM/DD/YYYY', true);
-    const ngayKetThucDate = moment(ngayKetThuc, 'MM/DD/YYYY', true);
-  
-    const isValidDateBD = ngayBatDauDate.isValid();
-    const isValidDateKT = ngayKetThucDate.isValid();
-  
-    if (!isValidDateBD) {
-      return res.json({ error: true, message: 'Ngày Bắt Đầu không hợp lệ!' });
-    }
-  
-    if (!isValidDateKT) {
-      return res.json({ error: true, message: 'Ngày Kết Thúc không hợp lệ!' });
-    }
-    
-    if (ngayBatDauDate.isAfter(ngayKetThucDate)) {
-      return res.json({ error: true, message: 'Ngày Bắt Đầu không thể sau Ngày Kết Thúc!' });
-    }
+  const ngayBatDauDate = moment(ngayBatDau, 'MM/DD/YYYY', true);
+  const ngayKetThucDate = moment(ngayKetThuc, 'MM/DD/YYYY', true);
 
-    const requestPlace = await models.Place.findOne({ 
-      attributes: ["id"],
-      where: {diaChi: diaChiRequest} 
-    });
-    let placeId = requestPlace.getDataValue("id");
+  const isValidDateBD = ngayBatDauDate.isValid();
+  const isValidDateKT = ngayKetThucDate.isValid();
+
+  if (!isValidDateBD) {
+    return res.json({ error: true, message: 'Ngày Bắt Đầu không hợp lệ!' });
+  }
+
+  if (!isValidDateKT) {
+    return res.json({ error: true, message: 'Ngày Kết Thúc không hợp lệ!' });
+  }
+
+  if (ngayBatDauDate.isAfter(ngayKetThucDate)) {
+    return res.json({ error: true, message: 'Ngày Bắt Đầu không thể sau Ngày Kết Thúc!' });
+  }
+
+  const requestPlace = await models.Place.findOne({
+    attributes: ["id"],
+    where: { diaChi: diaChiRequest }
+  });
+  let placeId = requestPlace.getDataValue("id");
   try {
-      const result = await cloudinary.uploader.upload(req.file.path,{
-        folder:'requestAds'
+    if (req.file && req.file.path) {
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'requestAds'
       });
+    }
+
+    const updateData = {
+      congTy,
+      diaChiCongTy,
+      dienThoai,
+      email,
+      placeId: placeId,
+      tenBangQuangCao,
+      noiDungQC,
+      kichThuoc,
+      soLuong,
+      ngayBatDau,
+      ngayKetThuc,
+      tinhTrang,
+    }
+    if (result.secure_url) {
+      updateData.hinhAnh = result.secure_url;
+      updateData.hinhAnhId = result.public_id;
+    }
+    await models.Requestads.update(updateData,{where: {id}});
+    if (hinhAnhId && result.secure_url) {
       await cloudinary.uploader.destroy(hinhAnhId);
-  
-      await models.Requestads.update(
-        { 
-          congTy,
-          diaChiCongTy,
-          dienThoai,
-          email,
-          placeId:placeId,
-          tenBangQuangCao,
-          noiDungQC,
-          kichThuoc,
-          soLuong,
-          ngayBatDau,
-          ngayKetThuc,
-          tinhTrang,
-          hinhAnh:result.secure_url,
-          hinhAnhId:result.public_id,
-        },
-        {where: {id}}
-      );
-      res.send("Đã cập nhật yêu cầu!");
+    }
+    res.send("Đã cập nhật yêu cầu!");
   } catch (error) {
+    if (result.public_id) {
+      await cloudinary.uploader.destroy(result.public_id);
+    }
     res.send("Không thể cập nhật yêu cầu!");
     console.error(error);
   }

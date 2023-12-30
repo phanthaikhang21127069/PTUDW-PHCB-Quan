@@ -78,7 +78,9 @@ controller.show = async (req, res) => {
 
 
 controller.requestEditPlace = async (req, res) => {
-  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua} = req.body;
+  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, liDoChinhSua, hinhAnh, hinhAnhId} = req.body;
+  result = {}
+  console.log(hinhAnhId);
   const existingPlace = await models.Requesteditplace.findOne({
     where: {
       placeId: id,
@@ -90,9 +92,14 @@ controller.requestEditPlace = async (req, res) => {
       res.send("Vui lòng chỉnh sửa thêm ở danh sách yêu cầu chỉnh sửa điểm đặt bảng quảng cáo");
     }
     else {
-      const result = await cloudinary.uploader.upload(req.file.path,{
-        folder:'places'
-      });
+      // const result = await cloudinary.uploader.upload(req.file.path,{
+      //   folder:'places'
+      // });
+      if (req.file && req.file.path) {
+        result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'places'
+        });
+      }
       await models.Requesteditplace.create({
         placeId: id,
         diaChi, 
@@ -101,39 +108,50 @@ controller.requestEditPlace = async (req, res) => {
         hinhThuc, 
         quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
         liDoChinhSua,
-        hinhAnh:result.secure_url,
-        hinhAnhId:result.public_id,
+        hinhAnh: result.secure_url ? result.secure_url : hinhAnh,
+        hinhAnhId: result.public_id ? result.public_id : hinhAnhId,
       });
       res.redirect("/diem-dat-bang-quang-cao");
     }
   } catch (error) {
+    if (result.public_id) {
+      await cloudinary.uploader.destroy(result.public_id);
+    }
     res.send("Không thể thêm điểm đặt");
-    cloudinary.uploader.destroy(result.secure_url);
     console.error(error);
   }
 }
 
 controller.continueEditRequest = async (req, res) => {
-  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, hinhAnhId} = req.body;
+  let {id, diaChi, khuVuc, loaiVT, hinhThuc, isQuyHoach, hinhAnhId, liDoChinhSua} = req.body;
+  let result = {}
   try {
-    const result = await cloudinary.uploader.upload(req.file.path,{
-      folder:'places'
-    });
-    await cloudinary.uploader.destroy(hinhAnhId);
-    await models.Requesteditplace.update(
-      { 
-        diaChi, 
-        khuVuc, 
-        loaiVT, 
-        hinhThuc, 
-        quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
-        hinhAnh:result.secure_url,
-        hinhAnhId:result.public_id,
-      },
-      {where: {id}}
-    );
+    if (req.file && req.file.path) {
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'places'
+      });
+    }
+    const updateData = {
+      diaChi, 
+      khuVuc, 
+      loaiVT, 
+      hinhThuc, 
+      quyHoach: isQuyHoach ? "ĐÃ QUY HOẠCH" : "CHƯA QUY HOẠCH",
+      liDoChinhSua,
+    }
+    if (result.secure_url) {
+      updateData.hinhAnh = result.secure_url;
+      updateData.hinhAnhId = result.public_id;
+    }
+    await models.Requesteditplace.update(updateData,{where: {id}});
+    if (hinhAnhId && result.secure_url) {
+      await cloudinary.uploader.destroy(hinhAnhId);
+    }
     res.send("Đã cập nhật điểm đặt!");
   } catch (error) {
+    if (result.public_id) {
+      await cloudinary.uploader.destroy(result.public_id);
+    }
     res.send("Không thể cập nhật điểm đặt!");
     console.error(error);
   }
